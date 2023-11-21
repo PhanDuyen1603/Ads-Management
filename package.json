@@ -10,9 +10,13 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@fawmi/vue-google-maps": "0.9.67",
     "@nuxt/devtools": "latest",
     "nuxt": "^3.8.2",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@vueform/nuxt": "^1.4.0"
   }
 }

@@ -19,37 +19,24 @@
 </template>
 
 <script>
+import random_coordinates_district_1 from '@constant/random_coordinates_district_1.json'
+const defaultLocation = [
+  {
+    position: {
+      lat: 10.766959,
+      lng: 106.694979
+    },
+  },
+]
 export default {
   data() {
     return {
       center: { lat: 10.766959, lng: 106.694979 },
-      markers: [
-        {
-          position: {
-            lat: 10.766959,
-            lng: 106.694979
-          },
-        },
-        {
-          position: {
-            lat: 51.198429,
-            lng: 6.69529,
-          },
-        },
-        {
-          position: {
-            lat: 51.165218,
-            lng: 7.067116,
-          },
-        },
-        {
-          position: {
-            lat: 51.09256,
-            lng: 6.84074,
-          },
-        },
-      ],
+      markers: [...defaultLocation, ...random_coordinates_district_1]
     };
+  },
+  mounted() {
+    console.log(random_coordinates_district_1)
   },
 };
 </script>

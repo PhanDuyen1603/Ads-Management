@@ -8,4 +8,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['@fawmi/vue-google-maps']
   },
+  alias: {
+    '@constant': './src/constant'
+  }
 })

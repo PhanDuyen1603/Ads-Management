@@ -12,6 +12,11 @@
         :position="m.position"
         :clickable="true"
         :draggable="true"
+        :icon= '{
+          url: "/icons/icon-qc.svg",
+          scaledSize: {width: 30, height: 30},
+          labelOrigin: {x: 16, y: -10}
+        }'
         @click="center = m.position"
       />
     </GMapCluster>
@@ -20,6 +25,7 @@
 
 <script>
 import random_coordinates_district_1 from '@constant/random_coordinates_district_1.json'
+import { generateLocations } from '~/utils/generateLocation'
 const defaultLocation = [
   {
     position: {
@@ -32,17 +38,21 @@ export default {
   data() {
     return {
       center: { lat: 10.766959, lng: 106.694979 },
-      markers: [...defaultLocation, ...random_coordinates_district_1]
+      markers: generateLocations([...defaultLocation, ...random_coordinates_district_1])
     };
   },
   mounted() {
-    console.log(random_coordinates_district_1)
+    console.log(generateLocations(random_coordinates_district_1))
   },
 };
 </script>
 
 <style>
-body {
-  margin: 0;
+.cluster img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.cluster span{
+  color: #fff;
 }
 </style>

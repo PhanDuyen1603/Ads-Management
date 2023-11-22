@@ -10,5 +10,15 @@ export default defineNuxtConfig({
   },
   alias: {
     '@constant': './src/constant'
+  },
+  app: {
+    head: {
+        link: [{ rel: 'icon', type: 'image/jpg', href: '/favicon.jpg' }]
+    }
+},
+  runtimeConfig: {
+    public: {
+      googleMapApiKey: process.env.GOOGLE_MAP_API_KEY || ''
+    }
   }
 })

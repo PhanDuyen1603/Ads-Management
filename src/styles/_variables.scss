@@ -1,0 +1,100 @@
+// color
+$clr-main: #e5625c;
+$section-primary: #e5625c !default;
+$section-secondary: #df8c26 !default;
+$section-third: #615375 !default;
+$section-forth: #65A06B !default;
+$white: #fff !default;
+$gray-100: #fbfbfb !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #8898aa !default;
+$gray-700: #525f7f !default;
+$gray-800: #32325d !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$status-pending: $section-secondary;
+// $status-
+//
+$rounded: 20px;
+$masonry-item-space: 20px;
+$theme-colors: ('primary': #e5625c, 'secondary': #df8c26, );
+//
+$search-height: 21px;
+$search-width: 35px;
+
+// media query
+$mobile-width: 480px;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+$large-desktop-width: 1200px;
+
+// new variables
+:root {
+  // colors
+  --clr-red-primary: #e5625c;
+  --clr-orange-primary: #df8c26;
+  --clr-violet-primary: #615375;
+  --clr-green-primary: #65A06B;
+  --clr-gray: #eaeaea;
+  --clr-gray-dark: #B0B0B0;
+  --clr-text-gray: #878787;
+  --clr-white: #fff;
+  --clr-black: #000;
+
+  // media size
+  --size-sm: 480px;
+  --size-md: 768px;
+  --size-lg: 1024px;
+  --size-xl: 1200px;
+  --size-xxl: 1440px;
+
+  // font-families
+  --ff-nunito: "Nunito", sans-serif;
+  --ff-Poppins: 'Poppins', sans-serif;
+
+  // font-size
+  --fs-xxxl: 1.875rem;
+  --fs-xxl: 1.5rem;
+  --fs-xl: 1.25rem;
+  --fs-lg: 1.125rem;
+  --fs-normal: 1rem;
+  --fs-sm: .875rem;
+  --fs-xs: .7rem;
+
+  --fs-subtitle: 2.5rem;
+
+  --fs-body: var(--fs-normal);
+
+  // font-weight
+  --font-weight-1: 100;
+  --font-weight-2: 200;
+  --font-weight-3: 300;
+  --font-weight-4: 400;
+  --font-weight-5: 500;
+  --font-weight-6: 600;
+  --font-weight-7: 700;
+  --font-weight-8: 800;
+  --font-weight-9: 900;
+
+  --font-weight-bold: var(--font-weight-7);
+
+  // image
+  --image-bg-clr: var(--clr-gray);
+
+  // container
+  --ff-header: var(--ff-Poppins);
+
+  // global
+  --clr-main: var(--clr-red-primary);
+  --fs-base: 16px;
+  --section-spacing: 70px;
+
+  // radius
+  --rounded-circle: 50%;
+  --rounded-100: 100px;
+}
+

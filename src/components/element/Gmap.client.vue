@@ -11,14 +11,29 @@
         v-for="(m, index) in markers"
         :position="m.position"
         :clickable="true"
-        :draggable="true"
+        :draggable="false"
         :icon= '{
           url: "/icons/icon-qc.svg",
           scaledSize: {width: 30, height: 30},
           labelOrigin: {x: 16, y: -10}
         }'
-        @click="center = m.position"
-      />
+        @click="onFocusMarker(m)"
+      >
+        <GMapInfoWindow
+          :closeclick="true"
+          @closeclick="onOpenMarker(null)"
+          :opened="openMarker === m.id"
+        >
+          <div class="">
+            <h3>{{ m.advertisingType }}</h3>
+            <p>{{ m.areaType }}</p>
+            <p>{{ m.positionType }}</p>
+            <p>{{ m.address }}</p>
+            <h4>ĐÃ QUY HOẠCH</h4>
+          </div>
+        </GMapInfoWindow>
+
+      </GMapMarker>
     </GMapCluster>
   </GMapMap>
 </template>
@@ -37,6 +52,7 @@ const defaultLocation = [
 export default {
   data() {
     return {
+      openMarker: null,
       center: { lat: 10.766959, lng: 106.694979 },
       markers: generateLocations([...defaultLocation, ...random_coordinates_district_1])
     };
@@ -44,6 +60,14 @@ export default {
   mounted() {
     console.log(generateLocations(random_coordinates_district_1))
   },
+  methods: {
+    onOpenMarker(id) {
+      this.openMarker = id
+    },
+    onFocusMarker(location) {
+      this.onOpenMarker(location.id)
+    }
+  }
 };
 </script>
 

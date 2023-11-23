@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  devServer: {
+    port: 3030
+  },
   devtools: { enabled: true },
   srcDir: './src',
   modules: [
@@ -15,7 +18,7 @@ export default defineNuxtConfig({
     head: {
         link: [{ rel: 'icon', type: 'image/jpg', href: '/favicon.jpg' }]
     }
-},
+  },
   runtimeConfig: {
     public: {
       googleMapApiKey: process.env.GOOGLE_MAP_API_KEY || ''

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <ElementGmap />
+    <ThemeMapSection />
+    <!-- <ElementGmap /> -->
     <button type="button" class="btn btn-primary" @click="testModal">Primary</button>
   </div>
 </template>

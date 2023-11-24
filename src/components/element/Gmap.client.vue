@@ -3,7 +3,7 @@
     :center="center"
     :zoom="18"
     map-type-id="terrain"
-    style="width: 100vw; height: 40rem"
+    :style="mapStyles"
   >
     <GMapCluster :zoomOnClick="true">
       <GMapMarker
@@ -50,6 +50,15 @@ const defaultLocation = [
   },
 ]
 export default {
+  props: {
+    mapStyles: {
+      type: Object,
+      default:() => ({
+        width: '100vw',
+        height: '40rem',
+      })
+    }
+  },
   data() {
     return {
       openMarker: null,
@@ -66,6 +75,7 @@ export default {
     },
     onFocusMarker(location) {
       this.onOpenMarker(location.id)
+      this.$emit('openDetail', { value: location })
     }
   }
 };

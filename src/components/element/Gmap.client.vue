@@ -70,6 +70,10 @@ export default {
     onFocusMarker(location) {
       this.onOpenMarker(location.id)
       this.$emit('openDetail', { value: location })
+    },
+    onCenterMap(location = {}) {
+      if (location && location.lat) this.center.lat = location.lat;
+      if (location && location.lng) this.center.lng = location.lng;
     }
   }
 };

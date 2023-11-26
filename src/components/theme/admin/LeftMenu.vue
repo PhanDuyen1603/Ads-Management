@@ -5,10 +5,10 @@
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav">
         <ul id="sidebarnav">
-          <li v-for="(item, index) in menus" :key="index">
+          <li v-for="(item, index) in menus" :key="index" :class="`${activeMenu === item.name ? 'active' : ''}`">
             <NuxtLink
               :to="{ name: item.name }"
-              :class="`waves-effect waves-dark ${activeMenu === item.name ? 'active' : ''}`"
+              :class="`waves-effect waves-dark`"
               aria-expanded="false"
             >
               <i :class="item.icon"></i>
@@ -56,5 +56,11 @@ const menus = [
     icon: 'mdi mdi-table'
   },
 ]
-const activeMenu = computed(() => menus.find(x => x.name === route.name))
+const activeMenu = ref(route.name)
+watch(() => route.name, (newRouteName, oldRouteName) => {
+  const menu = menus.filter(x => x.name === newRouteName)
+  if(menu.length) {
+    activeMenu.value = menu[0].name
+  }
+});
 </script>

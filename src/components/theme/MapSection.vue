@@ -1,7 +1,12 @@
 <template>
   <div class="map_wrapper" style="--info-width: 300px; ">
     <!-- <slot /> -->
-    <ElementGmap class="map" :map-styles="mapStyles" @open-detail="showAdDetail" />
+    <ElementGmap
+      class="map"
+      :map-styles="mapStyles"
+      :markers="ads"
+      @open-detail="showAdDetail"
+    />
     <div class="map_infos">
       <ElementAdInformation :info="info" />
     </div>
@@ -9,10 +14,13 @@
 </template>
 
 <script setup>
+import useMapStore from '~/stores/map.store'
+
+const mapStore = useMapStore()
+const ads = mapStore.adLocations
 const info = ref(null)
 const showDetail = ref(true)
 const showAdDetail = (data) => {
-  console.log(data)
   showDetail.value = true
 }
 

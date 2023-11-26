@@ -3,9 +3,10 @@
     :center="center"
     :zoom="18"
     map-type-id="terrain"
+    ref="map"
     :style="mapStyles"
   >
-    <GMapCluster :zoomOnClick="true">
+    <GMapCluster v-if="markers.length" :zoomOnClick="true">
       <GMapMarker
         :key="index"
         v-for="(m, index) in markers"
@@ -39,16 +40,6 @@
 </template>
 
 <script>
-import random_coordinates_district_1 from '@constant/random_coordinates_district_1.json'
-import { generateLocations } from '~/utils/generateLocation'
-const defaultLocation = [
-  {
-    position: {
-      lat: 10.766959,
-      lng: 106.694979
-    },
-  },
-]
 export default {
   props: {
     mapStyles: {
@@ -57,17 +48,20 @@ export default {
         width: '100vw',
         height: '40rem',
       })
+    },
+    markers: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
       openMarker: null,
       center: { lat: 10.766959, lng: 106.694979 },
-      markers: generateLocations([...defaultLocation, ...random_coordinates_district_1])
     };
   },
   mounted() {
-    console.log(generateLocations(random_coordinates_district_1))
+
   },
   methods: {
     onOpenMarker(id) {

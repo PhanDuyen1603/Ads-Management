@@ -1,5 +1,6 @@
 import { defineNuxtPlugin } from "#app";
 import VueGoogleMaps from "@fawmi/vue-google-maps";
+import useMapStore from '~/stores/map.store'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig();
@@ -9,4 +10,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       key: $config.googleMapApiKey || 'AIzaSyDbL87HXftpb5uvQG8Z927vDBJgzZliVsk'
     }
   });
+  // init mock data
+  const $store = useMapStore()
+  $store.initLocations()
 });

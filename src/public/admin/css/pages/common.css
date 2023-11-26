@@ -15,8 +15,8 @@ File: scss
 /*Light colors*/
 /*Normal Color*/
 /*Extra Variable*/
-/*============================================================== 
- For all pages 
+/*==============================================================
+ For all pages
  ============================================================== */
 #main-wrapper {
   width: 100%;
@@ -535,8 +535,8 @@ Notify
 
 .right-sidebar {
   position: fixed;
-  right: -240px;
-  width: 240px;
+  right: -200px;
+  width: 200px;
   display: none;
   z-index: 1100;
   background: #ffffff;
@@ -585,7 +585,7 @@ Notify
 
 .shw-rside {
   right: 0px;
-  width: 240px;
+  width: 200px;
   display: block;
 }
 

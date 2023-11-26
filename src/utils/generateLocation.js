@@ -28,6 +28,14 @@ const mapAdvertisingType = {
 
 const listAddTypes = ['Trụ bảng hiflex', 'Trụ màn hình điện tử LED', 'Trụ hộp đèn', 'Bảng hiflex ốp tường', 'Màn hình điện tử ốp tường', 'Trụ treo băng rôn dọc', 'Trụ treo băng rôn ngang', 'Trụ/Cụm pano', 'Cổng chào', 'Trung tâm thương mại']
 
+export const mapKey = {
+  address: 'Địa chỉ',
+  areaType: 'Khu vực',
+  positionType: 'Loại vị trí',
+  advertisingType: 'Hình thức quảng cáo',
+  isZoning: 'Thông tin quy hoạch'
+}
+
 // Function to generate random data
 export function generateRandomData() {
   const areaTypes = ["ward", "district"];

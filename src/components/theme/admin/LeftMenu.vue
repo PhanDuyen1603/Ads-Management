@@ -5,41 +5,15 @@
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav">
         <ul id="sidebarnav">
-          <li>
-            <a class="waves-effect waves-dark" href="index.html" aria-expanded="false">
-              <i class="mdi mdi-gauge"></i>
-              <span class="hide-menu">Dashboard</span>
-            </a>
-          </li>
-          <li>
-            <a class="waves-effect waves-dark" href="pages-profile.html" aria-expanded="false">
-              <i class="mdi mdi-account-check"></i>
-              <span class="hide-menu">Profile</span>
-            </a>
-          </li>
-          <li>
-            <a class="waves-effect waves-dark" href="table-basic.html" aria-expanded="false">
-              <i class="mdi mdi-table"></i>
-              <span class="hide-menu">Table</span>
-            </a>
-          </li>
-          <li>
-            <a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false">
-              <i class="mdi mdi-emoticon"></i>
-              <span class="hide-menu">Icons</span>
-            </a>
-          </li>
-          <li>
-            <a class="waves-effect waves-dark" href="map-google.html" aria-expanded="false">
-              <i class="mdi mdi-earth"></i>
-              <span class="hide-menu">Map</span>
-            </a>
-          </li>
-          <li>
-            <a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false">
-              <i class="mdi mdi-book-open-variant"></i>
-              <span class="hide-menu">Blank</span>
-            </a>
+          <li v-for="(item, index) in menus" :key="index">
+            <NuxtLink
+              :to="{ name: item.name }"
+              :class="`waves-effect waves-dark ${activeMenu === item.name ? 'active' : ''}`"
+              aria-expanded="false"
+            >
+              <i :class="item.icon"></i>
+              <span class="hide-menu">{{ item.title }}</span>
+            </NuxtLink>
           </li>
           <li>
             <a class="waves-effect waves-dark" href="pages-error-404.html" aria-expanded="false">
@@ -53,4 +27,34 @@
   <!-- End Sidebar scroll-->
 </aside></template>
 
-<script></script>
+<script setup>
+const route = useRoute()
+const menus = [
+  {
+    title: 'Tổng quan',
+    name: 'admin',
+    icon: 'mdi mdi-earth'
+  },
+  {
+    title: 'Profile',
+    name: 'admin-profile',
+    icon: 'mdi mdi-account-check'
+  },
+  {
+    title: 'Danh sách quảng cáo',
+    name: 'admin-ad',
+    icon: 'mdi mdi-table'
+  },
+  {
+    title: 'Danh sách báo cáo',
+    name: 'admin-report',
+    icon: 'mdi mdi-table'
+  },
+  {
+    title: 'Danh sách cty cấp phép',
+    name: 'admin-companny',
+    icon: 'mdi mdi-table'
+  },
+]
+const activeMenu = computed(() => menus.find(x => x.name === route.name))
+</script>

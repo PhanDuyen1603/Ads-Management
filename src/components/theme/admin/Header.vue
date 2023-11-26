@@ -5,7 +5,7 @@
       <!-- Logo -->
       <!-- ============================================================== -->
       <div class="navbar-header">
-        <a class="navbar-brand" href="index.html">
+        <NuxtLink :to="{ name: 'admin' }" class="navbar-brand">
           <!-- Logo icon --><b>
             <img src="/admin/images/logo-icon.png" alt="homepage" class="dark-logo" />
           </b>
@@ -14,7 +14,7 @@
           <span>
             <img src="/admin/images/logo-text.png" alt="homepage" class="dark-logo" />
           </span>
-        </a>
+        </NuxtLink>
       </div>
       <!-- ============================================================== -->
       <!-- End Logo -->

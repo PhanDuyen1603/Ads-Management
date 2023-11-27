@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 // Function to generate realistic random addresses
 function generateRandomAddress() {
   const streetNames = ["Le Loi", "Dong Khoi", "Nguyen Hue", "Tran Hung Dao"];
@@ -20,7 +22,7 @@ export const mapPositionType = {
   bus_shelters : 'Nhà chờ xe buýt'
 }
 
-const mapAdvertisingType = {
+export const mapAdvertisingType = {
   political_mobilization: 'Cổ động chính trị',
   commercial_advertising: 'Quảng cáo thương mại',
   socialization: 'Xã hội hoá'
@@ -48,6 +50,10 @@ export function generateRandomData() {
     areaType: mapAreaType[areaTypes[Math.floor(Math.random() * areaTypes.length)]],
     positionType: mapPositionType[positionTypes[Math.floor(Math.random() * positionTypes.length)]],
     advertisingType: mapAdvertisingType[advertisingTypes[Math.floor(Math.random() * advertisingTypes.length)]],
+    images: [
+      faker.image.urlLoremFlickr(),
+      faker.image.urlLoremFlickr()
+    ],
   };
 }
 

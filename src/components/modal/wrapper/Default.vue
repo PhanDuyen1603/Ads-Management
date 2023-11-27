@@ -1,6 +1,6 @@
 <template>
   <div class="modal__wrapper">
-    <div class="modal__content" :styles="{ maxWidth: maxWidth }">
+    <div class="modal__content" :style="{ maxWidth: maxWidth, ...styles }">
       <slot/>
     </div>
   </div>
@@ -12,6 +12,10 @@ defineProps({
   maxWidth: {
     type: String,
     default: '650px'
+  },
+  styles: {
+    type: Object,
+    default:() => {}
   }
 })
 const close = () => {

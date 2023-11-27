@@ -66,7 +66,12 @@ const openReportModal = async (item) => {
 const openDetailModal = async (item) => {
   await $modal.show({
     component: 'LazyModalAdminAdDetail',
-    props: {...item}
+    props: {...item},
+    wrapperProps: {
+      styles: {
+        width: '650px'
+      }
+    }
   })
 }
 </script>

@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import generateRandomDate from '~/utils/date/generateRandomDate'
 
 // Function to generate a random email address
 function generateRandomEmail() {
@@ -24,6 +25,17 @@ function generateRandomReportType() {
   return randomType
 }
 
+export const mapKey = {
+  createdAt: 'Ngày gửi',
+  reportType: 'Hình thức báo cáo',
+  userName: 'Họ và tên',
+  email: 'Email',
+  phone: 'Số điện thoại',
+  reportDetail: 'Nội dung báo cáo',
+  images: 'Hình ảnh minh hoạ',
+  ad_address: 'Địa chỉ',
+}
+
 // Generate an array of 10 objects
 export const generateReportList = (ids = []) => Array.from({ length: 10 }, (_, index) => ({
   id: Math.random().toString(),
@@ -36,5 +48,6 @@ export const generateReportList = (ids = []) => Array.from({ length: 10 }, (_, i
     faker.image.urlLoremFlickr(),
     faker.image.urlLoremFlickr()
   ],
+  createdAt: generateRandomDate(),
   ad: ids[Math.floor(Math.random() * ids.length)] || null
 }));

@@ -19,6 +19,10 @@ export default defineStore({
     initAdReports() {
       const listLocationIds = getIds(this.adLocations)
       this.adReports = generateReportList(listLocationIds)
+    },
+    getAdInfo(id, field) {
+      const ad = this.adLocations.filter(x => x.id === id)
+      return ad.length ? ad[0][field] : ''
     }
   }
 })

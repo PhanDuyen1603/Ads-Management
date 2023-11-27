@@ -64,7 +64,7 @@ export default defineNuxtPlugin(() => {
           const $store = useModalStore()
           $store.clearAll
         },
-        clost({ id, result }) {
+        close({ id, result }) {
           return new Promise(resolve => {
             const $store = useModalStore()
             const instance = $store.list.find(x => x.id === id)

@@ -1,6 +1,6 @@
 <template>
   <GMapMap
-    :center="center"
+    :center="mapCenter"
     :zoom="18"
     map-type-id="terrain"
     ref="map"
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { defaultLocation } from '~/constant/locations';
 export default {
   props: {
     mapStyles: {
@@ -52,13 +53,24 @@ export default {
     markers: {
       type: Array,
       default: () => []
+    },
+    center: {
+      type: Object,
+      default: null
     }
   },
   data() {
     return {
       openMarker: null,
-      center: { lat: 10.766959, lng: 106.694979 },
+      customCenter: {}
     };
+  },
+  computed: {
+    mapCenter() {
+      if(this.customCenter && this.customCenter.lat && this.customCenter.lng) return this.customCenter
+      if(this.center && this.center.lat && this.center.lng) return this.center
+      return defaultLocation.position
+    }
   },
   mounted() {
 
@@ -72,8 +84,8 @@ export default {
       this.$emit('openDetail', { value: location })
     },
     onCenterMap(location = {}) {
-      if (location && location.lat) this.center.lat = location.lat;
-      if (location && location.lng) this.center.lng = location.lng;
+      if (location && location.lat) this.customCenter.lat = location.lat;
+      if (location && location.lng) this.customCenter.lng = location.lng;
     }
   }
 };

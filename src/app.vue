@@ -1,10 +1,6 @@
 <template>
-  <!-- <div>
-    <ElementTestForm />
-    <ElementGmap /> -->
-  <!-- </div> -->
+  <ModalContainer />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
-  <ModalContainer />
 </template>

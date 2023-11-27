@@ -11,7 +11,7 @@ const mapAreaType = {
   district: 'Quận'
 }
 
-const mapPositionType = {
+export const mapPositionType = {
   public_land : 'Đất công/Công viên/Hành lang an toàn giao thông',
   private_land : 'Đất tư nhân/Nhà ở riêng lẻ',
   shopping_malls : 'Trung tâm thương mại',
@@ -26,7 +26,7 @@ const mapAdvertisingType = {
   socialization: 'Xã hội hoá'
 }
 
-const listAddTypes = ['Trụ bảng hiflex', 'Trụ màn hình điện tử LED', 'Trụ hộp đèn', 'Bảng hiflex ốp tường', 'Màn hình điện tử ốp tường', 'Trụ treo băng rôn dọc', 'Trụ treo băng rôn ngang', 'Trụ/Cụm pano', 'Cổng chào', 'Trung tâm thương mại']
+export const listAddTypes = ['Trụ bảng hiflex', 'Trụ màn hình điện tử LED', 'Trụ hộp đèn', 'Bảng hiflex ốp tường', 'Màn hình điện tử ốp tường', 'Trụ treo băng rôn dọc', 'Trụ treo băng rôn ngang', 'Trụ/Cụm pano', 'Cổng chào', 'Trung tâm thương mại']
 
 export const mapKey = {
   address: 'Địa chỉ',

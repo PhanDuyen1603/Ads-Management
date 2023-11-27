@@ -1,105 +1,77 @@
 <template>
   <div class="row">
     <!-- column -->
-    <div class="col-lg-8">
+    <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <!-- <h4 class="card-title">Basic Table</h4>
-          <h6 class="card-subtitle">Add class <code>.table</code></h6> -->
           <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table">
               <thead>
-                <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Deshmukh</td>
-                  <td>Prohaska</td>
-                  <td>@Genelia</td>
-                  <td>
-                    <button class="btn btn-success">
-                      Yêu cầu chỉnh sửa
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Deshmukh</td>
-                  <td>Gaylord</td>
-                  <td>@Ritesh</td>
-                  <td>
-                    <button class="btn btn-success">
-                      Yêu cầu chỉnh sửa
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Sanghani</td>
-                  <td>Gusikowski</td>
-                  <td>@Govinda</td>
-                  <td>
-                    <button class="btn btn-success">
-                      Yêu cầu chỉnh sửa
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Roshan</td>
-                  <td>Rogahn</td>
-                  <td>@Hritik</td>
-                  <td>
-                    <button class="btn btn-success">
-                      Yêu cầu chỉnh sửa
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Joshi</td>
-                  <td>Hickle</td>
-                  <td>@Maruti</td>
-                  <td>
-                    <button class="btn btn-success">
-                      Yêu cầu chỉnh sửa
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>Nigam</td>
-                  <td>Eichmann</td>
-                  <td>@Sonu</td>
-                  <td>
-                    <button class="btn btn-success">
-                      Yêu cầu chỉnh sửa
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+                  <tr>
+                    <th>#</th>
+                    <th v-for="(item, index) in tableField" :key="`head_${index}`" style="width: fit-content;">
+                      {{ mapKey[item] ? mapKey[item] : item }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in ads">
+                    <td>{{ index + 1 }}</td>
+                    <td v-for="(field, i) in tableField" :key="i">
+                      {{ item[field] }}
+                    </td>
+                    <td class="detail_icon" @click="openDetailModal(item)">
+                      <i class="mdi mdi-eye-outline"></i>
+                    </td>
+                    <td>
+                      <button class="btn btn-success" @click="openReportModal(item)">
+                        Yêu cầu chỉnh sửa
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-4">
+    <!-- <div class="col-lg-4">
       <ElementGmap class="map" :map-styles="{
         width: '100%',
         height: '30rem'
       }" />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
+import useMapStore from '~/stores/map.store'
+const { $modal } = useNuxtApp()
 definePageMeta({
   layout: 'admin'
 })
+const mapStore = useMapStore()
+const tableField = ['address', 'areaType', 'positionType', 'advertisingType']
+const ads = mapStore.adLocations
+
+const openReportModal = async (item) => {
+  const result = await $modal.show({
+    component: 'ModalAdminAdRequestEdit',
+    props: {
+      info: item
+    }
+  })
+}
+
+const openDetailModal = async (item) => {
+  await $modal.show({
+    component: 'LazyModalAdminAdDetail',
+    props: {...item}
+  })
+}
 </script>
+<style>
+.detail_icon {
+  cursor: pointer;
+}
+</style>

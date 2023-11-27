@@ -55,7 +55,6 @@ const tableField = ['address', 'areaType', 'positionType', 'advertisingType']
 const mapStore = useMapStore()
 const ads = mapStore.adLocations
 const onFocusMap = (item) => {
-  console.log(item, map.value)
   map.value.onCenterMap?.(item.position)
 }
 </script>

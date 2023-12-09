@@ -1,6 +1,10 @@
 <template>
   <div class="row">
-    <!-- column -->
+    <div>
+      <button @click="addAdsModal()">
+        add Ads
+      </button>
+    </div>
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
@@ -10,7 +14,7 @@
                   <tr>
                     <th>#</th>
                     <th v-for="(item, index) in tableField" :key="`head_${index}`" style="width: fit-content;">
-                      {{ mapKey[item] ? mapKey[item] : item }}
+                      {{ mapLocationKey[item] ? mapLocationKey[item] : item }}
                     </th>
                   </tr>
                 </thead>
@@ -46,6 +50,7 @@
 
 <script setup>
 import useMapStore from '~/stores/map.store'
+import { mapLocationKey } from '~/utils/generateLocation'
 const { $modal } = useNuxtApp()
 definePageMeta({
   layout: 'admin'
@@ -71,6 +76,15 @@ const openDetailModal = async (item) => {
       styles: {
         width: '650px'
       }
+    }
+  })
+}
+
+const addAdsModal = async (item) => {
+  const result = await $modal.show({
+    component: 'ModalAdminAdCreate',
+    props: {
+      info: item
     }
   })
 }

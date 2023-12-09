@@ -23,7 +23,13 @@ export default defineNuxtConfig({
   modules: [
     '@vueform/nuxt',
     '@pinia/nuxt',
+    'nuxt-mongoose',
   ],
+  mongoose: {
+    uri: process.env.MONGODB_URI,
+    options: {},
+    modelsDir: 'models',
+  },
   build: {
     transpile: ['@fawmi/vue-google-maps']
   },

@@ -11,7 +11,7 @@
                   <tr>
                     <th>#</th>
                     <th v-for="(item, index) in tableField" :key="index" style="width: fit-content;">
-                      {{ mapKey[item] ? mapKey[item] : item }}
+                      {{ mapLocationKey[item] ? mapLocationKey[item] : item }}
                     </th>
                   </tr>
                 </thead>
@@ -29,15 +29,10 @@
         </div>
       </div>
       <div class="col-lg-8 col-md-12">
-        <ElementGmap
-          class="map"
-          ref="map"
-          :markers="ads"
-          :map-styles="{
-            width: '100%',
-            height: '45rem'
-          }"
-        />
+        <MapGoogleMap :markers="ads" :style="{
+          width: '100%',
+          height: '45rem'
+        }" />
     </div>
 
     </div>
@@ -46,7 +41,7 @@
 
 <script setup>
 import useMapStore from '~/stores/map.store'
-import { mapKey } from '~/utils/generateLocation'
+import { mapLocationKey } from '~/utils/generateLocation'
 definePageMeta({
   layout: 'admin'
 })

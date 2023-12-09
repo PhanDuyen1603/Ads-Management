@@ -6,12 +6,12 @@
           <tr>
             <th>#</th>
             <th v-for="(item, idnex) in tableField" :key="index">
-              {{ mapKey[item] ? mapKey[item] : item }}
+              {{ mapReportKey[item] ? mapReportKey[item] : item }}
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in reports" :key="index">
+          <tr v-for="(item, index) in reports" :key="index" @click="openDetailModal(item)">
             <td>{{ index + 1 }}</td>
             <td v-for="(field, i) in tableField" :key="i">
               <div v-if="!field.startsWith('ad_')">{{ item[field] }}</div>
@@ -26,11 +26,22 @@
 
 <script setup>
 import useMapStore from '~/stores/map.store'
-import { mapKey } from '~/utils/generateAdReports'
+import { mapReportKey } from '~/utils/generateAdReports'
 definePageMeta({
   layout: 'admin'
 })
 const mapStore = useMapStore()
 const reports = mapStore.adReports
-const tableField = ['createdAt', 'ad_address', 'userName', 'phone', 'reportType']
+const tableField = ['createdAt', 'ad_address', 'userName', 'phone', 'reportType', 'status']
+const openDetailModal = async (item) => {
+  await $modal.show({
+    component: 'LazyModalAdminReportDetail',
+    props: {...item},
+    wrapperProps: {
+      styles: {
+        width: '650px'
+      }
+    }
+  })
+}
 </script>

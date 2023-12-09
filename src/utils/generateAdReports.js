@@ -25,7 +25,7 @@ function generateRandomReportType() {
   return randomType
 }
 
-export const mapKey = {
+export const mapReportKey = {
   createdAt: 'Ngày gửi',
   reportType: 'Hình thức báo cáo',
   userName: 'Họ và tên',
@@ -33,6 +33,7 @@ export const mapKey = {
   phone: 'Số điện thoại',
   reportDetail: 'Nội dung báo cáo',
   images: 'Hình ảnh minh hoạ',
+  status: 'Tình trạng xử lý',
   ad_address: 'Địa chỉ',
 }
 
@@ -49,5 +50,6 @@ export const generateReportList = (ids = []) => Array.from({ length: 10 }, (_, i
     faker.image.urlLoremFlickr()
   ],
   createdAt: generateRandomDate(),
-  ad: ids[Math.floor(Math.random() * ids.length)] || null
+  ad: ids[Math.floor(Math.random() * ids.length)] || null,
+  status: Math.random() < 0.5
 }));

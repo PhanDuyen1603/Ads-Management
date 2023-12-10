@@ -10,7 +10,7 @@
       <GMapMarker
         :key="index"
         v-for="(m, index) in markers"
-        :position="m.position"
+        :position="m.position ? m.position : { lat: m.lat, lng: m.lng }"
         :clickable="true"
         :draggable="false"
         :icon= '{

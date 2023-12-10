@@ -5,37 +5,19 @@
         add Ads
       </button>
     </div>
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item" @click="isShowAdsList = !isShowAdsList">
+        <div :class="`nav-link ${ !isShowAdsList ? 'active' : ''}`" aria-current="page" >Điểm đặt quảng cáo</div>
+      </li>
+      <li class="nav-item" @click="isShowAdsList = !isShowAdsList">
+        <div :class="`nav-link ${ isShowAdsList ? 'active' : ''}`">Danh sách quảng cáo</div>
+      </li>
+    </ul>
+
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                  <tr>
-                    <th>#</th>
-                    <th v-for="(item, index) in tableField" :key="`head_${index}`" style="width: fit-content;">
-                      {{ mapLocationKey[item] ? mapLocationKey[item] : item }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item, index) in ads">
-                    <td>{{ index + 1 }}</td>
-                    <td v-for="(field, i) in tableField" :key="i">
-                      {{ item[field] }}
-                    </td>
-                    <td class="detail_icon" @click="openDetailModal(item)">
-                      <i class="mdi mdi-eye-outline"></i>
-                    </td>
-                    <td>
-                      <button class="btn btn-success" @click="openReportModal(item)">
-                        Yêu cầu chỉnh sửa
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-            </table>
-          </div>
+          <TableLocations :data="addresses" />
         </div>
       </div>
     </div>
@@ -50,39 +32,20 @@
 
 <script setup>
 import useMapStore from '~/stores/map.store'
-import { mapLocationKey } from '~/utils/generateLocation'
 const { $modal } = useNuxtApp()
 definePageMeta({
   layout: 'admin'
 })
 const mapStore = useMapStore()
-const tableField = ['address', 'areaType', 'positionType', 'advertisingType']
-const ads = mapStore.adLocations
 
-const openReportModal = async (item) => {
-  const result = await $modal.show({
-    component: 'ModalAdminAdRequestEdit',
-    props: {
-      info: item
-    }
-  })
-}
+await mapStore.getAddressesList()
+const addresses = mapStore.addresses
 
-const openDetailModal = async (item) => {
-  await $modal.show({
-    component: 'LazyModalAdminAdDetail',
-    props: {...item},
-    wrapperProps: {
-      styles: {
-        width: '650px'
-      }
-    }
-  })
-}
+const isShowAdsList = ref(false)
 
 const addAdsModal = async (item) => {
   const result = await $modal.show({
-    component: 'ModalAdminAdCreate',
+    component: 'FormAdCreate',
     props: {
       info: item
     }
@@ -91,6 +54,9 @@ const addAdsModal = async (item) => {
 </script>
 <style>
 .detail_icon {
+  cursor: pointer;
+}
+.nav-item {
   cursor: pointer;
 }
 </style>

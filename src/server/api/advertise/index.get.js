@@ -13,13 +13,42 @@ export default defineEventHandler(async (event) => {
         $unwind: "$address" // If needed, unwind the array (optional)
       },
       {
+        $lookup: {
+          from: 'ads_categories',
+          localField: 'adsCategoryId',
+          foreignField: "_id",
+          as: "adCategory"
+        }
+      },
+      {
+        $unwind: "$adCategory"
+      },
+      {
+        $lookup: {
+          from: 'billboard_types',
+          localField: 'billboardTypeId',
+          foreignField: "_id",
+          as: "billboardType"
+        }
+      },
+      {
+        $unwind: "$billboardType"
+      },
+      {
         $project: {
-        "_id": 1,
-        "content": 1,
-        "address._id": 1,
-        "address.streetLine1": 1,
+          "_id": 1,
+          "title": 1,
+          "content": 1,
+          "images": 1,
+          "width": 1,
+          "height": 1,
+          "address": 1,
+          "adCategory.name": 1,
+          "billboardType.name": 1,
+          // "address._id": 1,
+          // "address.streetLine1": 1,
+        }
       }
-    }
     ])
   }
   catch (error) {

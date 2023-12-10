@@ -4,21 +4,22 @@
       <div class="col-lg-4 col-md-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title"><span class="lstick"></span>Danh sách quảng cáo</h4>
+            <h4 class="card-title"><span class="lstick"></span>DS địa điểm đặt quảng cáo</h4>
+            <!-- <h4 class="card-title"><span class="lstick"></span>DS quảng cáo</h4> -->
             <div class="table-responsive admin_table">
               <table class="table table-hover" style="width: max-content;">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th v-for="(item, index) in tableField" :key="index" style="width: fit-content;">
-                      {{ mapLocationKey[item] ? mapLocationKey[item] : item }}
+                    <th v-for="(item, index) in Object.values(tableField)" :key="index" style="width: fit-content;">
+                      {{ item }}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in ads" @click="onFocusMap(item)">
+                  <tr v-for="(item, index) in addresses" @click="focusMap(item)">
                     <td>{{ index + 1 }}</td>
-                    <td v-for="(field, i) in tableField" :key="i">
+                    <td v-for="(field, i) in Object.keys(tableField)" :key="i">
                       {{ item[field] }}
                     </td>
                   </tr>
@@ -29,10 +30,19 @@
         </div>
       </div>
       <div class="col-lg-8 col-md-12">
-        <MapGoogleMap :markers="ads" :style="{
+        <ElementGmap
+          class="map"
+          ref="map"
+          :markers="addresses"
+          :map-styles="{
+            width: '100%',
+            height: '45rem'
+          }"
+        />
+        <!-- <MapGoogleMap :markers="ads" :style="{
           width: '100%',
           height: '45rem'
-        }" />
+        }" /> -->
     </div>
 
     </div>
@@ -41,16 +51,27 @@
 
 <script setup>
 import useMapStore from '~/stores/map.store'
-import { mapLocationKey } from '~/utils/generateLocation'
+import { onFocusMap } from '~/utils/map'
 definePageMeta({
   layout: 'admin'
 })
-const map = ref(null)
-const tableField = ['address', 'areaType', 'positionType', 'advertisingType']
 const mapStore = useMapStore()
-const ads = mapStore.adLocations
-const onFocusMap = (item) => {
-  map.value.onCenterMap?.(item.position)
+
+const map = ref(null)
+
+await mapStore.getAddressesList()
+const addresses = mapStore.addresses
+
+const tableField = {
+  streetLine1: 'địa chỉ',
+  city: 'thành phố',
+  ward: 'quận',
+  district: 'huyện'
+}
+
+// map interaction
+const focusMap = (item) => {
+  onFocusMap({ lat: item.lat, lng: item.lng }, map.value)
 }
 </script>
 

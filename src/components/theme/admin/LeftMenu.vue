@@ -33,27 +33,38 @@ const menus = [
   {
     title: 'Tổng quan',
     name: 'admin',
-    icon: 'mdi mdi-earth'
+    icon: 'mdi mdi-earth',
+    rule: 'all'
   },
   {
     title: 'Profile',
     name: 'admin-profile',
-    icon: 'mdi mdi-account-check'
+    icon: 'mdi mdi-account-check',
+    rule: 'all'
   },
   {
-    title: 'Danh sách quảng cáo',
+    title: 'Danh sách quảng cáo/ điểm đặt quảng cáo',
     name: 'admin-ad',
-    icon: 'mdi mdi-table'
+    icon: 'mdi mdi-table',
+    rule: 'all'
   },
   {
     title: 'Danh sách báo cáo',
     name: 'admin-report',
-    icon: 'mdi mdi-table'
+    icon: 'mdi mdi-table',
+    rule: 'all'
   },
   {
     title: 'Danh sách cty cấp phép',
     name: 'admin-companny',
-    icon: 'mdi mdi-table'
+    icon: 'mdi mdi-table',
+    rule: 'all'
+  },
+  {
+    title: 'Danh sách người dùng',
+    name: 'admin-users',
+    icon: 'mdi mdi-table',
+    rule: 'all'
   },
 ]
 const activeMenu = ref(route.name)

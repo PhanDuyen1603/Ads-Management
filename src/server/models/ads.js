@@ -9,26 +9,35 @@ export const adsSchema = defineMongooseModel({
       ref: "addresses",
       requried: true,
     },
+    // Hình thức quảng cáo
     adsCategoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'adsCategories'
     },
-    locationTypeId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'locationTypes'
-    },
+    // Loại bảng quảng cáo
     billboardTypeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'billboardTypes'
     },
+    // ad content
     title: { type: 'string' },
-    content: { type: 'string' },
+    content: { type: 'string'},
+    images: { type: ['string'] },
+
+    // specifications
     width: { type: 'number' },
     height: { type: 'number' },
     quantity: { type: 'number', default: 1 },
-    isPlanned: { type: 'boolean', default: false },
-    images: { type: ['string'] },
+
+
     start_date: { type: 'date' },
     end_date: { type: 'date' },
+
+    updatedAt: { type: 'date' },
+    createdAt: { type: 'date' },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    }
   },
 })

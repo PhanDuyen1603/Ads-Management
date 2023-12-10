@@ -3,25 +3,12 @@ import { defineStore } from 'pinia'
 export default defineStore({
   id: 'ads-store',
   state:() => ({
-    locations: [],
     categories: [],
     locationTypes: [],
     billboardTypes: []
   }),
   actions: {
     // get
-    async getLocations() {
-      try {
-        const res = await $fetch('/api/address')
-        if(res.length) {
-          this.locations = res
-        }
-      } catch (error) {
-        console.log({
-          error
-        })
-      }
-    },
     async getCategories() {
       try {
         const res = await $fetch('/api/adsCategory')
@@ -48,7 +35,7 @@ export default defineStore({
     },
     async getBillboardTypes() {
       try {
-        const res = await $fetch('/api/billboard')
+        const res = await $fetch('/api/billboardType')
         if(res.length) {
           this.billboardTypes = res
         }
@@ -92,12 +79,6 @@ export default defineStore({
     },
   },
   getters: {
-    adsLocations:(state) => {
-      return state.locations.length ? state.locations.map(x => ({
-        label: x.streetLine1,
-        value: x._id
-      })) : []
-    },
     adsCategories:(state) => {
       return state.categories.length ? state.categories.map(x => ({
         label: x.name,

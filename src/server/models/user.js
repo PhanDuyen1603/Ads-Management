@@ -5,6 +5,8 @@ export const userSchema = defineMongooseModel({
   name: 'user',
   schema: {
     username: 'string',
+    firstName: 'string',
+    lastName: 'string',
     email: {
       type: 'string',
       required: true,
@@ -32,6 +34,10 @@ export const userSchema = defineMongooseModel({
       ref: "user_roles",
       requried: true,
     },
+    // user cấp quận
+    city: { type: 'string' },
+    ward: { type: 'string' },
+    district: { type: 'string' },
     dateOfBirth: { type: 'date' },
     updatedAt: { type: 'date' },
     createdAt: { type: 'date' }

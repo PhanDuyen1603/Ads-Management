@@ -5,19 +5,24 @@
         add Ads
       </button>
     </div>
-    <ul class="nav nav-pills nav-fill">
-      <li class="nav-item" @click="isShowAdsList = !isShowAdsList">
-        <div :class="`nav-link ${ !isShowAdsList ? 'active' : ''}`" aria-current="page" >Điểm đặt quảng cáo</div>
-      </li>
-      <li class="nav-item" @click="isShowAdsList = !isShowAdsList">
-        <div :class="`nav-link ${ isShowAdsList ? 'active' : ''}`">Danh sách quảng cáo</div>
-      </li>
-    </ul>
 
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <TableLocations :data="addresses" />
+          <ul class="nav nav-pills nav-fill mb-2">
+            <li class="nav-item" @click="showAddressList()">
+              <div :class="`nav-link ${ !isShowAdsList ? 'active' : ''}`">
+                Điểm đặt quảng cáo
+              </div>
+            </li>
+            <li class="nav-item" @click="showAdsList()">
+              <div :class="`nav-link ${ isShowAdsList ? 'active' : ''}`">
+                Danh sách quảng cáo
+              </div>
+            </li>
+          </ul>
+          <TableLocations v-if="!isShowAdsList" :data="dataList" :key="`location_${new Date()}`" />
+          <TableAds v-else :data="dataList" :key="`ad_${new Date()}`" />
         </div>
       </div>
     </div>
@@ -32,16 +37,30 @@
 
 <script setup>
 import useMapStore from '~/stores/map.store'
+import useAdsStore from '~/stores/ads.store'
 const { $modal } = useNuxtApp()
 definePageMeta({
   layout: 'admin'
 })
 const mapStore = useMapStore()
+const adsStore = useAdsStore()
 
 await mapStore.getAddressesList()
-const addresses = mapStore.addresses
+const dataList = computed(() => !isShowAdsList.value ? mapStore.addresses : adsStore.ads)
 
 const isShowAdsList = ref(false)
+
+const showAddressList = async () => {
+  if(!isShowAdsList.value) return
+  isShowAdsList.value = false
+  await mapStore.getAddressesList()
+}
+
+const showAdsList = async () => {
+  if(isShowAdsList.value) return
+  isShowAdsList.value = true
+  await adsStore.getAdsList()
+}
 
 const addAdsModal = async (item) => {
   const result = await $modal.show({

@@ -3,12 +3,38 @@ import { defineStore } from 'pinia'
 export default defineStore({
   id: 'ads-store',
   state:() => ({
+    ads: [],
     categories: [],
     locationTypes: [],
     billboardTypes: []
   }),
   actions: {
     // get
+    async getAdsList() {
+      try {
+        const res = await $fetch('/api/advertise')
+        if(res.length) {
+          this.ads = res
+        }
+      } catch (error) {
+        console.log({
+          error
+        })
+      }
+    },
+    async getAdById(id) {
+      try {
+        const res = await $fetch(`/api/advertise/${id}`)
+        if(res.length) {
+          return res[0]
+        }
+        return null
+      } catch (error) {
+        console.log({
+          error
+        })
+      }
+    },
     async getCategories() {
       try {
         const res = await $fetch('/api/adsCategory')

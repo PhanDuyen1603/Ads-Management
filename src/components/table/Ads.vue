@@ -4,7 +4,6 @@
       <thead>
         <tr>
           <th>#</th>
-          <th v-if="$map">goto</th>
           <th v-for="(item, index) in Object.values(tableField)" :key="`head_${index}`" style="width: fit-content;">
             {{ item }}
           </th>
@@ -14,20 +13,12 @@
       <tbody>
         <tr v-for="(item, index) in data">
           <td>{{ index + 1 }}</td>
-          <td v-if="$map" @click="focusMap(item)">
-            <i class="bi bi-crosshair"></i>
-          </td>
           <td v-for="(field, i) in Object.keys(tableField)" :key="i">
-            <div class="tb-content">
-              {{ item[field] }}
-            </div>
-          </td>
-          <td class="detail_icon" @click="openDetailModal(item)">
-            <i class="mdi mdi-eye-outline"></i>
+            {{ getName(item[field]) }}
           </td>
           <td>
-            <button class="btn btn-success" @click="openReportModal(item)">
-              Yêu cầu chỉnh sửa
+            <button class="btn btn-success" @click="openDetailModal(item)">
+              chỉnh sửa
             </button>
           </td>
         </tr>
@@ -38,6 +29,8 @@
 
 <script setup>
 import { onFocusMap } from '~/utils/map'
+import getName from '~/utils/string/getName'
+import { tableField } from '~/utils/dataMap/ads'
 
 const { $modal } = useNuxtApp()
 const props = defineProps({
@@ -45,34 +38,22 @@ const props = defineProps({
     type: Array
   },
   $map: {
-    type: Object
+    type: Object,
+    default:() => {}
   }
 })
-
-const tableField = {
-  streetLine1: 'địa chỉ',
-  city: 'thành phố',
-  ward: 'Phường',
-  district: 'quận'
-}
 
 const focusMap = () => {
   onFocusMap({ lat: item.lat, lng: item.lng }, $map)
 }
 
-const openReportModal = async (item) => {
-  const result = await $modal.show({
-    component: 'FormAdRequestEdit',
-    props: {
-      info: item
-    }
-  })
-}
-
 const openDetailModal = async (item) => {
   await $modal.show({
-    component: 'LazyModalAdminAdDetail',
-    props: {...item},
+    component: 'LazyFormAdCreate',
+    props: {
+      defaultFormData: item,
+      submitType: 'update'
+    },
     wrapperProps: {
       styles: {
         width: '650px'

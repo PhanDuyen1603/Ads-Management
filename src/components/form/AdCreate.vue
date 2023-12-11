@@ -1,7 +1,9 @@
 <template>
   <ClientOnly>
     <Vueform
-      :endpoint="(form, el) => handleSubmit(form, el)" :form-data="form$ => form$.requestData" v-model="form"
+      :endpoint="(form, el) => handleSubmit(form, el)"
+      :form-data="form$ => form$.requestData" v-model="form"
+      sync
     >
       <TextElement
         name="title"
@@ -17,9 +19,24 @@
         placeholder="Nhập thông tin bảng quảng cáo"
       />
 
-      <SelectElement label="Địa chỉ đặt quảng cáo" name="addressId" :native="false" :items="addresses" />
-      <SelectElement label="Hình thức quảng cáo" name="adsCategoryId" :native="false" :items="adsCategories" />
-      <SelectElement label="Loại bảng quảng cáo" name="billboardTypeId" :native="false" :items="billboardTypes" />
+      <SelectElement
+        label="Địa chỉ đặt quảng cáo"
+        name="addressId"
+        :native="false"
+        :items="addresses"
+      />
+      <SelectElement
+        label="Hình thức quảng cáo"
+        name="adsCategoryId"
+        :native="false"
+        :items="adsCategories"
+      />
+      <SelectElement
+        label="Loại bảng quảng cáo"
+        name="billboardTypeId"
+        :native="false"
+        :items="billboardTypes"
+      />
 
       <TextElement
         name="height"
@@ -51,55 +68,58 @@
       /> -->
 
       <ButtonElement name="submit" add-class="mt-2" submits>
-        Tạo mới
+        {{ submitType === 'create' ? 'Tạo mới' : 'Cập nhật' }}
       </ButtonElement>
     </Vueform>
   </ClientOnly>
 </template>
 
-<script>
+<script setup>
 import useAdsStore from '~/stores/ads.store'
 import useMapStore from '~/stores/map.store'
 
-export default {
-  async setup() {
-    const adsStore = useAdsStore()
-    const mapStore = useMapStore()
+const adsStore = useAdsStore()
+const mapStore = useMapStore()
 
-    await adsStore.getCategories()
-    await adsStore.getBillboardTypes()
-    const form = reactive({})
+const props = defineProps({
+  defaultFormData: {
+    type: Object,
+    default: null
+  },
+  submitType: {
+    type: String,
+    default: 'create',
+    validator:(x) => ['create', 'update'].includes(x)
+  }
+})
 
-    const handleSubmit = async (form, $el) => {
-      try {
-        const res = await $fetch('/api/advertise/create', {
-          method: 'POST',
-          body: form,
-          redirect: 'follow',
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        console.log(res)
-      } catch (error) {
-        console.log({error})
+await adsStore.getCategories()
+await adsStore.getBillboardTypes()
+
+const form = reactive(props.defaultFormData && props.submitType === 'update' ? props.defaultFormData : {})
+
+const adsCategories = computed(() => adsStore.adsCategories)
+const billboardTypes = computed(() => adsStore.adsBillboardTypes)
+const addresses = computed(() => mapStore.addresses.map(x => ({
+  value: x._id,
+  label: x.streetLine1
+})))
+
+const handleSubmit = async (form, $el) => {
+  try {
+    const endpoint = props.submitType === 'create' ? '/api/advertise/create' : `/api/advertise/${props.defaultFormData._id}`
+    const options = {
+      method: props.submitType === 'create' ? 'POST' : 'PUT',
+      body: form,
+      redirect: 'follow',
+      headers: {
+        "Content-Type": "application/json"
       }
     }
-
-    const adsCategories = computed(() => adsStore.adsCategories)
-    const billboardTypes = computed(() => adsStore.adsBillboardTypes)
-    const addresses = computed(() => mapStore.addresses.map(x => ({
-      value: x._id,
-      label: x.streetLine1
-    })))
-
-    return {
-      addresses,
-      adsCategories,
-      billboardTypes,
-      form,
-      handleSubmit
-    }
+    const res = await $fetch(endpoint, options)
+    console.log(res)
+  } catch (error) {
+    console.log({error})
   }
 }
 </script>

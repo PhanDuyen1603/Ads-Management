@@ -67,6 +67,12 @@ const addAdsModal = async (item) => {
     component: 'FormAdCreate',
     props: {
       info: item
+    },
+    wrapperProps: {
+      styles: {
+        'max-width': '650px',
+        width: '100%'
+      }
     }
   })
 }

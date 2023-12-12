@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-overflow">
+    <table class="table table-full">
       <thead>
         <tr>
           <th>#</th>
@@ -37,15 +37,7 @@ const props = defineProps({
   data: {
     type: Array
   },
-  $map: {
-    type: Object,
-    default:() => {}
-  }
 })
-
-const focusMap = () => {
-  onFocusMap({ lat: item.lat, lng: item.lng }, $map)
-}
 
 const openDetailModal = async (item) => {
   await $modal.show({

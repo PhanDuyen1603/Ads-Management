@@ -39,10 +39,6 @@
             height: '45rem'
           }"
         />
-        <!-- <MapGoogleMap :markers="ads" :style="{
-          width: '100%',
-          height: '45rem'
-        }" /> -->
     </div>
 
     </div>
@@ -60,7 +56,14 @@ const mapStore = useMapStore()
 const map = ref(null)
 
 await mapStore.getAddressesList()
-const addresses = mapStore.addresses
+const addresses = mapStore.addresses.map(x => ({
+  ...x,
+  id: x._id,
+  position: {
+    lat: x.lat,
+    lng: x.lng
+  }
+}))
 
 const tableField = {
   streetLine1: 'địa chỉ',

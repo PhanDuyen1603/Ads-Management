@@ -38,6 +38,8 @@ const close = () => {
   vertical-align: middle;
   display: inline-block;
   text-align: initial;
+  overflow-y: scroll;
+  max-height: calc(100vh - 10%);
 }
 .modal-overlay {
   position: fixed;

@@ -45,7 +45,8 @@ const props = defineProps({
     type: Array
   },
   $map: {
-    type: Object
+    type: Object,
+    default:() => {}
   }
 })
 
@@ -62,9 +63,15 @@ const focusMap = () => {
 
 const openReportModal = async (item) => {
   const result = await $modal.show({
-    component: 'FormAdRequestEdit',
+    component: 'FormAddressRequestEdit',
     props: {
-      info: item
+      defaultFormData: item,
+      submitType: 'update'
+    },
+    wrapperProps: {
+      styles: {
+        width: '650px'
+      }
     }
   })
 }

@@ -8,7 +8,7 @@ export const requestEditSchema = defineMongooseModel({
       type: 'string',
       required: true
     },
-    season: {
+    reason: {
       type: 'string',
       required: true
     },

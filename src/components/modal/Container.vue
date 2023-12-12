@@ -63,6 +63,8 @@ const close = (item, value) => {
   vertical-align: middle;
   display: inline-block;
   text-align: initial;
+  overflow-y: scroll;
+  max-height: calc(100vh - 10%);
 }
 .modal_overlay {
   position: fixed;

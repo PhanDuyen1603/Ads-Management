@@ -6,7 +6,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const $config = config.public;
   nuxtApp.vueApp.use(VueGoogleMaps, {
     load: {
-      key: $config.googleMapApiKey || 'AIzaSyDbL87HXftpb5uvQG8Z927vDBJgzZliVsk'
+      key: $config.googleMapApiKey || 'AIzaSyDbL87HXftpb5uvQG8Z927vDBJgzZliVsk',
+      libraries: "places"
     }
   });
 });

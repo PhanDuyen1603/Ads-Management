@@ -42,17 +42,18 @@
         name="height"
         label="Chiều dài"
         type="number"
-        placeholder="Nhập chiều dài bảng quảng cáo"
+        :columns="{ container: 4 }"
       />
       <TextElement
         name="width"
         label="Chiều rộng"
+        :columns="{ container: 4 }"
         type="number"
-        placeholder="Nhập chiều rộng bảng quảng cáo"
       />
       <TextElement
         name="quantity"
         label="Số lượng"
+        :columns="{ container: 4 }"
         type="number"
         placeholder="Số lượng"
       />
@@ -92,6 +93,7 @@ const props = defineProps({
     validator:(x) => ['create', 'update'].includes(x)
   }
 })
+const emits = defineEmits(['close'])
 
 await adsStore.getCategories()
 await adsStore.getBillboardTypes()
@@ -117,7 +119,7 @@ const handleSubmit = async (form, $el) => {
       }
     }
     const res = await $fetch(endpoint, options)
-    console.log(res)
+    emits('close')
   } catch (error) {
     console.log({error})
   }

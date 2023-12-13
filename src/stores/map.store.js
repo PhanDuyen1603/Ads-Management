@@ -12,7 +12,7 @@ export default defineStore({
   state:() => ({
     adLocations: [],
     adReports: [],
-    addresses: []
+    addresses: [],
   }),
   actions: {
     async getAddressesList() {
@@ -35,5 +35,15 @@ export default defineStore({
       const ad = this.adLocations.filter(x => x.id === id)
       return ad.length ? ad[0][field] : ''
     }
+  },
+  getters: {
+    gMapAddress:(state) => state.addresses.map(x => ({
+      ...x,
+      id: x._id,
+      position: {
+        lat: x.lat,
+        lng: x.lng
+      }
+    }))
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="wrap__body">
-    <!-- <WelcomeScreen></WelcomeScreen> -->
     <main class="main">
+      <LayoutMapLeftMenu />
       <slot />
     </main>
   </div>
@@ -17,3 +17,9 @@ useHead({
   ],
 });
 </script>
+
+<style>
+.main {
+  display: flex;
+}
+</style>

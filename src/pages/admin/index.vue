@@ -56,14 +56,7 @@ const mapStore = useMapStore()
 const map = ref(null)
 
 await mapStore.getAddressesList()
-const addresses = mapStore.addresses.map(x => ({
-  ...x,
-  id: x._id,
-  position: {
-    lat: x.lat,
-    lng: x.lng
-  }
-}))
+const addresses = computed(() => mapStore.gMapAddress)
 
 const tableField = {
   streetLine1: 'địa chỉ',

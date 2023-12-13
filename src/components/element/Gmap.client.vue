@@ -3,18 +3,18 @@
     :center="mapCenter"
     :zoom="18"
     map-type-id="terrain"
-    ref="map"
+    ref="myMapRef"
     :style="mapStyles"
   >
     <GMapCluster v-if="markers.length" :zoomOnClick="true">
       <GMapMarker
         :key="index"
         v-for="(m, index) in markers"
-        :position="m.position ? m.position : { lat: m.lat, lng: m.lng }"
+        :position="m.position"
         :clickable="true"
         :draggable="false"
         :icon= '{
-          url: "/icons/icon-qc.svg",
+          url: getMarkerIcon(m),
           scaledSize: {width: 30, height: 30},
           labelOrigin: {x: 16, y: -10}
         }'
@@ -25,12 +25,12 @@
           @closeclick="onOpenMarker(null)"
           :opened="openMarker === m.id"
         >
-          <div class="">
-            <h3>{{ m.advertisingType }}</h3>
-            <p>{{ m.areaType }}</p>
-            <p>{{ m.positionType }}</p>
-            <p>{{ m.address }}</p>
-            <h4>ĐÃ QUY HOẠCH</h4>
+          <div v-if="!markers.ads" class="marker_info">
+            <h3>{{ m.streetLine1 }}</h3>
+            <p>{{ m.ward }}</p>
+            <p>{{ m.district }}</p>
+            <p>{{ m.city }}</p>
+            <h4>{{ m.isPlanned ? 'Đã' : 'Chưa' }} quy hoạch</h4>
           </div>
         </GMapInfoWindow>
 
@@ -41,6 +41,7 @@
 
 <script>
 import { defaultLocation } from '~/constant/locations';
+import { getMarkerIcon } from '~/utils/map'
 export default {
   props: {
     mapStyles: {
@@ -62,9 +63,52 @@ export default {
   data() {
     return {
       openMarker: null,
-      customCenter: {}
+      customCenter: {},
     };
   },
+  setup(props, { emit }) {
+    const myMapRef = ref();
+    const isLoading = ref(true)
+
+    const getLocationFromClick = (map) => {
+      window.google.maps.event.addListener(map, 'click', function( event ){
+        console.log('event', event)
+        // alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
+        setTimeout(() => {
+          const infoWindow = document.querySelector('.poi-info-window')
+          const data = {
+            position: {
+              lat: event.latLng.lat(),
+              lng: event.latLng.lng()
+            },
+            title: infoWindow?.querySelector('.title')?.innerText,
+            full_address: infoWindow?.querySelector('.address')?.innerText.replaceAll('\n', ', '),
+            streetLine1: infoWindow?.querySelector('[jsinstance="0"]')?.innerText,
+            ward: infoWindow?.querySelector('[jsinstance="1"]')?.innerText,
+            district: infoWindow?.querySelector('[jsinstance="2"]')?.innerText,
+            city: infoWindow?.querySelector('[jsinstance="*3"]')?.innerText,
+          }
+          emit('getPlace', { value: data })
+          // console.log(infoWindow, data)
+        }, 1000)
+      });
+    }
+
+    watch(myMapRef, googleMap => {
+      if (googleMap) {
+        googleMap.$mapPromise.then(map=> {
+          getLocationFromClick(map)
+          isLoading.value = false
+        })
+      }
+    });
+
+    return {
+      myMapRef,
+      isLoading
+    }
+  },
+
   computed: {
     mapCenter() {
       if(this.customCenter && this.customCenter.lat && this.customCenter.lng) return this.customCenter
@@ -72,10 +116,8 @@ export default {
       return defaultLocation.position
     }
   },
-  mounted() {
-
-  },
   methods: {
+    getMarkerIcon,
     onOpenMarker(id) {
       this.openMarker = id
     },
@@ -86,17 +128,27 @@ export default {
     onCenterMap(location = {}) {
       if (location && location.lat) this.customCenter.lat = location.lat;
       if (location && location.lng) this.customCenter.lng = location.lng;
-    }
+    },
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 .cluster img {
   max-width: 100%;
   max-height: 100%;
 }
 .cluster span{
   color: #fff;
+}
+.marker_info {
+  max-width: 300px;
+  > * {
+    font-size: .8rem;
+    margin: .5rem;
+  }
+  h3 {
+    font-size: .9rem;
+  }
 }
 </style>

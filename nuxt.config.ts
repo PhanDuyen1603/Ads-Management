@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@vueform/nuxt',
     '@pinia/nuxt',
     'nuxt-mongoose',
+    '@vueuse/nuxt',
   ],
   mongoose: {
     uri: process.env.MONGODB_URI,

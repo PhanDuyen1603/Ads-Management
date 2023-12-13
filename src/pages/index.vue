@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <ThemeMapSection />
-  </div>
+  <ThemeMapSection />
 </template>
 
 <script setup>

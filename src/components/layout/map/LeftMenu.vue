@@ -1,13 +1,17 @@
 <template>
   <div class="map_right_menu">
     <ul class="menu_items">
-      <li class="menu_item" @click="navigate('address')">
+      <li class="menu_item" @click="navigate({ query: { entry: 'address' }})">
         <span><IconsGeoAlt style="height: 25px; width: 25px;"/></span>
         <span>dia diem</span>
       </li>
-      <li class="menu_item" @click="navigate('ads')">
+      <li class="menu_item" @click="navigate({ query: { entry: 'ads' }})">
         <span><IconsAdvertise style="height: 25px; width: 25px;"/></span>
         <span>quang cao</span>
+      </li>
+      <li class="menu_item" @click="navigate({ modal: loginModal })">
+        <span><IconsProfileCircle style="height: 25px; width: 25px;"/></span>
+        <span>Hồ sơ</span>
       </li>
     </ul>
     <div :class="['map_tab_content', { active: showTabContet }]">
@@ -37,19 +41,39 @@
 <script setup>
 import { resolveComponent } from 'vue';
 import { useDebounceFn } from '@vueuse/core'
+const { $modal } = useNuxtApp()
 const $router = useRouter()
 const showTabContet = ref(false)
 
-const listComponents = {
-  default: 'LayoutMapListAds'
+const loginModal = {
+  component: 'LayoutLogin',
+  wrapperProps: {
+    styles: {
+      background: 'unset',
+      maxWidth: '700px',
+      width: '100%'
+    }
+  }
 }
 
-const navigate = (x) => {
-  $router.push({
-    path: '/',
-    query: { entry: x },
-  });
-  showTabContet.value = true
+const listComponents = {
+  default: 'LayoutMapListAds',
+  profile: 'LayoutProfile'
+}
+
+const navigate = async ({ query = {}, modal = {} }) => {
+  showTabContet.value = false
+  if(modal && modal.component) {
+    await $modal.show({
+      ...modal
+    })
+  } else {
+    $router.push({
+      path: '/',
+      query,
+    });
+    showTabContet.value = true
+  }
 }
 
 // search

@@ -1,19 +1,25 @@
 <template>
 
-  <div class="container" id="container">
+  <div class="container" id="sigin_form">
 
     <div class="form-container sign-in-container">
       <form action="#">
         <h1>Sign in</h1>
         <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social">
+            <img src="/icons/meta.svg" alt="meta">
+          </a>
+          <div @click="handleLogin({provider: 'google'})" class="social">
+            <img src="/icons/google.svg" alt="google">
+          </div>
+          <a href="#" class="social">
+            <img src="/icons/linkedin.svg" alt="linkedin">
+          </a>
         </div>
         <span>or use your account</span>
         <input type="email" placeholder="Email"/>
         <input type="password" placeholder="Password"/>
-        <a href="#">Forgot your password?</a>
+        <a href="#" class="link">Forgot your password?</a>
         <button>Sign In</button>
       </form>
     </div>
@@ -29,90 +35,67 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
-export default {
-  data() {
-    return {}
-  },
+const handleLogin = (data) => {
+  const { provider } = data
 }
 </script>
-<style>
 
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
-body {
+<style lang="scss">
+#sigin_form {
   font-family: 'Montserrat', sans-serif;
+  h1 {
+    font-weight: bold;
+    margin: 0;
+  }
 }
 
-h1 {
-  font-weight: bold;
-  margin: 0;
+.sign-in-container {
+  .link {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+  }
+  button {
+    border-radius: 20px;
+    border: 1px solid #FF4B2B;
+    background-color: #FF4B2B;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+
+  button:focus {
+    outline: none;
+  }
+  form {
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+  }
+
+  input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+  }
 }
-
-h2 {
-  text-align: center;
-}
-
-p {
-  font-size: 14px;
-  font-weight: 100;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  margin: 20px 0 30px;
-}
-
-span {
-  font-size: 12px;
-}
-
-a {
-  color: #333;
-  font-size: 14px;
-  text-decoration: none;
-  margin: 15px 0;
-}
-
-button {
-  border-radius: 20px;
-  border: 1px solid #FF4B2B;
-  background-color: #FF4B2B;
-  color: #FFFFFF;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 12px 45px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-button:active {
-  transform: scale(0.95);
-}
-
-button:focus {
-  outline: none;
-}
-
-
-form {
-  background-color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0 50px;
-  height: 100%;
-  text-align: center;
-}
-
-input {
-  background-color: #eee;
-  border: none;
-  padding: 12px 15px;
-  margin: 8px 0;
-  width: 100%;
-}
-
 .container {
   background-color: #fff;
   border-radius: 10px;
@@ -145,51 +128,58 @@ input {
   height: 100%;
   overflow: hidden;
   z-index: 100;
-}
-
-.overlay {
-  background: #FF416C;
-  background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-  background: linear-gradient(to right, #FF4B2B, #FF416C);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 0 0;
-  color: #FFFFFF;
-  position: relative;
-  left: -100%;
-  height: 100%;
-  width: 200%;
-}
-
-.overlay-panel {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  top: 0;
-  height: 100%;
-  width: 50%;
-}
-
-.overlay-right {
-  right: 0;
+  .overlay {
+    background: #FF416C;
+    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+    background: linear-gradient(to right, #FF4B2B, #FF416C);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #FFFFFF;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+  }
+  .overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+  }
+  .overlay-right {
+    right: 0;
+    p {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      margin: 20px 0 30px;
+    }
+  }
 }
 
 .social-container {
   margin: 20px 0;
-}
-
-.social-container a {
-  border: 1px solid #DDDDDD;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 5px;
-  height: 40px;
-  width: 40px;
+  span {
+    font-size: 12px;
+  }
+  .social {
+    border: 1px solid #DDDDDD;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    height: 40px;
+    width: 40px;
+    img {
+      width: 35px;
+    }
+  }
 }
 
 </style>

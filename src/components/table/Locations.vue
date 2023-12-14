@@ -37,9 +37,7 @@
 </template>
 
 <script setup>
-import { onFocusMap } from '~/utils/map'
-
-const { $modal } = useNuxtApp()
+const { $modal, $gMap } = useNuxtApp()
 const props = defineProps({
   data: {
     type: Array
@@ -58,7 +56,7 @@ const tableField = {
 }
 
 const focusMap = () => {
-  onFocusMap({ lat: item.lat, lng: item.lng }, $map)
+  $gMap.changeMapCenter({ lat: item.lat, lng: item.lng })
 }
 
 const openReportModal = async (item) => {

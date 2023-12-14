@@ -38,8 +38,6 @@
 </template>
 
 <script setup>
-import { onFocusMap } from '~/utils/map'
-import getName from '~/utils/string/getName'
 import { tableField } from '~/utils/dataMap/user'
 
 const { $modal } = useNuxtApp()
@@ -52,10 +50,6 @@ const props = defineProps({
     default:() => {}
   }
 })
-
-const focusMap = () => {
-  onFocusMap({ lat: item.lat, lng: item.lng }, $map)
-}
 
 const openDetailModal = async (item) => {
   await $modal.show({

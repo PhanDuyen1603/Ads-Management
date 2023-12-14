@@ -22,8 +22,8 @@
       >
         <GMapInfoWindow
           :closeclick="true"
-          @closeclick="onOpenMarker(null)"
-          :opened="openMarker === m.id"
+          @closeclick="focusMarker(null)"
+          :opened="targetMarker === m.id"
         >
           <div v-if="!markers.ads" class="marker_info">
             <h3>{{ m.streetLine1 }}</h3>
@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import { defaultLocation } from '~/constant/locations';
 import { getMarkerIcon } from '~/utils/map'
+import useGmapStore from '~/stores/gmap.store'
 export default {
   props: {
     mapStyles: {
@@ -51,24 +51,23 @@ export default {
         height: '40rem',
       })
     },
-    markers: {
-      type: Array,
-      default: () => []
-    },
     center: {
       type: Object,
       default: null
     }
   },
-  data() {
-    return {
-      openMarker: null,
-      customCenter: {},
-    };
-  },
   setup(props, { emit }) {
+    const gmapStore = useGmapStore()
     const myMapRef = ref();
     const isLoading = ref(true)
+    const targetMarker = ref(null)
+
+    const markers = computed(() => gmapStore.markers)
+    const initCenter = computed(() => gmapStore.center)
+    const mapCenter = computed(() => {
+      if(props.center && props.center.lat && props.center.lng) return props.center
+      return initCenter.value
+    })
 
     const getLocationFromClick = (map) => {
       window.google.maps.event.addListener(map, 'click', function( event ){
@@ -94,6 +93,15 @@ export default {
       });
     }
 
+    const focusMarker = (id) => {
+      targetMarker.value = id
+    }
+
+    const onFocusMarker = (location) => {
+      focusMarker(location.id)
+      emit('openDetail', { value: location })
+    }
+
     watch(myMapRef, googleMap => {
       if (googleMap) {
         googleMap.$mapPromise.then(map=> {
@@ -103,33 +111,21 @@ export default {
       }
     });
 
+    onBeforeMount(() => {
+      gmapStore.initCenter = null
+    })
+
     return {
       myMapRef,
-      isLoading
+      isLoading,
+      markers,
+      mapCenter,
+      targetMarker,
+      focusMarker,
+      onFocusMarker,
+      getMarkerIcon,
     }
   },
-
-  computed: {
-    mapCenter() {
-      if(this.customCenter && this.customCenter.lat && this.customCenter.lng) return this.customCenter
-      if(this.center && this.center.lat && this.center.lng) return this.center
-      return defaultLocation.position
-    }
-  },
-  methods: {
-    getMarkerIcon,
-    onOpenMarker(id) {
-      this.openMarker = id
-    },
-    onFocusMarker(location) {
-      this.onOpenMarker(location.id)
-      this.$emit('openDetail', { value: location })
-    },
-    onCenterMap(location = {}) {
-      if (location && location.lat) this.customCenter.lat = location.lat;
-      if (location && location.lng) this.customCenter.lng = location.lng;
-    },
-  }
 };
 </script>
 

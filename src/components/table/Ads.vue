@@ -28,7 +28,6 @@
 </template>
 
 <script setup>
-import { onFocusMap } from '~/utils/map'
 import getName from '~/utils/string/getName'
 import { tableField } from '~/utils/dataMap/ads'
 

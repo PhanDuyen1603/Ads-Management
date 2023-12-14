@@ -1,9 +1,5 @@
 <template>
   <div class="map_wrapper" style="--info-width: 300px; ">
-    <div class="map_infos">
-      <!-- <ElementAdInformation :info="info" /> -->
-      <!-- <ListMapAddresses :data="addresses" @focusMap="focusMap" /> -->
-    </div>
     <div v-show="isMapLoading" :style="{ ...mapStyles, background: '#9ca3af' }"></div>
     <ElementGmap
       v-show="!isMapLoading"
@@ -18,7 +14,6 @@
 
 <script setup>
 import useMapStore from '~/stores/map.store'
-import { onFocusMap } from '~/utils/map'
 
 const mapStore = useMapStore()
 
@@ -28,12 +23,7 @@ const isMapLoading = computed(() => Gmap.value?.isLoading)
 
 const addresses = computed(() => mapStore.gMapAddress)
 
-const ads = mapStore.adLocations
-const info = ref(null)
 const showDetail = ref(true)
-const focusMap = ({ value }) => {
-  onFocusMap({ lat: value.lat, lng: value.lng }, Gmap.value)
-}
 const showAdDetail = (data) => {
   showDetail.value = true
 }

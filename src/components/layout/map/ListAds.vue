@@ -5,7 +5,7 @@
       :key="index"
       class="card_horizontal_wrap"
     >
-      <div class="card_horizontal">
+      <div class="card_horizontal" @click="focusMap(item)">
         <div class="card_image">
           <img :src="faker.image.urlPicsumPhotos()" alt="..">
         </div>
@@ -33,12 +33,15 @@ const props = defineProps({
     default:() => []
   }
 })
-
+const { $gMap } = useNuxtApp()
 const mapStore = useMapStore()
 
 await mapStore.getAddressesList()
-
 const addresses = computed(() => mapStore.gMapAddress)
+
+const focusMap = (item) => {
+  $gMap.changeMapCenter(item.position)
+}
 
 </script>
 <style lang="scss">

@@ -1,7 +1,7 @@
 <template>
   <GMapMap
     :center="mapCenter"
-    :zoom="18"
+    :zoom="16.5"
     map-type-id="terrain"
     ref="myMapRef"
     :style="mapStyles"
@@ -106,6 +106,8 @@ export default {
       if (googleMap) {
         googleMap.$mapPromise.then(map=> {
           getLocationFromClick(map)
+          //
+          //
           isLoading.value = false
         })
       }

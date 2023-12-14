@@ -1,6 +1,6 @@
 <template>
   <teleport to='body' >
-    <div v-for="item in $store.list" :key="item.id">
+    <div v-for="item in lisModal" :key="item.id">
       <div class="modal_overlay" @click="close(item, $event)" />
       <component
         :is="getComponent(item.wrapper || 'ModalWrapperDefault')"
@@ -25,6 +25,7 @@ import { resolveComponent } from 'vue';
 import useModalStore from '~/stores/modal.store'
 
 const $store = useModalStore()
+const lisModal = computed(() => $store.list)
 const getComponent = (name) => {
   if(typeof name === 'string' && name[0].toUpperCase === name[0]) {
     return resolveComponent(name)
@@ -49,26 +50,9 @@ const close = (item, value) => {
 </script>
 
 <style scoped>
-.modal__wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 101;
-  min-width: 500px;
-  max-width: calc(100vw - 2rem);
-  background: #fff;
-  border-radius: 8px;
-  padding: 24px;
-  vertical-align: middle;
-  display: inline-block;
-  text-align: initial;
-  overflow-y: scroll;
-  max-height: calc(100vh - 10%);
-}
 .modal_overlay {
   position: fixed;
-  z-index: 100;
+  z-index: 101;
   top: 0;
   left: 0;
   width: 100%;

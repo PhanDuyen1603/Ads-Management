@@ -28,26 +28,29 @@
         </div>
       </div>
       <div class="list_addresses">
-        <LayoutMapListAds />
+        <component :is="resolveComponent(listComponents.default)" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { resolveComponent } from 'vue';
 import { useDebounceFn } from '@vueuse/core'
 const $router = useRouter()
 const showTabContet = ref(false)
 
+const listComponents = {
+  default: 'LayoutMapListAds'
+}
+
 const navigate = (x) => {
   $router.push({
     path: '/',
-    query: { list: x },
+    query: { entry: x },
   });
   showTabContet.value = true
 }
-
-// const message = inject('tesstMap')
 
 // search
 const searchStr = ref('')
@@ -97,7 +100,7 @@ const handleSearch = useDebounceFn((event) => {
     position: absolute;
     top: 0;
     left: 80px;
-    z-index: 100000;
+    z-index: 100;
 
     width: 0;
     height: 100%;
@@ -161,10 +164,6 @@ const handleSearch = useDebounceFn((event) => {
         right: 48px;
       }
     }
-  }
-  .list_addresses {
-    max-height: calc(100% - 80px);
-    overflow-y: scroll;
   }
 }
 </style>

@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { tableField } from '~/utils/dataMap/user'
+import { tableField } from '~/constant/user'
 
 const { $modal } = useNuxtApp()
 const props = defineProps({

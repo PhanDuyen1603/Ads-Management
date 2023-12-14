@@ -29,7 +29,7 @@
 
 <script setup>
 import getName from '~/utils/string/getName'
-import { tableField } from '~/utils/dataMap/ads'
+import { tableField } from '~/constant/ads'
 
 const { $modal } = useNuxtApp()
 const props = defineProps({

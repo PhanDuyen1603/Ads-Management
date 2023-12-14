@@ -1,6 +1,6 @@
 import { ref, reactive, computed } from 'vue';
 import { defineStore, storeToRefs } from 'pinia'
-import { defaultLocation } from '~/constant/locations';
+import { defaultLocation } from '~/constant/location';
 import useMapStore from '~/stores/map.store'
 
 const useGmapStore = defineStore('api-store', () => {

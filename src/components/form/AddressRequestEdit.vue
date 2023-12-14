@@ -76,8 +76,7 @@
 </template>
 
 <script setup>
-import { mapPositionType, mapAdvertisingType } from '~/utils/generateLocation'
-import { districts } from '~/utils/dataMap/location'
+import { districts } from '~/constant/location'
 
 const props = defineProps({
   defaultFormData: {

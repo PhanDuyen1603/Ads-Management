@@ -1,9 +1,8 @@
 import { generateLocations } from '~/utils/generateLocation'
 import { generateReportList } from '~/utils/generateAdReports'
-import { defaultLocation } from '~/constant/locations'
-import random_coordinates_district_1 from '~/constant/random_coordinates_district_1.json'
+import { defaultLocation } from '~/constant/location'
+import random_coordinates_district_1 from '~/constant/location/random_coordinates_district_1.json'
 import { defineStore } from 'pinia'
-import { addressesApi } from '~/services/api'
 
 const getIds = (arr) => arr.map(x => x.id)
 

@@ -73,7 +73,7 @@
 
 <script setup>
 import useUsersStore from '~/stores/users.store'
-import { districts } from '~/utils/dataMap/location'
+import { districts } from '~/constant/location'
 
 const props = defineProps({
   defaultFormData: {

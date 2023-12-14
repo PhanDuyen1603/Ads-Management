@@ -1,27 +1,23 @@
 <template>
-
   <div class="container" id="sigin_form">
-
     <div class="form-container sign-in-container">
-      <form action="#">
-        <h1>Sign in</h1>
-        <div class="social-container">
-          <a href="#" class="social">
-            <img src="/icons/meta.svg" alt="meta">
-          </a>
-          <div @click="handleLogin({provider: 'google'})" class="social">
-            <img src="/icons/google.svg" alt="google">
-          </div>
-          <a href="#" class="social">
-            <img src="/icons/linkedin.svg" alt="linkedin">
-          </a>
+      <h1>Sign in</h1>
+      <div class="social-container">
+        <a href="#" class="social">
+          <img src="/icons/meta.svg" alt="meta">
+        </a>
+        <div @click="handleLogin({provider: 'google'})" class="social">
+          <img src="/icons/google.svg" alt="google">
         </div>
-        <span>or use your account</span>
-        <input type="email" placeholder="Email"/>
-        <input type="password" placeholder="Password"/>
-        <a href="#" class="link">Forgot your password?</a>
-        <button>Sign In</button>
-      </form>
+        <a href="#" class="social">
+          <img src="/icons/linkedin.svg" alt="linkedin">
+        </a>
+      </div>
+      <span>or use your account</span>
+      <input type="email" placeholder="Email" v-model="form.email"/>
+      <input type="password" placeholder="Password" v-model="form.password"/>
+      <a href="#" class="link">Forgot your password?</a>
+      <button @click="handleLogin()">Sign In</button>
     </div>
     <div class="overlay-container">
       <div class="overlay">
@@ -36,9 +32,29 @@
 </template>
 
 <script setup>
-
-const handleLogin = (data) => {
-  const { provider } = data
+import { exampleData } from '~/constant/user'
+import useUsersStore from '~/stores/users.store'
+const $router = useRouter()
+const usersStore = useUsersStore()
+const emits = defineEmits(['close'])
+const form = reactive({
+  email: '',
+  password: ''
+})
+const handleLogin = (data = {}) => {
+  const { provider = null } = data
+  if(provider) {}
+  // TODO: remove late
+  const existUser = exampleData.find(x => x.email === form.email)
+  console.log(existUser)
+  if(existUser && existUser.email) {
+    usersStore.setProfile(existUser[0])
+    usersStore.isLoggedIn = true
+    $router.push({ name: 'admin' })
+    emits('close')
+  } else {
+    alert('user or password not correct')
+  }
 }
 </script>
 
@@ -52,6 +68,14 @@ const handleLogin = (data) => {
 }
 
 .sign-in-container {
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  text-align: center;
   .link {
     color: #333;
     font-size: 14px;
@@ -78,14 +102,7 @@ const handleLogin = (data) => {
     outline: none;
   }
   form {
-    background-color: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 50px;
-    height: 100%;
-    text-align: center;
+
   }
 
   input {

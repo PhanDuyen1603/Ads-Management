@@ -5,7 +5,8 @@ export default defineStore({
   state:() => ({
     list: [],
     userRoles: [],
-    user: {}
+    profile: {},
+    isLoggedIn: false,
   }),
   actions: {
     async getListUsers() {
@@ -31,6 +32,22 @@ export default defineStore({
           error
         })
       }
+    },
+    setProfile(profile) {
+      if (profile) this.profile = profile;
+    },
+    /**
+     * @desc Sets whether user is logged in
+     */
+    setIsLoggedIn(value) {
+      this.isLoggedIn = value;
+    },
+
+    /**
+     * @desc Clears profile
+     */
+    clearProfile() {
+      this.profile = null;
     }
   },
   getters: {
@@ -40,5 +57,6 @@ export default defineStore({
         value: x._id
       })) : []
     },
+    userRole:(state) => state.profile?.role
   }
 })

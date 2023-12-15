@@ -5,58 +5,105 @@
       :form-data="form$ => form$.requestData" v-model="form"
       sync
     >
-      <TextElement
-        name="title"
-        :submit="false"
-        label="Tiêu đề quảng cáo"
-        placeholder="Nhập tên bảng quảng cáo"
-        :messages="{ required: 'Vui lòng nhập vào biểu mẫu' }"
-      />
-      <TextareaElement
-        name="content"
-        rules="required"
-        label="Thông tin bảng quảng cáo"
-        placeholder="Nhập thông tin bảng quảng cáo"
-      />
+    <template #empty>
+      <!--  -->
+      <FormSteps>
+        <FormStep
+          name="desc"
+          :elements="['title', 'content']"
+        >Thông tin</FormStep>
+        <FormStep
+          name="personal"
+          :elements="['addressId', 'map']"
+        >Địa điểm đặt</FormStep>
+        <FormStep
+          name="extra"
+          :elements="['adsCategoryId', 'billboardTypeId', 'height', 'width', 'quantity']"
+        >Thông tin thêm</FormStep>
+      </FormSteps>
+      <!--  -->
 
-      <SelectElement
-        label="Địa chỉ đặt quảng cáo"
-        name="addressId"
-        :native="false"
-        :items="addresses"
-      />
-      <SelectElement
-        label="Hình thức quảng cáo"
-        name="adsCategoryId"
-        :native="false"
-        :items="adsCategories"
-      />
-      <SelectElement
-        label="Loại bảng quảng cáo"
-        name="billboardTypeId"
-        :native="false"
-        :items="billboardTypes"
-      />
+      <FormElements>
+        <!-- step 1 -->
+        <TextElement
+          name="title"
+          :submit="false"
+          rules="required"
+          label="Tiêu đề quảng cáo"
+          placeholder="Nhập tên bảng quảng cáo"
+          :messages="{ required: 'Vui lòng nhập vào biểu mẫu' }"
+        />
+        <TextareaElement
+          name="content"
+          rules="required"
+          label="Thông tin bảng quảng cáo"
+          placeholder="Nhập thông tin bảng quảng cáo"
+        />
 
-      <TextElement
-        name="height"
-        label="Chiều dài"
-        type="number"
-        :columns="{ container: 4 }"
-      />
-      <TextElement
-        name="width"
-        label="Chiều rộng"
-        :columns="{ container: 4 }"
-        type="number"
-      />
-      <TextElement
-        name="quantity"
-        label="Số lượng"
-        :columns="{ container: 4 }"
-        type="number"
-        placeholder="Số lượng"
-      />
+        <!-- step 2 -->
+        <SelectElement
+          label="Địa chỉ đặt quảng cáo"
+          name="addressId"
+          :native="false"
+          :items="addresses"
+          @change="(e) => changeLocation(e, 'addressId')"
+        />
+        <StaticElement name="map">
+          <ElementGmap
+            :map-styles="{
+              width: '100%',
+              height: '300px'
+            }"
+            :center="mapCenter"
+          />
+        </StaticElement>
+
+        <!-- step 3 -->
+        <SelectElement
+          label="Hình thức quảng cáo"
+          name="adsCategoryId"
+          :native="false"
+          :items="adsCategories"
+        />
+        <SelectElement
+          label="Loại bảng quảng cáo"
+          name="billboardTypeId"
+          :native="false"
+          :items="billboardTypes"
+        />
+        <TextElement
+          name="height"
+          label="Chiều dài"
+          type="number"
+          :columns="{ container: 4 }"
+        />
+        <TextElement
+          name="width"
+          label="Chiều rộng"
+          :columns="{ container: 4 }"
+          type="number"
+        />
+        <TextElement
+          name="quantity"
+          label="Số lượng"
+          :columns="{ container: 4 }"
+          type="number"
+          placeholder="Số lượng"
+        />
+      </FormElements>
+
+      <FormStepsControls :labels="false">
+        <template #next>
+          bước tiếp theo
+        </template>
+        <template #previous>
+          quay lại
+        </template>
+        <template #finish>
+          gửi
+        </template>
+      </FormStepsControls>
+    </template>
 
       <!-- <MultifileElement
         :drop="true"
@@ -68,9 +115,6 @@
         @remove="handleRemoveImage"
       /> -->
 
-      <ButtonElement name="submit" add-class="mt-2" submits>
-        {{ submitType === 'create' ? 'Tạo mới' : 'Cập nhật' }}
-      </ButtonElement>
     </Vueform>
   </ClientOnly>
 </template>
@@ -106,6 +150,7 @@ const addresses = computed(() => mapStore.addresses.map(x => ({
   value: x._id,
   label: x.streetLine1
 })))
+const mapCenter = ref(null)
 
 const handleSubmit = async (form, $el) => {
   try {
@@ -122,6 +167,16 @@ const handleSubmit = async (form, $el) => {
     emits('close')
   } catch (error) {
     console.log({error})
+  }
+}
+const changeLocation = (e, fieldname) => {
+  const target = mapStore.addresses.find(x => x._id === e)
+  if(target && target._id) {
+    form[fieldname] = e
+    mapCenter.value = {
+      lat: target.lat,
+      lng: target.lng
+    }
   }
 }
 </script>

@@ -1,15 +1,15 @@
 <template>
   <div class="row">
-    <div>
-      <button @click="addAdsModal()">
-        add Ads
-      </button>
-    </div>
-
     <div class="col-lg-12">
       <div class="card">
+        <div class="card-header">
+          <button class="btn btn-outline-danger btn-add" @click="addAdsModal()">
+            <IconsPlusCircle />
+            <span>Thêm {{ isShowAdsList ? 'quảng cáo' : 'điểm đặt  quảng cáo' }}</span>
+          </button>
+        </div>
         <div class="card-body">
-          <ul class="nav nav-pills nav-fill mb-2">
+          <ul class="nav nav-pills nav-fill mb-2 nav-blue">
             <li class="nav-item" @click="showAddressList()">
               <div :class="`nav-link ${ !isShowAdsList ? 'active' : ''}`">
                 Điểm đặt quảng cáo
@@ -26,12 +26,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="col-lg-4">
-      <ElementGmap class="map" :map-styles="{
-        width: '100%',
-        height: '30rem'
-      }" />
-    </div> -->
   </div>
 </template>
 
@@ -64,7 +58,7 @@ const showAdsList = async () => {
 
 const addAdsModal = async (item) => {
   const result = await $modal.show({
-    component: 'FormAdCreate',
+    component: isShowAdsList.value ? 'FormAdCreate' : 'FormLocationCreate',
     props: {
       info: item
     },
@@ -77,11 +71,24 @@ const addAdsModal = async (item) => {
   })
 }
 </script>
-<style>
+<style lang="scss">
 .detail_icon {
   cursor: pointer;
 }
 .nav-item {
   cursor: pointer;
+}
+.nav-blue {
+  .nav-link.active, .show>.nav-link {
+    background-color: #06d79c;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+.btn-add {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 </style>

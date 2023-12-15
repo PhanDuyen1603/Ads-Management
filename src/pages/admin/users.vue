@@ -1,13 +1,13 @@
 <template>
   <div class="row">
-    <div>
-      <button @click="addUserModal()">
-        add user
-      </button>
-    </div>
-
     <div class="col-lg-12">
       <div class="card">
+        <div class="card-header">
+          <button class="btn btn-outline-danger btn-add" @click="addUserModal()">
+            <IconsPlusCircle />
+            <span>Thêm user</span>
+          </button>
+        </div>
         <div class="card-body">
           <TableUsers :data="dataList" :key="`user_${new Date()}`" />
         </div>

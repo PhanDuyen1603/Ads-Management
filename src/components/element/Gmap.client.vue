@@ -6,7 +6,7 @@
     ref="myMapRef"
     :style="mapStyles"
   >
-    <GMapCluster v-if="markers.length" :zoomOnClick="true">
+    <GMapCluster v-if="markers.length && showMarkers" :zoomOnClick="true">
       <GMapMarker
         :key="index"
         v-for="(m, index) in markers"
@@ -54,6 +54,10 @@ export default {
     center: {
       type: Object,
       default: null
+    },
+    showMarkers: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props, { emit }) {
@@ -71,7 +75,7 @@ export default {
 
     const getLocationFromClick = (map) => {
       window.google.maps.event.addListener(map, 'click', function( event ){
-        console.log('event', event)
+        // console.log('event', event)
         // alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
         setTimeout(() => {
           const infoWindow = document.querySelector('.poi-info-window')

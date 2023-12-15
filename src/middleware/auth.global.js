@@ -7,14 +7,14 @@ export default defineNuxtRouteMiddleware((to) => {
   let redirectUrl = '/';
 
   if(!isLoggedIn && to.name.startsWith('admin')) {
+    const profileRole = profile.role
+    const accepRoles = adminMenu.filter(x => x.name === to.name)?.[0].roles.includes(profileRole)
+
+    if(!accepRoles) {
+      redirectUrl = '/admin'
+      return navigateTo(redirectUrl)
+    }
     return navigateTo(redirectUrl)
   }
 
-  const profileRole = profile.role
-  const accepRoles = adminMenu.filter(x => x.name === to.name)?.[0].roles.includes(profileRole)
-
-  if(!accepRoles) {
-    redirectUrl = '/admin'
-    return navigateTo(redirectUrl)
-  }
 })

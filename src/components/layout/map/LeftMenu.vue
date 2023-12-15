@@ -26,13 +26,16 @@
           <div class="icon search_icon">
             <IconsSearch fill="#70757a" />
           </div>
-          <div class="icon close_icon" @click="showTabContet = false">
+          <div class="icon close_icon" @click="hideTab">
             <IconsCloseCircle fill="#70757a" />
           </div>
         </div>
       </div>
       <div class="list_addresses">
-        <component :is="resolveComponent(listComponents.default)" />
+        <component
+          :is="resolveComponent(contentComponent)"
+          :data="contentData"
+        />
       </div>
     </div>
   </div>
@@ -41,10 +44,23 @@
 <script setup>
 import { resolveComponent } from 'vue';
 import { useDebounceFn } from '@vueuse/core'
+import useMapStore from '~/stores/map.store'
+
+const mapStore = useMapStore()
 const { $modal } = useNuxtApp()
 const $router = useRouter()
+const $route = useRoute()
 const showTabContet = ref(false)
 
+const hideTab = () => {
+  showTabContet.value = false
+  $router.push({
+      path: '/',
+      query: {},
+    });
+}
+
+// menu and navigate
 const loginModal = {
   component: 'LayoutLogin',
   wrapperProps: {
@@ -54,11 +70,6 @@ const loginModal = {
       width: '100%'
     }
   }
-}
-
-const listComponents = {
-  default: 'LayoutMapListAds',
-  profile: 'LayoutProfile'
 }
 
 const navigate = async ({ query = {}, modal = {} }) => {
@@ -76,13 +87,36 @@ const navigate = async ({ query = {}, modal = {} }) => {
   }
 }
 
+//  menu content
+const listComponents = {
+  default: 'LayoutMapListAds',
+  profile: 'LayoutMapProfile',
+  detail: 'LayoutMapDetail'
+}
+
+const contentComponent = ref(listComponents.default)
+
+// dynamic data for dynamic component
+const contentData = computed(() => {
+  if(contentComponent.value === listComponents.detail) return mapStore.target
+  return []
+})
+
+// watch query string
+watch(() => $route.query, (val) => {
+  if(val && val.entry) return contentComponent.value = listComponents.default;
+  if(val && val.detail) {
+    contentComponent.value = listComponents.detail
+    showTabContet.value = true
+    return
+  }
+});
+
 // search
 const searchStr = ref('')
 
 const handleSearch = useDebounceFn((event) => {
   // do something
-  console.log({event})
-
 }, 1000)
 
 </script>

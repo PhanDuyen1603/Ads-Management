@@ -16,6 +16,10 @@ export const addressSchema = defineMongooseModel({
     createdAt: { type: 'date' },
     // quy hoach
     isPlanned: { type: 'boolean', default: false },
+    ads: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ads'
+    }],
     // loai vi tri
     locationTypeId: {
       type: mongoose.Schema.Types.ObjectId,

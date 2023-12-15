@@ -12,6 +12,9 @@ export default defineStore({
     adLocations: [],
     adReports: [],
     addresses: [],
+
+    // target show on detail right menu
+    target: {},
   }),
   actions: {
     async getAddressesList() {

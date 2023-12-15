@@ -13,9 +13,11 @@
 </template>
 
 <script setup>
+import { changeToSlug } from '~/utils/string/slug'
 import useMapStore from '~/stores/map.store'
 
 const mapStore = useMapStore()
+const $router = useRouter()
 
 await mapStore.getAddressesList()
 const Gmap = ref(null)
@@ -23,9 +25,14 @@ const isMapLoading = computed(() => Gmap.value?.isLoading)
 
 const addresses = computed(() => mapStore.gMapAddress)
 
-const showDetail = ref(true)
-const showAdDetail = (data) => {
-  showDetail.value = true
+const showAdDetail = ({value}) => {
+  mapStore.target = value
+  $router.push({
+    path: '/',
+    query: {
+      detail: changeToSlug(value?.streetLine1 || '')
+    },
+  });
 }
 
 const mapStyles = computed(() => {

@@ -48,7 +48,7 @@ const handleLogin = (data = {}) => {
   const existUser = exampleData.find(x => x.email === form.email)
   console.log(existUser)
   if(existUser && existUser.email) {
-    usersStore.setProfile(existUser[0])
+    usersStore.setProfile(existUser)
     usersStore.isLoggedIn = true
     $router.push({ name: 'admin' })
     emits('close')

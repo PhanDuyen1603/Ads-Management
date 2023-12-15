@@ -5,11 +5,14 @@
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav">
         <ul id="sidebarnav">
-          <li v-for="(item, index) in menus" :key="index" :class="`${activeMenu === item.name ? 'active' : ''}`">
+          <li
+            v-for="(item, index) in adminMenu" :key="index"
+            :class="`${activeMenu === item.name ? 'active' : ''}`"
+          >
             <NuxtLink
               :to="{ name: item.name }"
               :class="`waves-effect waves-dark`"
-              aria-expanded="false"
+              v-if="roleMenuCondition(item?.roles || [], userRole)"
             >
               <i :class="item.icon"></i>
               <span class="hide-menu">{{ item.title }}</span>
@@ -28,48 +31,17 @@
 </aside></template>
 
 <script setup>
+import { adminMenu } from '~/constant/layout/admin/leftMenu'
+import { roleMenuCondition } from '~/utils/auth'
+import useUsersStore from '~/stores/users.store'
 const route = useRoute()
-const menus = [
-  {
-    title: 'Tổng quan',
-    name: 'admin',
-    icon: 'mdi mdi-earth',
-    rule: 'all'
-  },
-  {
-    title: 'Profile',
-    name: 'admin-profile',
-    icon: 'mdi mdi-account-check',
-    rule: 'all'
-  },
-  {
-    title: 'Danh sách quảng cáo/ điểm đặt quảng cáo',
-    name: 'admin-ad',
-    icon: 'mdi mdi-table',
-    rule: 'all'
-  },
-  {
-    title: 'Danh sách báo cáo',
-    name: 'admin-report',
-    icon: 'mdi mdi-table',
-    rule: 'all'
-  },
-  {
-    title: 'Danh sách cty cấp phép',
-    name: 'admin-companny',
-    icon: 'mdi mdi-table',
-    rule: 'all'
-  },
-  {
-    title: 'Danh sách người dùng',
-    name: 'admin-users',
-    icon: 'mdi mdi-table',
-    rule: 'all'
-  },
-]
+const userStore = useUsersStore()
+
 const activeMenu = ref(route.name)
+const userRole = computed(() => userStore.userRole)
+//
 watch(() => route.name, (newRouteName, oldRouteName) => {
-  const menu = menus.filter(x => x.name === newRouteName)
+  const menu = adminMenu.filter(x => x.name === newRouteName)
   if(menu.length) {
     activeMenu.value = menu[0].name
   }

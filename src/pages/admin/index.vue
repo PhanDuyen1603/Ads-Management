@@ -47,10 +47,10 @@
 
 <script setup>
 import useMapStore from '~/stores/map.store'
-import { onFocusMap } from '~/utils/map'
 definePageMeta({
   layout: 'admin'
 })
+const { $gMap } = useNuxtApp()
 const mapStore = useMapStore()
 
 const map = ref(null)
@@ -67,7 +67,7 @@ const tableField = {
 
 // map interaction
 const focusMap = (item) => {
-  onFocusMap({ lat: item.lat, lng: item.lng }, map.value)
+  $gMap.changeMapCenter({ lat: item.lat, lng: item.lng })
 }
 </script>
 

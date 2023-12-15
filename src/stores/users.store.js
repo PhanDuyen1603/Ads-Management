@@ -1,12 +1,15 @@
 import { defineStore } from "pinia";
+import { exampleData } from '~/constant/user'
 
 export default defineStore({
   id: 'users-store',
   state:() => ({
     list: [],
     userRoles: [],
-    profile: {},
-    isLoggedIn: false,
+    profile: exampleData[0],
+    isLoggedIn: true,
+    // profile: {},
+    // isLoggedIn: false,
   }),
   actions: {
     async getListUsers() {

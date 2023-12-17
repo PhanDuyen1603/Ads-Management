@@ -26,7 +26,7 @@ const isMapLoading = computed(() => Gmap.value?.isLoading)
 const addresses = computed(() => mapStore.gMapAddress)
 
 const showAdDetail = ({value}) => {
-  mapStore.target = value
+  mapStore.setDetailTarget(value)
   $router.push({
     path: '/',
     query: {

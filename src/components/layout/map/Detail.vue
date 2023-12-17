@@ -41,7 +41,7 @@
               <div class="info_1_head">
                 <strong>Thông tin quảng cáo</strong>
               </div>
-              <div v-if="!ads" class="info_1_body_empty">
+              <div v-if="!(ads && ads.length)" class="info_1_body_empty">
                 <p>Chua co du lieu</p>
                 <p>vui long chon ban do de xem</p>
               </div>
@@ -80,14 +80,13 @@
 <script setup>
 import { faker } from '@faker-js/faker';
 import getName from '~/utils/string/getName'
+import useMapStore from '~/stores/map.store'
+
 const { $modal } = useNuxtApp()
-const props = defineProps({
-  data: {
-    type: Object,
-    default:() => {}
-  }
-})
-const ads = ref(null)
+const mapStore = useMapStore()
+
+const data = computed(() => mapStore.target)
+const ads = computed(() => mapStore.targetAds)
 
 const openReportModal = async () => {
   await $modal.show({
@@ -103,17 +102,4 @@ const openReportModal = async () => {
   })
 }
 
-const getAds = async () => {
-  const res = await $fetch('/api/advertise', {
-    params: {
-      ids: props.data.ids?.join(', '),
-    }
-  })
-  ads.value = res
-  console.log(res)
-}
-
-onMounted(async () => {
-  await getAds()
-})
 </script>

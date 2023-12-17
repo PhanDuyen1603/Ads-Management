@@ -15,12 +15,27 @@ export default defineStore({
 
     // target show on detail right menu
     target: {},
+    targetAds: [],
   }),
   actions: {
     async getAddressesList() {
       try {
         const res = await $fetch('/api/address')
         this.addresses = res.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async setDetailTarget(target, ids) {
+      try {
+        this.target = target
+        const ids = target.ads
+        const res = ids && ids.length ? await $fetch('/api/advertise', {
+          params: {
+            ids: target.ads?.join(', '),
+          }
+        }) : {}
+        this.targetAds = res
       } catch (error) {
         console.log(error)
       }

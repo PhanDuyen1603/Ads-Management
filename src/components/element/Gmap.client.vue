@@ -42,6 +42,8 @@
 <script>
 import { getMarkerIcon } from '~/utils/map'
 import useGmapStore from '~/stores/gmap.store'
+import getLocationFromClick from '~/utils/map/getLocationFromClick'
+import generateButtons from '~/composables/map/generateButtons'
 export default {
   props: {
     mapStyles: {
@@ -73,29 +75,11 @@ export default {
       return initCenter.value
     })
 
-    const getLocationFromClick = (map) => {
-      window.google.maps.event.addListener(map, 'click', function( event ){
-        // console.log('event', event)
-        // alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
-        setTimeout(() => {
-          const infoWindow = document.querySelector('.poi-info-window')
-          const data = {
-            position: {
-              lat: event.latLng.lat(),
-              lng: event.latLng.lng()
-            },
-            title: infoWindow?.querySelector('.title')?.innerText,
-            full_address: infoWindow?.querySelector('.address')?.innerText.replaceAll('\n', ', '),
-            streetLine1: infoWindow?.querySelector('[jsinstance="0"]')?.innerText,
-            ward: infoWindow?.querySelector('[jsinstance="1"]')?.innerText,
-            district: infoWindow?.querySelector('[jsinstance="2"]')?.innerText,
-            city: infoWindow?.querySelector('[jsinstance="*3"]')?.innerText,
-          }
-          emit('getPlace', { value: data })
-          // console.log(infoWindow, data)
-        }, 1000)
-      });
-    }
+    const {
+      showAds,
+      showReports,
+      stausControlButtons
+    } = generateButtons()
 
     const focusMarker = (id) => {
       targetMarker.value = id
@@ -110,12 +94,21 @@ export default {
       if (googleMap) {
         googleMap.$mapPromise.then(map=> {
           getLocationFromClick(map)
+          stausControlButtons(map)
           //
           //
           isLoading.value = false
         })
       }
     });
+
+    watch(showAds, (n, o) => {
+      console.log('TODO: re-render address ')
+    })
+
+    watch(showReports, (n, o) => {
+      console.log('TODO: re-render address no report')
+    })
 
     onBeforeMount(() => {
       gmapStore.initCenter = null

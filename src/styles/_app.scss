@@ -18,3 +18,23 @@ body.modal-open {
   height: 100vh;
   overflow-y: hidden;
 }
+
+.form-custom-map {
+  padding: 1rem;
+  border-radius: 2px;
+  width: calc(100% - 135px);
+  background: #fff;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 15px;
+  .form-switch {
+    height: 15px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    .form-check-input {
+      width: 30px;
+      height: 15px;
+    }
+  }
+}

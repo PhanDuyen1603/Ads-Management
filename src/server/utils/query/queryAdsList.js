@@ -53,9 +53,10 @@ const queryAdsList = (query) => {
       }
     }
   ]
-  if(query?.ids) {
-    const listId = query.ids.split(', ')
-      .map(x => new mongoose.Types.ObjectId(x))
+  const queryKeys = Object.keys(query)
+  if(queryKeys.includes('ids')) {
+    const listId = query.ids?.split(', ')
+      .map(x => new mongoose.Types.ObjectId(x)) || []
     commonQuery.unshift({
       $match: { _id: { $in: listId }}
     })

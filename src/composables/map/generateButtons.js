@@ -1,10 +1,12 @@
 import { ref } from 'vue'
 
 export default function () {
+  const $route = useRoute()
   const showAds = ref(true)
   const showReports = ref(true)
 
   const stausControlButtons = (map) => {
+    if($route.name.startsWith('admin')) return
     // btn 1
     var controlAdInput = document.createElement("INPUT")
     controlAdInput.setAttribute("type", "checkbox")

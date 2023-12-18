@@ -93,7 +93,7 @@ export default {
     watch(myMapRef, googleMap => {
       if (googleMap) {
         googleMap.$mapPromise.then(map=> {
-          getLocationFromClick(map)
+          getLocationFromClick(map, emit)
           stausControlButtons(map)
           //
           //

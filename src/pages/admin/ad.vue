@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-header">
+        <div v-if="userPermission.advertise.create || userPermission.address.create" class="card-header">
           <button class="btn btn-outline-danger btn-add" @click="addAdsModal()">
             <IconsPlusCircle />
             <span>Thêm {{ isShowAdsList ? 'quảng cáo' : 'điểm đặt  quảng cáo' }}</span>
@@ -38,6 +38,7 @@ definePageMeta({
 })
 const mapStore = useMapStore()
 const adsStore = useAdsStore()
+const { userPermission } = useMapAdmin()
 
 await mapStore.getAddressesList()
 const dataList = computed(() => !isShowAdsList.value ? mapStore.addresses : adsStore.ads)

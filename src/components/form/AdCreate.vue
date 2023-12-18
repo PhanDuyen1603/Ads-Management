@@ -134,7 +134,7 @@ const props = defineProps({
   submitType: {
     type: String,
     default: 'create',
-    validator:(x) => ['create', 'update'].includes(x)
+    validator:(x) => ['create', 'update', 'request'].includes(x)
   }
 })
 const emits = defineEmits(['close'])

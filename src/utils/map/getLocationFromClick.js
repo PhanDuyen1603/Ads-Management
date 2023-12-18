@@ -1,4 +1,4 @@
-export default function getLocationFromClick(map) {
+export default function getLocationFromClick(map, emit) {
   window.google.maps.event.addListener(map, 'click', function( event ){
     setTimeout(() => {
       const infoWindow = document.querySelector('.poi-info-window')

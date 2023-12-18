@@ -86,25 +86,20 @@ const props = defineProps({
   submitType: {
     type: String,
     default: 'create',
-    validator:(x) => ['create', 'update'].includes(x)
+    validator:(x) => ['create', 'update', 'request'].includes(x)
   }
 })
 const emits = defineEmits(['close'])
+const { createLocation, updateLocation } = useLocation()
 
 const form = reactive(props.defaultFormData && props.submitType === 'update' ? props.defaultFormData : {})
 
-const position = reactive({
-  lat: 0,
-  lng: 0
-})
-
 const listWards = computed(() => form.district ? districts.find(x => x.slug === form.district)?.wards : [])
 
-onMounted(() => {
-
-})
-const handleSubmit = () => {
-  console.log(111)
+const handleSubmit = async () => {
+  if(props.submitType === 'create') await createLocation(form)
+  if(props.submitType === 'update') await updateLocation(defaultFormData._id, form)
+  emit('close')
 }
 const getPlace = (data) => {
   console.log(121212, data)

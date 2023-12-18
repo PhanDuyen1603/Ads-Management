@@ -25,9 +25,14 @@
           <td class="detail_icon" @click="openDetailModal(item)">
             <i class="mdi mdi-eye-outline"></i>
           </td>
-          <td>
+          <td v-if="userPermission.address.request">
             <button class="btn btn-success" @click="openReportModal(item)">
               Yêu cầu chỉnh sửa
+            </button>
+          </td>
+          <td v-if="userPermission.address.update">
+            <button class="btn btn-success" @click="openReportModal(item)">
+              Chỉnh sửa
             </button>
           </td>
         </tr>
@@ -38,6 +43,7 @@
 
 <script setup>
 const { $modal, $gMap } = useNuxtApp()
+const { userPermission } = useMapAdmin()
 const props = defineProps({
   data: {
     type: Array
@@ -50,17 +56,12 @@ const tableField = {
   ward: 'Phường',
   district: 'quận'
 }
-
-// const focusMap = () => {
-//   $gMap.changeMapCenter({ lat: item.lat, lng: item.lng })
-// }
-
 const openReportModal = async (item) => {
   const result = await $modal.show({
     component: 'FormAddressRequestEdit',
     props: {
       defaultFormData: item,
-      submitType: 'update'
+      submitType: userPermission.value.advertise.update ? 'update' : 'request',
     },
     wrapperProps: {
       styles: {

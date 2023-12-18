@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { exampleData } from '~/constant/user'
+import { exampleData, permissions } from '~/constant/user'
 
 export default defineStore({
   id: 'users-store',
@@ -60,6 +60,7 @@ export default defineStore({
         value: x._id
       })) : []
     },
-    userRole:(state) => state.profile?.role
+    userRole:(state) => state.profile?.role,
+    userPermission:(state) => permissions[state.profile?.role]?.permissions
   }
 })

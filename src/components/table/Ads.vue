@@ -16,9 +16,14 @@
           <td v-for="(field, i) in Object.keys(tableField)" :key="i">
             {{ getName(item[field]) }}
           </td>
-          <td>
+          <td v-if="userPermission.advertise.update">
             <button class="btn btn-success" @click="openDetailModal(item)">
               chỉnh sửa
+            </button>
+          </td>
+          <td v-if="userPermission.advertise.request">
+            <button class="btn btn-success" @click="openDetailModal(item)">
+              yêu cầu chỉnh sửa
             </button>
           </td>
         </tr>
@@ -30,6 +35,7 @@
 <script setup>
 import getName from '~/utils/string/getName'
 import { tableField } from '~/constant/ads'
+const { userPermission } = useMapAdmin()
 
 const { $modal } = useNuxtApp()
 const props = defineProps({
@@ -43,7 +49,7 @@ const openDetailModal = async (item) => {
     component: 'LazyFormAdCreate',
     props: {
       defaultFormData: item,
-      submitType: 'update'
+      submitType: userPermission.value.advertise.update ? 'update' : 'request',
     },
     wrapperProps: {
       styles: {

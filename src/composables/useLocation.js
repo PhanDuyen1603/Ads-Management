@@ -1,9 +1,28 @@
+import { computed } from 'vue'
+import useMapStore from '~/stores/map.store'
+
 export default function useLocation() {
+  const { $apiFetch } = useNuxtApp()
+  const $store = useMapStore()
+
+  /**
+   * @desc get ads addresses
+   */
+  const getAddresses = async (query) => {
+    try {
+      const response = await $apiFetch('/addresses')
+      if(response.success) {
+        $store.addresses = response.data
+      }
+    } catch (error) {
+      console.log('GET: /addresses', error)
+    }
+  }
+
   /**
    * @desc create location
    */
   const createLocation = async (data) => {
-    console.log(data)
     const response = await $fetch('/api/address/create', {
       method: 'POST',
       body: data,
@@ -42,8 +61,14 @@ export default function useLocation() {
     return response
   }
 
+  const addresses = computed(() => $store.addresses)
+
   return {
+    getAddresses,
     createLocation,
-    updateLocation
+    updateLocation,
+    requestUpadte,
+
+    addresses: addresses.value
   }
 }

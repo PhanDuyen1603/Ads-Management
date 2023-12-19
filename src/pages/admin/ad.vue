@@ -30,31 +30,28 @@
 </template>
 
 <script setup>
-import useMapStore from '~/stores/map.store'
-import useAdsStore from '~/stores/ads.store'
 const { $modal } = useNuxtApp()
 definePageMeta({
   layout: 'admin'
 })
-const mapStore = useMapStore()
-const adsStore = useAdsStore()
 const { userPermission } = useMapAdmin()
-
-await mapStore.getAddressesList()
-const dataList = computed(() => !isShowAdsList.value ? mapStore.addresses : adsStore.ads)
-
+const { getAds, ads, getAdsLocations, adsLocations } = useAdvertise()
 const isShowAdsList = ref(false)
+// await getAds()
+await getAdsLocations()
+
+const dataList = computed(() => !isShowAdsList.value ? unref(adsLocations) : unref(ads))
 
 const showAddressList = async () => {
   if(!isShowAdsList.value) return
   isShowAdsList.value = false
-  await mapStore.getAddressesList()
+  await getAdsLocations()
 }
 
 const showAdsList = async () => {
   if(isShowAdsList.value) return
   isShowAdsList.value = true
-  await adsStore.getAdsList()
+  await getAds()
 }
 
 const addAdsModal = async (item) => {
@@ -66,7 +63,8 @@ const addAdsModal = async (item) => {
     wrapperProps: {
       styles: {
         'max-width': '650px',
-        width: '100%'
+        width: '100%',
+        'overflow-y': isShowAdsList.value ? 'unset' : 'scroll'
       }
     }
   })

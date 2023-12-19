@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in data">
+        <tr v-for="(item, index) in transformData">
           <td>{{ index + 1 }}</td>
           <!-- <td @click="focusMap(item)">
             <i class="bi bi-crosshair"></i>
@@ -42,13 +42,17 @@
 </template>
 
 <script setup>
+import { mapAdsLocation } from '~/utils/mapData'
 const { $modal, $gMap } = useNuxtApp()
 const { userPermission } = useMapAdmin()
 const props = defineProps({
   data: {
-    type: Array
+    type: Array,
+    default:() => []
   },
 })
+
+const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x)) || [])
 
 const tableField = {
   streetLine1: 'địa chỉ',

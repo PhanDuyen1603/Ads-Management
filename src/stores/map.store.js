@@ -18,15 +18,7 @@ export default defineStore({
     targetAds: [],
   }),
   actions: {
-    async getAddressesList() {
-      try {
-        const res = await $fetch('/api/address')
-        this.addresses = res.data
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    async setDetailTarget(target, ids) {
+    async setDetailTarget(target) {
       try {
         this.target = target
         const ids = target.ads

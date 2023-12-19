@@ -72,7 +72,6 @@
 
 <script setup>
 import './leftmenu.scss'
-import useMapStore from '~/stores/map.store'
 import { faker } from '@faker-js/faker';
 const props = defineProps({
   data: {
@@ -81,10 +80,7 @@ const props = defineProps({
   }
 })
 const { $gMap, $modal } = useNuxtApp()
-const mapStore = useMapStore()
-
-await mapStore.getAddressesList()
-const addresses = computed(() => mapStore.gMapAddress)
+const { getAddresses, addresses } = useLocation()
 
 const showInfo = ref(true)
 const target = ref({})
@@ -105,9 +101,13 @@ const openReportModal = async () => {
       styles: {
         maxWidth: '650px',
         width: '100%',
-
+        'overflow-y': 'unset'
       }
     }
   })
 }
+
+onMounted(async () => {
+  await getAddresses()
+})
 </script>

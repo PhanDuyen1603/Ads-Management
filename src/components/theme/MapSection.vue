@@ -6,7 +6,7 @@
       class="map"
       ref="Gmap"
       :map-styles="mapStyles"
-      :markers="addresses"
+      :markers="adsLocations"
       @open-detail="showAdDetail"
     />
   </div>
@@ -15,22 +15,23 @@
 <script setup>
 import { changeToSlug } from '~/utils/string/slug'
 import useMapStore from '~/stores/map.store'
+import { mapAdsLocation } from '~/utils/mapData'
+
+const { getAdsLocations, adsLocations } = useAdvertise()
 
 const mapStore = useMapStore()
 const $router = useRouter()
 
-await mapStore.getAddressesList()
 const Gmap = ref(null)
 const isMapLoading = computed(() => Gmap.value?.isLoading)
 
-const addresses = computed(() => mapStore.gMapAddress)
-
 const showAdDetail = ({value}) => {
-  mapStore.setDetailTarget(value)
+  const ad = mapAdsLocation(value) || {}
+  mapStore.setDetailTarget(ad)
   $router.push({
     path: '/',
     query: {
-      detail: changeToSlug(value?.streetLine1 || '')
+      detail: changeToSlug(ad?.streetLine1 || '')
     },
   });
 }
@@ -38,14 +39,13 @@ const showAdDetail = ({value}) => {
 const mapStyles = computed(() => {
   return {
     height: '100vh',
-    // width: `calc(100vw - ${showDetail.value ? '300px' : '0'})`,
     width: `calc(100vw - 80px)`,
     'margin-left': 'auto'
   }
 })
 
-onMounted(() => {
-  console.log('Gmap', Gmap.value)
+onMounted(async () => {
+  await getAdsLocations()
 })
 </script>
 
@@ -59,15 +59,12 @@ onMounted(() => {
   height: 100%;
   display: inline-flex;
 }
-/* .vue-map-container {
-  max-width: cal;
-} */
+
 .map_infos {
   -webkit-transition: width 1s ease-in-out;
   -moz-transition: width 1s ease-in-out;
   -o-transition: width 1s ease-in-out;
   transition: width 1s ease-in-out;
-  /* position: absolute; */
   max-width: var(--right-section-width);
   right: 0;
   top: 0;

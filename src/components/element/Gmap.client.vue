@@ -60,6 +60,10 @@ export default {
     showMarkers: {
       type: Boolean,
       default: true
+    },
+    markers: {
+      type: Array,
+      default:() => []
     }
   },
   setup(props, { emit }) {
@@ -68,7 +72,6 @@ export default {
     const isLoading = ref(true)
     const targetMarker = ref(null)
 
-    const markers = computed(() => gmapStore.markers)
     const initCenter = computed(() => gmapStore.center)
     const mapCenter = computed(() => {
       if(props.center && props.center.lat && props.center.lng) return props.center
@@ -117,7 +120,7 @@ export default {
     return {
       myMapRef,
       isLoading,
-      markers,
+      // markers,
       mapCenter,
       targetMarker,
       focusMarker,

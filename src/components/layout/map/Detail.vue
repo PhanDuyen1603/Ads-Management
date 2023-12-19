@@ -9,7 +9,7 @@
     >
     <div class="item_info">
       <div class="info_wrap">
-        <div class="info_body" v-if="data && data.id">
+        <div class="info_body" v-if="data && (data.id || data._id)">
           <div class="info_image">
             <img :src="faker.image.urlPicsumPhotos()" alt="..">
           </div>
@@ -96,7 +96,6 @@ const openReportModal = async () => {
       styles: {
         maxWidth: '650px',
         width: '100%',
-
       }
     }
   })

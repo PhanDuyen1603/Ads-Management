@@ -14,7 +14,10 @@
         <tr v-for="(item, index) in data">
           <td>{{ index + 1 }}</td>
           <td v-for="(field, i) in Object.keys(tableField)" :key="i">
-            {{ getName(item[field]) }}
+            <div v-if="field !== 'images'">{{ getName(item[field]) }}</div>
+            <div class="table_images" v-else>
+              <img v-for="(img, img_i) in item[field]" :key="`img_${img_i}`" :src="getFileUrl(img.path)" >
+            </div>
           </td>
           <td v-if="userPermission.advertise.update">
             <button class="btn btn-success" @click="openDetailModal(item)">
@@ -43,8 +46,10 @@ const props = defineProps({
     type: Array
   },
 })
+const { getFileUrl } = useMedia()
 
 const openDetailModal = async (item) => {
+  console.log({ item })
   await $modal.show({
     component: 'LazyFormAdCreate',
     props: {
@@ -53,10 +58,22 @@ const openDetailModal = async (item) => {
     },
     wrapperProps: {
       styles: {
-        width: '650px'
+        width: '650px',
+        'overflow-y': 'unset'
       }
     }
   })
 }
 
 </script>
+
+<style lang="scss">
+.table_images {
+  display: flex;
+  gap: 8px;
+  img {
+    width: 70px;
+    height: 70px;
+  }
+}
+</style>

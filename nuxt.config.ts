@@ -1,8 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devServer: {
-    port: 3030
-  },
   devtools: { enabled: true },
   srcDir: './src',
   components: {
@@ -50,7 +47,8 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      googleMapApiKey: process.env.GOOGLE_MAP_API_KEY || ''
+      googleMapApiKey: process.env.GOOGLE_MAP_API_KEY || '',
+      baseURL: process.env.BASE_URL || `localhost:${process.env.PORT}`,
     }
   }
 })

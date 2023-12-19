@@ -4,74 +4,14 @@ export default defineStore({
   id: 'ads-store',
   state:() => ({
     ads: [],
+    ads_locations: [],
+    target: {},
+
     categories: [],
     locationTypes: [],
-    billboardTypes: []
+    billboardTypes: [],
   }),
   actions: {
-    // get
-    async getAdsList() {
-      try {
-        const res = await $fetch('/api/advertise')
-        if(res.length) {
-          this.ads = res
-        }
-      } catch (error) {
-        console.log({
-          error
-        })
-      }
-    },
-    async getAdById(id) {
-      try {
-        const res = await $fetch(`/api/advertise/${id}`)
-        if(res.length) {
-          return res[0]
-        }
-        return null
-      } catch (error) {
-        console.log({
-          error
-        })
-      }
-    },
-    async getCategories() {
-      try {
-        const res = await $fetch('/api/adsCategory')
-        if(res.length) {
-          this.categories = res
-        }
-      } catch (error) {
-        console.log({
-          error
-        })
-      }
-    },
-    async getLocationTypes() {
-      try {
-        const res = await $fetch('/api/locationType')
-        if(res.length) {
-          this.locationTypes = res
-        }
-      } catch (error) {
-        console.log({
-          error
-        })
-      }
-    },
-    async getBillboardTypes() {
-      try {
-        const res = await $fetch('/api/billboardType')
-        if(res.length) {
-          this.billboardTypes = res
-        }
-      } catch (error) {
-        console.log({
-          error
-        })
-      }
-    },
-
     // create
     async createLocation(data) {
       try {
@@ -123,5 +63,15 @@ export default defineStore({
         value: x._id
       })) : []
     },
+    adsLocations:(state) => {
+      return state.ads_locations.map(x => ({
+        ...x.address,
+        position: {
+          lat: x.address.lat,
+          lng: x.address.long
+        },
+        ...x,
+      }))
+    }
   }
 })

@@ -33,7 +33,7 @@
         <ElementGmap
           class="map"
           ref="map"
-          :markers="addresses"
+          :markers="adsLocations"
           :map-styles="{
             width: '100%',
             height: '45rem'
@@ -46,17 +46,14 @@
 </template>
 
 <script setup>
-import useMapStore from '~/stores/map.store'
 definePageMeta({
   layout: 'admin'
 })
 const { $gMap } = useNuxtApp()
-const mapStore = useMapStore()
+const { getAdsLocations, adsLocations } = useAdvertise()
+const { getAddresses, addresses } = useLocation()
 
 const map = ref(null)
-
-await mapStore.getAddressesList()
-const addresses = computed(() => mapStore.gMapAddress)
 
 const tableField = {
   streetLine1: 'địa chỉ',
@@ -69,6 +66,11 @@ const tableField = {
 const focusMap = (item) => {
   $gMap.changeMapCenter({ lat: item.lat, lng: item.lng })
 }
+
+onMounted(async () => {
+  await getAdsLocations()
+  await getAddresses()
+})
 </script>
 
 <style>

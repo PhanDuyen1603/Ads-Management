@@ -20,6 +20,21 @@ export default function useLocation() {
   }
 
   /**
+   * @desc get ads addresses
+   */
+  const getLocation = async (id) => {
+    try {
+      const response = await $apiFetch(`/ads-locations/${id}`)
+      if(response.success) {
+        return response.data
+      }
+    } catch (error) {
+      console.log('GET: /ads-locations/', error)
+      return null
+    }
+  }
+
+  /**
    * @desc create location
    */
   const createLocation = async (data) => {
@@ -37,8 +52,8 @@ export default function useLocation() {
    * @desc update location
    */
   const updateLocation = async (id, data) => {
-    const response = await $fetch(`/api/address/${id}`, {
-      method: 'PUT',
+    const response = await $apiFetch(`/ads-locations/${id}`, {
+      method: 'PATCH',
       body: data,
       headers: {
         "Content-Type": "application/json"
@@ -85,6 +100,7 @@ export default function useLocation() {
 
   return {
     getLocations,
+    getLocation,
     createLocation,
     updateLocation,
     requestUpadte,

@@ -2,11 +2,13 @@
   <ClientOnly>
     <Vueform
       :endpoint="(form, el) => handleSubmit(form, el)"
-      :form-data="form$ => form$.requestData" v-model="form"
+      :form-data="form$ => form$.requestData"
+      v-model="form"
       sync
     >
       <TextElement
         name="user"
+        :disabled="true"
         :submit="false"
         label="Tên người sửa"
         placeholder="Nhập Tên người sửa"
@@ -19,39 +21,55 @@
 
       <TextElement
         name="streetLine1"
+        :disabled="true"
         :submit="false"
+        readonly
         label="Địa chỉ (số)"
         placeholder="Nhập số nhà"
       />
 
       <TextElement
         name="streetLine2"
+        :disabled="true"
         :submit="false"
+        readonly
         label="Địa chỉ (tên đường)"
         placeholder="Nhập tên đường"
       />
 
       <SelectElement
-        label="Quận"
-        name="district"
-        :native="true"
-        :items="districts"
-        :columns="{ container: 6 }"
-        label-prop="name"
-        value-prop="slug"
+        label="Loại địa điểm"
+        name="locationType"
+        :native="false"
+        :items="locationsTypes"
       />
 
       <SelectElement
-        label="Phường"
-        name="ward"
-        :native="true"
-        :items="listWards"
-        :columns="{ container: 6 }"
-        label-prop="name"
-        value-prop="slug"
+        label="Loại quảng cáo"
+        name="adsCategory"
+        :native="false"
+        :items="adsCategories"
       />
 
-      <StaticElement name="position">
+      <TextElement
+        label="Quận"
+        :disabled="true"
+        :submit="false"
+        readonly
+        name="district"
+        :columns="{ container: 6 }"
+      />
+
+      <TextElement
+        label="Phường"
+        :disabled="true"
+        :submit="false"
+        readonly
+        name="ward"
+        :columns="{ container: 6 }"
+      />
+
+      <StaticElement readonly name="position">
         <ElementGmap
           :map-styles="{
             width: '100%',
@@ -62,10 +80,6 @@
       </StaticElement>
 
       <GroupElement name="group">
-        <ButtonElement name="button">
-          Đóng
-        </ButtonElement>
-
         <ButtonElement name="submit" submits>
           gửi
         </ButtonElement>
@@ -76,7 +90,7 @@
 </template>
 
 <script setup>
-import { districts } from '~/constant/location'
+import { mapAdsLocationDetail } from '~/utils/mapData'
 
 const props = defineProps({
   defaultFormData: {
@@ -85,21 +99,23 @@ const props = defineProps({
   },
   submitType: {
     type: String,
-    default: 'create',
-    validator:(x) => ['create', 'update', 'request'].includes(x)
+    default: 'update',
+    validator:(x) => ['update', 'request'].includes(x)
   }
 })
 const emits = defineEmits(['close'])
-const { createLocation, updateLocation } = useLocation()
+const { updateLocation, getLocation, getLocationTypes, locationsTypes } = useLocation()
+const { getAdsCategories, adsCategories } = useAdvertise()
 
-const form = reactive(props.defaultFormData && props.submitType === 'update' ? props.defaultFormData : {})
+await getLocationTypes()
+await getAdsCategories()
+const initData = await getLocation(props.defaultFormData._id)
 
-const listWards = computed(() => form.district ? districts.find(x => x.slug === form.district)?.wards : [])
+const form = reactive(mapAdsLocationDetail(initData))
 
 const handleSubmit = async () => {
-  if(props.submitType === 'create') await createLocation(form)
-  if(props.submitType === 'update') await updateLocation(defaultFormData._id, form)
-  emit('close')
+  if(props.submitType === 'update') await updateLocation(props.defaultFormData._id, form)
+  emits('close')
 }
 const getPlace = (data) => {
   console.log(121212, data)

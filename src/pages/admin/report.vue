@@ -25,13 +25,13 @@
 </template>
 
 <script setup>
-import useMapStore from '~/stores/map.store'
+// import useMapStore from '~/stores/map.store'
 import { mapReportKey } from '~/utils/generateAdReports'
 definePageMeta({
   layout: 'admin'
 })
-const mapStore = useMapStore()
-const reports = mapStore.adReports
+// const mapStore = useMapStore()
+// const reports = mapStore.adReports
 const tableField = ['createdAt', 'ad_address', 'userName', 'phone', 'reportType', 'status']
 const openDetailModal = async (item) => {
   await $modal.show({

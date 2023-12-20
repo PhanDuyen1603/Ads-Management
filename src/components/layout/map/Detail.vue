@@ -9,7 +9,7 @@
     >
     <div class="item_info">
       <div class="info_wrap">
-        <div class="info_body" v-if="data && (data.id || data._id)">
+        <div class="info_body" v-if="target && (target.id || target._id)">
           <div class="info_image">
             <img :src="faker.image.urlPicsumPhotos()" alt="..">
           </div>
@@ -20,9 +20,9 @@
                 <strong>Thong tin dia diem</strong>
               </div>
               <div class="info_2_body">
-                <p>{{ data.title }}</p>
-                <p>{{ data.streetLine1 }}</p>
-                <p>{{ data.ward }} {{ data.district }}, {{ data.city }}</p>
+                <p>{{ target.title }}</p>
+                <p>{{ target.streetLine1 }}</p>
+                <p>{{ target.ward }} {{ target.district }}, {{ target.city }}</p>
               </div>
               <div class="info_2_action">
                 <div class="action_groups">
@@ -41,13 +41,13 @@
               <div class="info_1_head">
                 <strong>Thông tin quảng cáo</strong>
               </div>
-              <div v-if="!(ads && ads.length)" class="info_1_body_empty">
+              <div v-if="!(targetAds && targetAds.length)" class="info_1_body_empty">
                 <p>Chua co du lieu</p>
                 <p>vui long chon ban do de xem</p>
               </div>
               <div v-else class="info_1_body_empty">
                 <!--  -->
-                <div v-for="(item, index) in ads" :key="index" class="ad_info">
+                <div v-for="(item, index) in targetAds" :key="index" class="ad_info">
                   <h3>{{ getName(item.billboardType) }}</h3>
                   <p>{{ item.address.streetLine1 }}</p>
                   <p>kich thuoc: {{ item.width }} x {{ item.height }}</p>
@@ -80,13 +80,9 @@
 <script setup>
 import { faker } from '@faker-js/faker';
 import getName from '~/utils/string/getName'
-import useMapStore from '~/stores/map.store'
 
 const { $modal } = useNuxtApp()
-const mapStore = useMapStore()
-
-const data = computed(() => mapStore.target)
-const ads = computed(() => mapStore.targetAds)
+const { target, targetAds} = useLocation()
 
 const openReportModal = async () => {
   await $modal.show({

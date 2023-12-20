@@ -14,12 +14,12 @@
 
 <script setup>
 import { changeToSlug } from '~/utils/string/slug'
-import useMapStore from '~/stores/map.store'
+import useLocationStore from '~/stores/locations.store'
 import { mapAdsLocation } from '~/utils/mapData'
 
 const { getAdsLocations, adsLocations } = useAdvertise()
 
-const mapStore = useMapStore()
+const mapStore = useLocationStore()
 const $router = useRouter()
 
 const Gmap = ref(null)

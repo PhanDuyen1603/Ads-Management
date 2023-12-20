@@ -80,7 +80,7 @@ const props = defineProps({
   }
 })
 const { $gMap, $modal } = useNuxtApp()
-const { getAddresses, addresses } = useLocation()
+const { getLocations, addresses } = useLocation()
 
 const showInfo = ref(true)
 const target = ref({})
@@ -108,6 +108,6 @@ const openReportModal = async () => {
 }
 
 onMounted(async () => {
-  await getAddresses()
+  await getLocations()
 })
 </script>

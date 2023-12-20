@@ -2,7 +2,7 @@
   <div>
     <ClientOnly>
       <Vueform
-        endpoint="/api/address/create"
+        :endpoint="(form, el$) => handleCreateLocation(form, el$)"
         :form-data="form$ => form$.requestData"
         v-model="form"
         class="form_create_address"
@@ -30,6 +30,14 @@
           placeholder="thanh pho"
           readonly
         />
+
+        <SelectElement
+          label="Loại địa điểm"
+          name="locationType"
+          :native="false"
+          :items="locationsTypes"
+        />
+
         <TextElement
           name="district"
           rules="required"
@@ -79,6 +87,9 @@
 
 <script setup>
 const form = reactive({})
+const { createLocation, getLocationTypes, locationsTypes } = useLocation()
+
+await getLocationTypes()
 
 const setPlace = ({ value }) => {
   form.title = value.title
@@ -89,4 +100,14 @@ const setPlace = ({ value }) => {
   form.city = value.city
   form.district = value.district
 }
+
+const handleCreateLocation = async (form, el$) => {
+  try {
+    const res = await createLocation(form)
+    console.log({res})
+  } catch (error) {
+    console.log({error})
+  }
+}
+
 </script>

@@ -51,7 +51,7 @@ definePageMeta({
 })
 const { $gMap } = useNuxtApp()
 const { getAdsLocations, adsLocations } = useAdvertise()
-const { getAddresses, addresses } = useLocation()
+const { getLocations, addresses } = useLocation()
 
 const map = ref(null)
 
@@ -69,7 +69,7 @@ const focusMap = (item) => {
 
 onMounted(async () => {
   await getAdsLocations()
-  await getAddresses()
+  await getLocations()
 })
 </script>
 

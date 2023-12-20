@@ -139,10 +139,6 @@
 </template>
 
 <script setup>
-import useMapStore from '~/stores/map.store'
-
-const mapStore = useMapStore()
-
 const props = defineProps({
   defaultFormData: {
     type: Object,
@@ -158,9 +154,11 @@ const { $apiFetch } = useNuxtApp()
 const { getFileUrl } = useMedia()
 const emits = defineEmits(['close'])
 const { getBillboardTypes, getAdsLocations, adsLocations, billboardTypes, getAdById } = useAdvertise()
+const { getLocations, addresses: locations} = useLocation()
 
 await getBillboardTypes()
 await getAdsLocations()
+await getLocations()
 const initData = props.defaultFormData._id ? await getAdById(props.defaultFormData._id) : {}
 
 const transformData = (data) => {
@@ -184,7 +182,7 @@ const addresses = computed(() => adsLocations.value?.map(x => ({
 const mapCenter = ref(null)
 
 const changeLocation = (e, fieldname) => {
-  const target = mapStore.addresses.find(x => x._id === e)
+  const target = locations.find(x => x._id === e)
   if(target && target._id) {
     form[fieldname] = e
     mapCenter.value = {

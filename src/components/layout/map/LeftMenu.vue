@@ -44,9 +44,8 @@
 <script setup>
 import { resolveComponent } from 'vue';
 import { useDebounceFn } from '@vueuse/core'
-import useMapStore from '~/stores/map.store'
 
-const mapStore = useMapStore()
+const { target } = useLocation()
 const { $modal } = useNuxtApp()
 const $router = useRouter()
 const $route = useRoute()
@@ -98,7 +97,7 @@ const contentComponent = ref(listComponents.default)
 
 // dynamic data for dynamic component
 const contentData = computed(() => {
-  if(contentComponent.value === listComponents.detail) return mapStore.target
+  if(contentComponent.value === listComponents.detail) return target.value
   return []
 })
 

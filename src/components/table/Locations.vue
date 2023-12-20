@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-overflow">
+    <table class="table">
       <thead>
         <tr>
           <th>#</th>

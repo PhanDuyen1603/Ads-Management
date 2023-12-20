@@ -1,18 +1,18 @@
 import { computed } from 'vue'
-import useMapStore from '~/stores/map.store'
+import useLocationStore from '~/stores/locations.store'
 
 export default function useLocation() {
   const { $apiFetch } = useNuxtApp()
-  const $store = useMapStore()
+  const $store = useLocationStore()
 
   /**
    * @desc get ads addresses
    */
-  const getAddresses = async (query) => {
+  const getLocations = async (query) => {
     try {
       const response = await $apiFetch('/addresses')
       if(response.success) {
-        $store.addresses = response.data
+        $store.locations = response.data
       }
     } catch (error) {
       console.log('GET: /addresses', error)
@@ -23,7 +23,7 @@ export default function useLocation() {
    * @desc create location
    */
   const createLocation = async (data) => {
-    const response = await $fetch('/api/address/create', {
+    const response = await $apiFetch('/ads-locations', {
       method: 'POST',
       body: data,
       headers: {
@@ -61,14 +61,38 @@ export default function useLocation() {
     return response
   }
 
-  const addresses = computed(() => $store.addresses)
+  /**
+   * @desc get location types
+   */
+  const getLocationTypes = async () => {
+    try {
+      const response = await $apiFetch('/location-types')
+      if(response.success) {
+        $store.locationsTypes = response.data
+      }
+    } catch (error) {
+      console.log('GET: /location-types', error)
+    }
+  }
+
+  const addresses = computed(() => $store.locations)
+  const locationsTypes = computed(() => $store.locationsTypes.map(x => ({
+    label: x.name,
+    value: x._id
+  })))
+  const target = computed(() => $store.target)
+  const targetAds = computed(() => $store.targetAds)
 
   return {
-    getAddresses,
+    getLocations,
     createLocation,
     updateLocation,
     requestUpadte,
+    getLocationTypes,
 
-    addresses: addresses.value
+    addresses: addresses.value,
+    locationsTypes,
+    target,
+    targetAds
   }
 }

@@ -38,6 +38,13 @@
           :items="locationsTypes"
         />
 
+        <SelectElement
+          label="Loại quảng cáo"
+          name="adsCategory"
+          :native="false"
+          :items="adsCategories"
+        />
+
         <TextElement
           name="district"
           rules="required"
@@ -86,10 +93,13 @@
 </template>
 
 <script setup>
+const emits = defineEmits(['close'])
 const form = reactive({})
 const { createLocation, getLocationTypes, locationsTypes } = useLocation()
+const { getAdsCategories, adsCategories } = useAdvertise()
 
 await getLocationTypes()
+await getAdsCategories()
 
 const setPlace = ({ value }) => {
   form.title = value.title
@@ -104,7 +114,7 @@ const setPlace = ({ value }) => {
 const handleCreateLocation = async (form, el$) => {
   try {
     const res = await createLocation(form)
-    console.log({res})
+    emits('close')
   } catch (error) {
     console.log({error})
   }

@@ -88,6 +88,10 @@ export default function useAdvertise() {
   const adsLocations = computed(() => $store.adsLocations)
   const ads = computed(() => $store.ads)
   const billboardTypes = computed(() => $store.adsBillboardTypes)
+  const adsCategories = computed(() => $store.categories.map(x => ({
+    label: x.name,
+    value: x._id
+  })))
 
   return {
     getAdsLocations,
@@ -98,6 +102,7 @@ export default function useAdvertise() {
 // no return .value in composable it will not reactive any more
     adsLocations,
     ads,
-    billboardTypes
+    billboardTypes,
+    adsCategories
   }
 }

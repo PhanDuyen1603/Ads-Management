@@ -52,6 +52,7 @@
           placeholder="quan"
           :columns="{ container: 6 }"
           readonly
+          :disabled="true"
         />
         <TextElement
           name="ward"
@@ -60,6 +61,7 @@
           placeholder="phuong"
           :columns="{ container: 6 }"
           readonly
+          :disabled="true"
         />
         <TextElement
           name="lat"
@@ -69,6 +71,7 @@
           placeholder="Kinh do"
           :columns="{ container: 6 }"
           readonly
+          :disabled="true"
         />
         <TextElement
           name="lng"
@@ -78,6 +81,7 @@
           placeholder="vi do"
           :columns="{ container: 6 }"
           readonly
+          :disabled="true"
         />
 
         <ButtonElement

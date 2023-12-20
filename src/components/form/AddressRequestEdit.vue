@@ -44,6 +44,10 @@
         :items="locationsTypes"
       />
 
+      <ToggleElement name="isPlanned">
+        Thông tin quy hoạch
+      </ToggleElement>
+
       <SelectElement
         label="Loại quảng cáo"
         name="adsCategory"

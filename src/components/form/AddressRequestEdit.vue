@@ -80,6 +80,7 @@
             height: '300px'
           }"
           @getPlace="(e) => getPlace(e)"
+          :center="{ lat: form.lat, lng: form.long }"
         />
       </StaticElement>
 

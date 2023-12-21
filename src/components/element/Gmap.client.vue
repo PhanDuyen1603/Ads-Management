@@ -7,10 +7,11 @@
     :style="mapStyles"
   >
     <GMapCluster v-if="markers.length && showMarkers" :zoomOnClick="true">
+      <!-- :position="m.position" -->
       <GMapMarker
         :key="index"
         v-for="(m, index) in markers"
-        :position="m.position"
+        :position="{ lat: +m.lat, lng: +m.lng|| +m.long }"
         :clickable="true"
         :draggable="false"
         :icon= '{

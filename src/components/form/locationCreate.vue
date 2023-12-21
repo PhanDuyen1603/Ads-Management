@@ -74,7 +74,7 @@
           :disabled="true"
         />
         <TextElement
-          name="lng"
+          name="long"
           rules="required"
           input-type="number"
           label="vi do"
@@ -109,7 +109,7 @@ const setPlace = ({ value }) => {
   form.title = value.title
   form.streetLine1 = value.streetLine1
   form.lat = value.position?.lat
-  form.lng = value.position?.lng
+  form.long = value.position?.lng
   form.ward = value.ward
   form.city = value.city
   form.district = value.district

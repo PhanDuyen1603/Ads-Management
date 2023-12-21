@@ -6,7 +6,7 @@
       class="map"
       ref="Gmap"
       :map-styles="mapStyles"
-      :markers="adsLocations"
+      :markers="markers"
       @open-detail="showAdDetail"
     />
   </div>
@@ -17,7 +17,8 @@ import { changeToSlug } from '~/utils/string/slug'
 import useLocationStore from '~/stores/locations.store'
 import { mapAdsLocation } from '~/utils/mapData'
 
-const { getAdsLocations, adsLocations } = useAdvertise()
+const { getLocations, markers } = useLocation()
+await getLocations()
 
 const mapStore = useLocationStore()
 const $router = useRouter()
@@ -44,9 +45,9 @@ const mapStyles = computed(() => {
   }
 })
 
-onMounted(async () => {
-  await getAdsLocations()
-})
+// onMounted(async () => {
+//   await getAdsLocations()
+// })
 </script>
 
 <style>

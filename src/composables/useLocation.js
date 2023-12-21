@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import useLocationStore from '~/stores/locations.store'
+import { mapAdsLocation } from '~/utils/mapData'
 
 export default function useLocation() {
   const { $apiFetch } = useNuxtApp()
@@ -10,7 +11,7 @@ export default function useLocation() {
    */
   const getLocations = async (query) => {
     try {
-      const response = await $apiFetch('/addresses')
+      const response = await $apiFetch('/ads-locations/')
       if(response.success) {
         $store.locations = response.data
       }
@@ -97,6 +98,7 @@ export default function useLocation() {
   })))
   const target = computed(() => $store.target)
   const targetAds = computed(() => $store.targetAds)
+  const markers = computed(() => $store.locations.map(x => mapAdsLocation(x)))
 
   return {
     getLocations,
@@ -109,6 +111,7 @@ export default function useLocation() {
     addresses: addresses.value,
     locationsTypes,
     target,
-    targetAds
+    targetAds,
+    markers
   }
 }

@@ -57,7 +57,7 @@
           name="adsLocation"
           :native="false"
           :items="addresses"
-          @change="(e) => changeLocation(e, 'addressId')"
+          @change="(e) => changeLocation(e, 'adsLocation')"
         />
         <StaticElement name="map">
           <ElementGmap
@@ -159,7 +159,7 @@ const { getLocations, addresses: locations} = useLocation()
 await getBillboardTypes()
 await getAdsLocations()
 await getLocations()
-const initData = props.defaultFormData._id ? await getAdById(props.defaultFormData._id) : {}
+const initData = props.submitType === 'update' && props.defaultFormData?._id ? await getAdById(props.defaultFormData._id) : {}
 
 const transformData = (data) => {
   return {
@@ -182,12 +182,12 @@ const addresses = computed(() => adsLocations.value?.map(x => ({
 const mapCenter = ref(null)
 
 const changeLocation = (e, fieldname) => {
-  const target = locations.find(x => x._id === e)
+  const target = locations.value?.find(x => x._id === e)
   if(target && target._id) {
     form[fieldname] = e
     mapCenter.value = {
       lat: target.lat,
-      lng: target.lng
+      lng: target.long
     }
   }
 }

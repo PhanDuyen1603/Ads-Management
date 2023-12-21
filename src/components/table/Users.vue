@@ -4,7 +4,6 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Họ và tên</th>
           <th v-for="(item, index) in Object.values(tableField)" :key="`head_${index}`" style="width: fit-content;">
             {{ item }}
           </th>
@@ -15,9 +14,6 @@
       <tbody>
         <tr v-for="(item, index) in data">
           <td>{{ index + 1 }}</td>
-          <td>
-            {{ item.firstName + ' ' + item.lastName }}
-          </td>
           <td v-for="(field, i) in Object.keys(tableField)" :key="i">
             {{ item[field] }}
           </td>

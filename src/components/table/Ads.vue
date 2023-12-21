@@ -38,7 +38,7 @@
 <script setup>
 import getName from '~/utils/string/getName'
 import { tableField } from '~/constant/ads'
-const { userPermission } = useMapAdmin()
+const { userPermission } = useAuth()
 
 const { $modal } = useNuxtApp()
 const props = defineProps({

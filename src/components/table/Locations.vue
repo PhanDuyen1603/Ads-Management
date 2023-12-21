@@ -44,7 +44,7 @@
 <script setup>
 import { mapAdsLocation } from '~/utils/mapData'
 const { $modal, $gMap } = useNuxtApp()
-const { userPermission } = useMapAdmin()
+const { userPermission } = useAuth()
 const props = defineProps({
   data: {
     type: Array,

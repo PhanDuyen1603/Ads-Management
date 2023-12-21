@@ -33,12 +33,10 @@
 <script setup>
 import { adminMenu } from '~/constant/layout/admin/leftMenu'
 import { roleMenuCondition } from '~/utils/auth'
-import useUsersStore from '~/stores/users.store'
 const route = useRoute()
-const userStore = useUsersStore()
+const { role: userRole } = useAuth()
 
 const activeMenu = ref(route.name)
-const userRole = computed(() => userStore.userRole)
 //
 watch(() => route.name, (newRouteName, oldRouteName) => {
   const menu = adminMenu.filter(x => x.name === newRouteName)

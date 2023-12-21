@@ -11,6 +11,7 @@
         placeholder="Nhập họ và tên đệm"
         :columns="{ container: 6 }"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
+        :submit="false"
       />
       <TextElement
         name="lastName"
@@ -18,6 +19,16 @@
         placeholder="Nhập tên"
         :columns="{ container: 6 }"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
+        :submit="false"
+      />
+      <TextElement
+        name="username"
+        label="Tên đăng nhập"
+        placeholder="Nhập tên đăng nhập"
+        :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
+        :submit="submitType === 'create'"
+        :disabled="submitType !== 'create'"
+        :readonly="submitType !== 'create'"
       />
       <TextElement
         name="email"
@@ -31,7 +42,7 @@
         placeholder="Nhập số điện thoại"
       />
       <DateElement
-        name="dateOfBirth"
+        name="dob"
         label="Ngày sinh"
         placeholder="Nhập Ngày sinh"
         load-format="DD-MM-YYYY"
@@ -40,9 +51,12 @@
       />
       <SelectElement
         label="Quyền"
-        name="roleId"
+        name="role"
         :native="false"
         :items="roles"
+        :submit="submitType === 'create'"
+        :disabled="submitType !== 'create'"
+        :readonly="submitType !== 'create'"
       />
 
       <SelectElement
@@ -52,6 +66,7 @@
         :items="districts"
         label-prop="name"
         value-prop="slug"
+        :submit="false"
       />
 
       <SelectElement
@@ -62,6 +77,7 @@
         :disabled="!form.district"
         label-prop="name"
         value-prop="slug"
+        :submit="false"
       />
 
       <ButtonElement name="submit" add-class="mt-2" submits>
@@ -72,7 +88,7 @@
 </template>
 
 <script setup>
-import useUsersStore from '~/stores/users.store'
+import { ROLES, ROLE_LABEL } from '~/constant/user'
 import { districts } from '~/constant/location'
 
 const props = defineProps({
@@ -83,33 +99,43 @@ const props = defineProps({
   submitType: {
     type: String,
     default: 'create',
-    validator:(x) => ['create', 'update'].includes(x)
+    validator:(x) => ['create', 'update', 'authUpdate'].includes(x)
   }
 })
 
-const emits = defineEmits(['close'])
+const emits = defineEmits(['close', 'handle-update'])
+const { createStaff } = useStaff()
 
-const usersStore = useUsersStore()
-const form = reactive(props.defaultFormData && props.submitType === 'update' ? props.defaultFormData : {})
+const form = reactive(props.defaultFormData && props.submitType !== 'create' ? props.defaultFormData : {})
 
 const listWards = computed(() => form.district ? districts.find(x => x.slug === form.district)?.wards : [])
 
-await usersStore.getUserRoles()
-const roles = computed(() => usersStore.roles)
+const roles = Object.keys(ROLES).map(key => {
+  return {
+    label: ROLE_LABEL[key],
+    value: ROLES[key]
+  }
+})
 
-const handleSubmit = async (form, $el) => {
+const handleSubmit = async (submitForm, $el) => {
   try {
-    const endpoint = props.submitType === 'create' ? '/api/user/create' : `/api/user/${props.defaultFormData._id}`
-    const options = {
-      method: props.submitType === 'create' ? 'POST' : 'PUT',
-      body: form,
-      redirect: 'follow',
-      headers: {
-        "Content-Type": "application/json"
+    if (props.submitType === 'create') {
+      submitForm.password = '123456'
+      submitForm.fullName = `${form?.firstName || ''} ${form?.lastName || ''}`
+      const res = await createStaff(submitForm)
+      if(res.success) {
+        emits('close')
+        alert('tao nguoi dung thanh cong')
+      }
+    } else if (props.submitType === 'authUpdate') {
+      emits('handle-update', {value: submitForm})
+    } else {
+      const res = await updateStaff(submitForm)
+      if(res.success) {
+        emits('close')
+        alert('cap nhap nguoi dung thanh cong')
       }
     }
-    const res = await $fetch(endpoint, options)
-    emits('close')
   } catch (error) {
     console.log({error})
   }

@@ -10,7 +10,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     authStore.setAccessToken(window.localStorage.getItem('access-token'))
   }
 
-  if(authStore.accessToken) {
+  if(unref(authStore).accessToken) {
     headers.Authorization = 'Bearer ' + authStore.accessToken
   }
 

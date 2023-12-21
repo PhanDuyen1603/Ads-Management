@@ -34,7 +34,7 @@ const { $modal } = useNuxtApp()
 definePageMeta({
   layout: 'admin'
 })
-const { userPermission } = useMapAdmin()
+const { userPermission } = useAuth()
 const { getAds, ads, getAdsLocations, adsLocations } = useAdvertise()
 const isShowAdsList = ref(false)
 // await getAds()

@@ -1,4 +1,6 @@
 import useAuthStore from "~/stores/auth.store";
+import { permissions } from '~/constant/user'
+
 export default function useAuth() {
   const { $apiFetch } = useNuxtApp()
   const $store = useAuthStore()
@@ -29,10 +31,14 @@ export default function useAuth() {
 
   const profile = computed(() => $store.profile)
   const isLoggedIn = computed(() => $store.isLoggedIn)
+  const role = computed(() => $store.profile?.role)
+  const userPermission = computed(() => permissions[$store.profile?.role]?.permissions)
 
   return {
     signIn,
     profile,
-    isLoggedIn
+    isLoggedIn,
+    role,
+    userPermission
   }
 }

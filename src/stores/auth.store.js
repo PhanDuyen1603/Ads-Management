@@ -1,53 +1,47 @@
 import { defineStore } from "pinia";
 
-const useAuthStore = defineStore('authStore', () => {
-  const accessToken = ref(null)
-  const refreshToken = ref(null)
-  const profile = ref(null)
-  const isLoggedIn = ref(false)
+export default defineStore({
+  id: 'auth-store',
+  state:() => ({
+    accessToken: null,
+    refreshToken: null,
+    profile: {
+      "_id": "658127a76eada69253daf3ef",
+      "username": "nguyenvana",
+      "role": "canbo_phuong"
+    },
+    isLoggedIn: true
+  }),
+  actions: {
+    /**
+     * @desc Sets profile
+     * @param profile
+     */
+    setProfile(profile) {
+      if (profile) this.profile = profile;
+    },
 
-  /**
-   * @desc Sets profile
-   * @param profile
-   */
-  const setProfile = (profile) => {
-    if (profile) profile.value = profile;
-  }
+    /**
+     * @desc Clears profile
+    */
+    clearProfile() {
+      this.profile = null;
+    },
 
-  /**
-   * @desc Clears profile
-  */
-  const clearProfile = () => {
-    profile.value = null;
-  }
+    /**
+     * @desc Sets access token
+     * @param token
+     */
+    setAccessToken(token){
+      if (token) {
+        this.accessToken = token
+        window.localStorage.setItem('access-token', token)
+      }
+    },
 
-  /**
-   * @desc Sets access token
-   * @param token
-   */
-  const setAccessToken = (token) => {
-    if (token) {
-      accessToken.value = profile
-      window.localStorage.setItem('access-token', token)
+    clearAccessToken() {
+      this.accessToken = null
+      window.localStorage.removeItem('access-token')
     }
   }
-
-  const clearAccessToken = () => {
-    accessToken.value = null
-    window.localStorage.removeItem('access-token')
-  }
-
-
-  return {
-    refreshToken,
-    accessToken,
-    profile,
-    isLoggedIn,
-    setProfile,
-    clearProfile,
-    setAccessToken,
-    clearAccessToken
-  }
 })
-
-export default useAuthStore

@@ -1,5 +1,6 @@
 export const tableField = {
-  fullName: 'Tên người dùng',
+  fullName: 'Họ và tên',
+  username: 'Tên người dùng',
   email: 'Email',
   phone: 'Số điện thoại',
   dob: 'Ngày sinh',
@@ -13,8 +14,14 @@ export const ROLES = {
   SUPER_ADMIN: 'canbo_so',
   ADMIN_LV_1: 'canbo_quan',
   ADMIN_LV_2: 'canbo_phuong',
-  ADMIN_LV_3: 'admin_lv_3',
-  GENERAL: 'general'
+  // ADMIN_LV_3: 'admin_lv_3',
+  // GENERAL: 'general'
+}
+
+export const ROLE_LABEL = {
+  SUPER_ADMIN: 'cán bộ sở',
+  ADMIN_LV_1: 'cán bộ quận',
+  ADMIN_LV_2: 'cán bộ phường',
 }
 
 export const exampleData = [
@@ -102,16 +109,16 @@ export const permissions = {
       },
     }
   },
-  [ROLES.ADMIN_LV_3]: {
-    "description": "Phân hệ người dân",
-    "permissions": {
-      "users": {},
-      "advertise": {
-        "request": true
-      },
-      "address": {
-        "request": true
-      },
-    }
-  }
+  // [ROLES.ADMIN_LV_3]: {
+  //   "description": "Phân hệ người dân",
+  //   "permissions": {
+  //     "users": {},
+  //     "advertise": {
+  //       "request": true
+  //     },
+  //     "address": {
+  //       "request": true
+  //     },
+  //   }
+  // }
 }

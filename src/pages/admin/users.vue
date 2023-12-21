@@ -9,7 +9,7 @@
           </button>
         </div>
         <div class="card-body">
-          <TableUsers :data="dataList" :key="`user_${new Date()}`" />
+          <TableUsers :data="staffs" :key="`user_${new Date()}`" />
         </div>
       </div>
     </div>
@@ -17,16 +17,12 @@
 </template>
 
 <script setup>
-import useUsersStore from '~/stores/users.store'
-
 const { $modal } = useNuxtApp()
 definePageMeta({
   layout: 'admin'
 })
-const usersStore = useUsersStore()
-
-await usersStore.getListUsers()
-const dataList = computed(() => usersStore.list)
+const { getStaffs, staffs } = useStaff()
+await getStaffs()
 
 const addUserModal = async () => {
   await $modal.show({

@@ -14,7 +14,7 @@
         </a>
       </div>
       <span>or use your account</span>
-      <input type="email" placeholder="Email" v-model="form.email"/>
+      <input type="text" placeholder="Tên đăng nhập hoặc Email" v-model="form.username"/>
       <input type="password" placeholder="Password" v-model="form.password"/>
       <a href="#" class="link">Forgot your password?</a>
       <button @click="handleLogin()">Sign In</button>
@@ -32,24 +32,20 @@
 </template>
 
 <script setup>
-import { exampleData } from '~/constant/user'
-import useUsersStore from '~/stores/users.store'
 const $router = useRouter()
-const usersStore = useUsersStore()
 const emits = defineEmits(['close'])
 const form = reactive({
-  email: '',
+  username: '',
   password: ''
 })
-const handleLogin = (data = {}) => {
+const { signIn } = useAuth()
+
+const handleLogin = async (data = {}) => {
   const { provider = null } = data
   if(provider) {}
-  // TODO: remove late
-  const existUser = exampleData.find(x => x.email === form.email)
-  console.log(existUser)
-  if(existUser && existUser.email) {
-    usersStore.setProfile(existUser)
-    usersStore.isLoggedIn = true
+  const res = await signIn(form)
+
+  if(res.success) {
     $router.push({ name: 'admin' })
     emits('close')
   } else {

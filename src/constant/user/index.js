@@ -1,18 +1,18 @@
 export const tableField = {
-  // username: 'Tên người dùng',
-  dateOfBirth: 'Ngày sinh',
+  fullName: 'Tên người dùng',
   email: 'Email',
   phone: 'Số điện thoại',
+  dob: 'Ngày sinh',
   role: 'Quyền',
   ward: 'Phường',
   district: 'Quận',
-  verified: 'Xác thực',
+  // verified: 'Xác thực',
 }
 
 export const ROLES = {
-  SUPER_ADMIN: 'super_admin',
-  ADMIN_LV_1: 'admin_lv_1',
-  ADMIN_LV_2: 'admin_lv_2',
+  SUPER_ADMIN: 'canbo_so',
+  ADMIN_LV_1: 'canbo_quan',
+  ADMIN_LV_2: 'canbo_phuong',
   ADMIN_LV_3: 'admin_lv_3',
   GENERAL: 'general'
 }

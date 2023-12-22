@@ -32,7 +32,8 @@
 <script setup>
 const { $modal } = useNuxtApp()
 definePageMeta({
-  layout: 'admin'
+  layout: 'admin',
+  middleware: ['admin'],
 })
 const { userPermission } = useAuth()
 const { getAds, ads, getAdsLocations, adsLocations } = useAdvertise()

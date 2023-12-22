@@ -30,7 +30,8 @@
 
 <script setup>
 definePageMeta({
-  layout: 'admin'
+  layout: 'admin',
+  middleware: ['admin'],
 })
 const { profile } = useAuth()
 const { getStaff, updateStaff } = useStaff()

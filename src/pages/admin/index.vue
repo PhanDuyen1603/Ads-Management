@@ -47,7 +47,8 @@
 
 <script setup>
 definePageMeta({
-  layout: 'admin'
+  layout: 'admin',
+  middleware: ["admin"],
 })
 const { $gMap } = useNuxtApp()
 const { getAdsLocations, adsLocations } = useAdvertise()

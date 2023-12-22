@@ -29,6 +29,11 @@ export default function useAuth() {
     }
   }
 
+  const signOut = () => {
+    $store.clearAccessToken()
+    $store.clearProfile()
+  }
+
   const profile = computed(() => $store.profile)
   const isLoggedIn = computed(() => $store.isLoggedIn)
   const role = computed(() => $store.profile?.role)
@@ -36,6 +41,7 @@ export default function useAuth() {
 
   return {
     signIn,
+    signOut,
     profile,
     isLoggedIn,
     role,

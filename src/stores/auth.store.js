@@ -1,16 +1,14 @@
 import { defineStore } from "pinia";
+import setCookie from "~/utils/cookie/setCookie"
+import deleteCookie from "~/utils/cookie/deleteCookie";
 
 export default defineStore({
   id: 'auth-store',
   state:() => ({
     accessToken: null,
     refreshToken: null,
-    profile: {
-      "_id": "658127a76eada69253daf3ef",
-      "username": "nguyenvana",
-      "role": "canbo_phuong"
-    },
-    isLoggedIn: true
+    profile: {},
+    isLoggedIn: false
   }),
   actions: {
     /**
@@ -18,7 +16,11 @@ export default defineStore({
      * @param profile
      */
     setProfile(profile) {
-      if (profile) this.profile = profile;
+      if (profile) {
+        this.profile = profile;
+        // TODO: remove late
+        setCookie('user',JSON.stringify(profile))
+      }
     },
 
     /**
@@ -26,6 +28,8 @@ export default defineStore({
     */
     clearProfile() {
       this.profile = null;
+      // TODO: remove late
+      deleteCookie('user')
     },
 
     /**
@@ -35,13 +39,17 @@ export default defineStore({
     setAccessToken(token){
       if (token) {
         this.accessToken = token
-        window.localStorage.setItem('access-token', token)
+        setCookie('token', token)
       }
     },
 
     clearAccessToken() {
       this.accessToken = null
-      window.localStorage.removeItem('access-token')
+      deleteCookie('token')
+    },
+
+    setIsLogin(value) {
+      this.isLoggedIn = value
     }
   }
 })

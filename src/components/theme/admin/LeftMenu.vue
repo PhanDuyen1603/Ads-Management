@@ -23,6 +23,11 @@
               <i class="mdi mdi-help-circle"></i>
               <span class="hide-menu">404</span></a>
           </li>
+          <li>
+            <a class="waves-effect waves-dark" aria-expanded="false" @click="logOut()">
+              <i class="mdi mdi-logout"></i>
+              <span class="hide-menu">Đăng suất</span></a>
+          </li>
         </ul>
       </nav>
       <!-- End Sidebar navigation -->
@@ -34,9 +39,14 @@
 import { adminMenu } from '~/constant/layout/admin/leftMenu'
 import { roleMenuCondition } from '~/utils/auth'
 const route = useRoute()
-const { role: userRole } = useAuth()
+const router = useRouter()
+const { role: userRole, signOut } = useAuth()
 
 const activeMenu = ref(route.name)
+const logOut = () => {
+  signOut()
+  router.push({ path: '/' })
+}
 //
 watch(() => route.name, (newRouteName, oldRouteName) => {
   const menu = adminMenu.filter(x => x.name === newRouteName)

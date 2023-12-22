@@ -19,7 +19,8 @@
 <script setup>
 const { $modal } = useNuxtApp()
 definePageMeta({
-  layout: 'admin'
+  layout: 'admin',
+  middleware: ['admin'],
 })
 const { getStaffs, staffs } = useStaff()
 await getStaffs()

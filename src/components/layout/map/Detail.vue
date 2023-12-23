@@ -17,7 +17,7 @@
             <!-- ads -->
             <div class="info_2">
               <div class="info_2_head">
-                <strong>Thong tin dia diem</strong>
+                <strong>Thông tin địa điểm</strong>
               </div>
               <div class="info_2_body">
                 <p>{{ target.title }}</p>
@@ -42,18 +42,18 @@
                 <strong>Thông tin quảng cáo</strong>
               </div>
               <div v-if="!(targetAds && targetAds.length)" class="info_1_body_empty">
-                <p>Chua co du lieu</p>
-                <p>vui long chon ban do de xem</p>
+                <p>Chưa có dữ liệu</p>
+                <p>Vui lòng chọn trên bản đồ để xem</p>
               </div>
               <div v-else class="info_1_body_empty">
                 <!--  -->
                 <div v-for="(item, index) in targetAds" :key="index" class="ad_info">
                   <h3>{{ getName(item.billboardType) }}</h3>
                   <p>{{ item.address.streetLine1 }}</p>
-                  <p>kich thuoc: {{ item.width }} x {{ item.height }}</p>
-                  <p>so luong: <strong>1 tru/bang</strong></p>
-                  <p>hinh thuc: <strong>{{ getName(item.adCategory) }}</strong></p>
-                  <p>phan loai: <strong>dat cong</strong></p>
+                  <p>Kích thước: {{ item.width }} x {{ item.height }}</p>
+                  <p>Số lượng: <strong>1 tru/bang</strong></p>
+                  <p>Hình thức: <strong>{{ getName(item.adCategory) }}</strong></p>
+                  <p>Phân loại: <strong>dat cong</strong></p>
                   <div class="action_groups">
                       <IconsInfoCircle fill="blue" />
                     <div>

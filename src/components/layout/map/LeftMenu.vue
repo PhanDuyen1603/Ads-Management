@@ -3,11 +3,11 @@
     <ul class="menu_items">
       <li class="menu_item" @click="navigate({ query: { entry: 'address' }})">
         <span><IconsGeoAlt style="height: 25px; width: 25px;"/></span>
-        <span>dia diem</span>
+        <span>Địa điểm</span>
       </li>
       <li class="menu_item" @click="navigate({ query: { entry: 'ads' }})">
         <span><IconsAdvertise style="height: 25px; width: 25px;"/></span>
-        <span>quang cao</span>
+        <span>Quảng cáo</span>
       </li>
       <li class="menu_item" @click="navigate({ modal: loginModal })">
         <span><IconsProfileCircle style="height: 25px; width: 25px;"/></span>

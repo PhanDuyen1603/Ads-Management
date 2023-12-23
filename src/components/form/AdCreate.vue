@@ -123,13 +123,13 @@
 
       <FormStepsControls :labels="false">
         <template #next>
-          bước tiếp theo
+          Bước tiếp theo
         </template>
         <template #previous>
-          quay lại
+          Quay lại
         </template>
         <template #finish>
-          gửi
+          Gửi
         </template>
       </FormStepsControls>
     </template>

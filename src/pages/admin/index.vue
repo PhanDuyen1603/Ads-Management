@@ -4,7 +4,7 @@
       <div class="col-lg-4 col-md-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title"><span class="lstick"></span>DS địa điểm đặt quảng cáo</h4>
+            <h4 class="card-title"><span class="lstick"></span>Danh sách địa điểm đặt quảng cáo</h4>
             <!-- <h4 class="card-title"><span class="lstick"></span>DS quảng cáo</h4> -->
             <div class="table-responsive admin_table">
               <table class="table table-hover" style="width: max-content;">
@@ -57,10 +57,10 @@ const { getLocations, addresses } = useLocation()
 const map = ref(null)
 
 const tableField = {
-  streetLine1: 'địa chỉ',
-  city: 'thành phố',
-  ward: 'quận',
-  district: 'huyện'
+  streetLine1: 'Địa chỉ',
+  city: 'Thành phố',
+  ward: 'Quận',
+  district: 'Huyện'
 }
 
 // map interaction

@@ -2,15 +2,17 @@
   <ClientOnly>
     <Vueform
       :endpoint="(form, el) => handleSubmit(form, el)"
-      :form-data="form$ => form$.requestData" v-model="form"
+      :form-data="form$ => form$.requestData"
+      v-model="form"
       sync
     >
-    <TextElement
+      <TextElement
         name="firstName"
         label="Họ và tên đệm"
         placeholder="Nhập họ và tên đệm"
         :columns="{ container: 6 }"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
+        :submit="false"
       />
       <TextElement
         name="lastName"
@@ -18,6 +20,7 @@
         placeholder="Nhập tên"
         :columns="{ container: 6 }"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
+        :submit="false"
       />
       <TextElement
         name="email"
@@ -33,15 +36,35 @@
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
       />
 
+      <SelectElement
+        label="Hình thức báo cáo"
+        name="reportType"
+        :native="false"
+        :items="reportTypes"
+      />
+
       <EditorElement
         name="content"
         label="Nội dung báo cáo"
         :accept="['image/png', 'image/jpeg']"
       />
 
-      <Button name="submit" add-class="mt-2" submits>
-        {{ submitType === 'create' ? 'Tạo mới' : 'Cập nhật' }}
-      </Button>
+      <MultifileElement
+        :drop="true"
+        name="images"
+        view="gallery"
+        :url="false"
+        order-by="order" :object="true"
+        :upload-temp-endpoint="(file, el$) => handleUploadMediaFiles(file, el$)"
+        :remove-endpoint="(file, el$) => handleRemoveMediaFiles(file, el$)"
+        :max-files="5"
+        @mounted="el$ => imagesViews && imagesViews.length && el$.load(imagesViews)"
+      />
+
+      <ButtonElement name="submit" submits>
+        Gửi báo cáo
+      </ButtonElement>
+
     </Vueform>
   </ClientOnly>
 </template>
@@ -58,10 +81,56 @@ const props = defineProps({
   },
   updateType: {
     type: String,
-    default: 'address',
-    validator:(x) => ['address', 'ad'].includes(x)
+    default: 'location',
+    validator:(x) => ['location', 'ad'].includes(x)
   }
 })
+const emits = defineEmits(['close'])
 const form = reactive({})
-const handleSubmit = () => {}
+const { getFileUrl } = useMedia()
+const { getReportTypes } = useReport()
+const { createReport } = useAdReport()
+
+const reportTypes = await getReportTypes()
+
+const imagesViews = ref(form?.images?.map((x, i) => ({ file: getFileUrl(x.path), order: i+1 })) || [])
+
+const handleUploadMediaFiles = async (file, el$) => {
+  return {
+    tmp: file.name, // the temp file identifier
+    originalName: file.name, // the original name of the file that will be displayed to the user
+    file
+  }
+}
+const handleRemoveMediaFiles = async (file, el$) => {
+  imagesViews.value = imagesViews.value.filter(x => x.file !== file)
+}
+
+const handleSubmit = async (submitForm, el) => {
+  const _id = props.updateType === 'ad' ? props.adId : props.addressId
+  var formdata = new FormData();
+
+  const keys = Object.keys(submitForm)
+
+  for (let i = 0; i < keys.length; i++) {
+    if(keys[i] === 'images') {
+      for (let k = 0; k < submitForm.images.length; k++) {
+        if(submitForm.images[k]?.file?.file) formdata.append('images', submitForm.images[k].file.file)
+      }
+    } else {
+      formdata.append(keys[i], submitForm[keys[i]])
+    }
+  }
+  formdata.append('fullName', `${form.firstName} ${form.lastName}`)
+  formdata.append('adsId', _id)
+  try {
+    const res = await createReport(formdata)
+    const list = window.localStorage.getItem('reports') || ''
+    window.localStorage.setItem('reports', list && list.length ? `${list}, ${res.data?.report?._id}` : res.data?.report?._id)
+    emits('close')
+  } catch (error) {
+    console.log({error})
+  }
+
+}
 </script>

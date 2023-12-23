@@ -108,7 +108,7 @@ export default function useLocation() {
     requestUpadte,
     getLocationTypes,
 
-    addresses: addresses.value,
+    addresses,
     locationsTypes,
     target,
     targetAds,

@@ -44,10 +44,6 @@ const mapStyles = computed(() => {
     'margin-left': 'auto'
   }
 })
-
-// onMounted(async () => {
-//   await getAdsLocations()
-// })
 </script>
 
 <style>

@@ -9,6 +9,10 @@
         <span><IconsAdvertise style="height: 25px; width: 25px;"/></span>
         <span>quang cao</span>
       </li>
+      <li class="menu_item" @click="navigate({ query: { entry: 'reports' }})">
+        <span><IconsAdvertise style="height: 25px; width: 25px;"/></span>
+        <span>báo cáo</span>
+      </li>
       <li class="menu_item" @click="navigate({ modal: loginModal })">
         <span><IconsProfileCircle style="height: 25px; width: 25px;"/></span>
         <span>Hồ sơ</span>

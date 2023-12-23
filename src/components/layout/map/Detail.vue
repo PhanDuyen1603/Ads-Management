@@ -87,7 +87,10 @@ const { target, targetAds} = useLocation()
 const openReportModal = async () => {
   await $modal.show({
     component: 'FormCommonLocationReport',
-    props: {},
+    props: {
+      addressId: unref(target)._id,
+      updateType: 'location'
+    },
     wrapperProps: {
       styles: {
         maxWidth: '650px',

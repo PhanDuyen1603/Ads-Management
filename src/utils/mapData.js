@@ -5,6 +5,7 @@ export const mapAdsLocation = (value) => ({
     lat: value.address.lat,
     lng: value.address.long
   },
+  id: value._id,
   ...value,
 })
 

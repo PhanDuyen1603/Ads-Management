@@ -21,7 +21,7 @@ const useGmapStore = defineStore('api-store', () => {
 
   return {
     markers,
-    center,
+    // center,
     initCenter,
 
     changeMapCenter,

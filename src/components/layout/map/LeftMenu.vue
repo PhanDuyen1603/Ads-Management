@@ -10,8 +10,8 @@
         <span>Quảng cáo</span>
       </li>
       <li class="menu_item" @click="navigate({ query: { entry: 'reports' }})">
-        <span><IconsAdvertise style="height: 25px; width: 25px;"/></span>
-        <span>báo cáo</span>
+        <span><IconsReport style="height: 25px; width: 25px;"/></span>
+        <span>Báo cáo</span>
       </li>
       <li class="menu_item" @click="navigate({ modal: loginModal })">
         <span><IconsProfileCircle style="height: 25px; width: 25px;"/></span>

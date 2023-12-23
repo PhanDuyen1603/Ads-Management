@@ -28,7 +28,7 @@
                 <div class="action_groups">
                     <IconsInfoCircle style="cursor: pointer;" fill="blue" />
                   <div>
-                    <button class="btn btn-outline-danger bt-alert" @click="openReportModal()">
+                    <button class="btn btn-outline-danger bt-alert" @click="openReportModal">
                       <IconsExclamationOctagon class="icon_danger" />
                       <span>Báo cáo vi phạm</span>
                     </button>

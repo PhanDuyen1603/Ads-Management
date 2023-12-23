@@ -2,6 +2,14 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   srcDir: './src',
+  imports: {
+    dirs: [
+      'composables',
+      // ... or scan modules nested one level deep with a specific name and file extension
+      'composables/*/**.{ts,js,mjs,mts}',
+      // ... or scan all modules within given directory
+    ]
+  },
   components: {
     dirs: [
       {

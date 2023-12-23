@@ -2,7 +2,7 @@
   <div class="list_items_wrap">
     <div class="list_items_horizontal">
       <div
-        v-for="(item, index) in addresses"
+        v-for="(item, index) in dataList"
         :key="index"
         class="card_horizontal_wrap"
       >
@@ -83,9 +83,46 @@ const props = defineProps({
 const { $gMap, $modal } = useNuxtApp()
 const { getLocations, addresses } = useLocation()
 const { getAds, ads } = useAdvertise()
+const { getReportByIds, reports } = useAdReport()
+const $route = useRoute()
+
+const listType = computed(() => $route.query.entry || 'ads')
 
 const showInfo = ref(true)
 const target = ref({})
+
+const components = {
+  ads: 'ListAdsHorizontal',
+  address: 'ListAdsHorizontal',
+  reports: 'ListReports'
+}
+
+const dataList = ref([])
+
+const getData = async (type) => {
+  switch (type) {
+    case 'ads':
+      await getAds()
+      dataList.value = ads.value
+      break;
+
+    case 'reports':
+      const ids = window.localStorage.getItem('reports')
+      console.log({ids})
+      await getReportByIds(ids)
+      dataList.value = reports.value
+      break;
+
+    default:
+      await getLocations()
+      dataList.value = addresses.value
+      break;
+  }
+}
+
+watch(listType, async (newX, oldX) => {
+  await getData(newX)
+})
 
 const focusMap = (item) => {
   $gMap.changeMapCenter(item.position)
@@ -110,7 +147,12 @@ const openReportModal = async () => {
 }
 
 onMounted(async () => {
-  await getLocations()
-  await getAds()
+  await getData(listType.value)
 })
 </script>
+
+<style lang="scss">
+  .card_desc p {
+    margin: 0
+  }
+</style>

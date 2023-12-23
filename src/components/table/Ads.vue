@@ -26,7 +26,7 @@
           </td>
           <td v-if="userPermission.advertise.request">
             <button class="btn btn-success" @click="openDetailModal(item)">
-              yêu cầu chỉnh sửa
+              Yêu cầu chỉnh sửa
             </button>
           </td>
         </tr>

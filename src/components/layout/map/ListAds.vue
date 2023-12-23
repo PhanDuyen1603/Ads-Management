@@ -12,12 +12,12 @@
           </div>
           <div class="card_content">
             <div class="card_title">
-              {{ item.streetLine1 }}
+              {{ item.address.streetLine1 }}
             </div>
             <div class="card_desc">
-              <span>{{ item.ward }}</span>
-              <span>{{ item.district }}</span>
-              <span>{{ item.city }}</span>
+              <span>{{ item.address.ward }},&nbsp</span>
+              <span>{{ item.address.district }},&nbsp</span>
+              <span>{{ item.address.city }}</span>
             </div>
           </div>
         </div>
@@ -38,18 +38,18 @@
                 <strong>Thông tin quảng cáo</strong>
               </div>
               <div class="info_1_body_empty">
-                <p>Chua co du lieu</p>
-                <p>vui long chon ban do de xem</p>
+                <p>Chưa có dữ liệu</p>
+                <p>Vui lòng chọn bản đồ để xem</p>
               </div>
             </div>
             <div class="info_2">
               <div class="info_2_head">
-                <strong>Thong tin dia diem</strong>
+                <strong>Thông tin địa điểm</strong>
               </div>
               <div class="info_2_body">
                 <p>{{ target.title }}</p>
-                <p>{{ target.streetLine1 }}</p>
-                <p>{{ target.ward }} {{ target.district }}, {{ target.city }}</p>
+                <p>{{ target.streetLine1 }},</p>
+                <p>{{ target.ward }}, {{ target.district }}, {{ target.city }}</p>
               </div>
               <div class="info_2_action">
                 <div class="action_groups">
@@ -73,14 +73,16 @@
 <script setup>
 import './leftmenu.scss'
 import { faker } from '@faker-js/faker';
+import useAdvertise from "~/composables/useAdvertise.js";
 const props = defineProps({
   data: {
     type: Array,
-    default:() => []
+    default:() => [],
   }
 })
 const { $gMap, $modal } = useNuxtApp()
 const { getLocations, addresses } = useLocation()
+const { getAds, ads } = useAdvertise()
 
 const showInfo = ref(true)
 const target = ref({})
@@ -109,5 +111,6 @@ const openReportModal = async () => {
 
 onMounted(async () => {
   await getLocations()
+  await getAds()
 })
 </script>

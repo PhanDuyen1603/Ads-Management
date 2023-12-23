@@ -21,13 +21,13 @@
         </StaticElement>
 
         <TextElement name="title" label="Tên địa điểm" placeholder="Tên" />
-        <TextElement name="streetLine1" label="địa chỉ" placeholder="streetLine1" />
+        <TextElement name="streetLine1" label="Địa chỉ" placeholder="streetLine1" />
         <TextElement name="streetLine2" label="Tên đường" placeholder="streetLine1" />
         <TextElement
           name="city"
           rules="required"
-          label="thanh pho"
-          placeholder="thanh pho"
+          label="Thành phố"
+          placeholder="Thành phố"
           readonly
         />
 
@@ -48,8 +48,8 @@
         <TextElement
           name="district"
           rules="required"
-          label="quan"
-          placeholder="quan"
+          label="Quận"
+          placeholder="Quận"
           :columns="{ container: 6 }"
           readonly
           :disabled="true"
@@ -57,8 +57,8 @@
         <TextElement
           name="ward"
           rules="required"
-          label="phuong"
-          placeholder="phuong"
+          label="Phường"
+          placeholder="Phường"
           :columns="{ container: 6 }"
           readonly
           :disabled="true"
@@ -67,8 +67,8 @@
           name="lat"
           rules="required"
           input-type="number"
-          label="Kinh do"
-          placeholder="Kinh do"
+          label="Kinh độ"
+          placeholder="Kinh độ"
           :columns="{ container: 6 }"
           readonly
           :disabled="true"
@@ -77,8 +77,8 @@
           name="long"
           rules="required"
           input-type="number"
-          label="vi do"
-          placeholder="vi do"
+          label="Vĩ độ"
+          placeholder="Vĩ độ"
           :columns="{ container: 6 }"
           readonly
           :disabled="true"

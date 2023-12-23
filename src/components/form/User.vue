@@ -32,7 +32,7 @@
       />
       <TextElement
         name="email"
-        label="email"
+        label="Email"
         placeholder="Nhập email"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
       />

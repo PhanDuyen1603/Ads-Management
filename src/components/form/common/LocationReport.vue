@@ -24,7 +24,7 @@
       />
       <TextElement
         name="email"
-        label="email"
+        label="Email"
         placeholder="Email"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
       />

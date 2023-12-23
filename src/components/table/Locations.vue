@@ -55,10 +55,10 @@ const props = defineProps({
 const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x)) || [])
 
 const tableField = {
-  streetLine1: 'địa chỉ',
-  city: 'thành phố',
+  streetLine1: 'Địa chỉ',
+  city: 'Thành phố',
   ward: 'Phường',
-  district: 'quận'
+  district: 'Quận'
 }
 const openReportModal = async (item) => {
   const result = await $modal.show({

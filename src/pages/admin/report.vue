@@ -16,7 +16,7 @@
             </li>
           </ul>
           <div class="table-responsive">
-            <table v-if="reports.length" class="table table-hover">
+            <table v-if="isShowAdsList && reports.length" class="table table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -31,6 +31,35 @@
               </thead>
               <tbody>
                 <tr v-for="(item, index) in reports" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td v-for="(field, i) in tableField" :key="i">
+                    <div>{{ get(item, field) }}</div>
+                  </td>
+                  <td>
+                    <div>{{ status[item.report.status] }}</div>
+                  </td>
+                  <td>
+                    <button class="btn btn-success" @click="openDetailModal(item)">Chi tiết</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table v-if="!isShowAdsList && reports.length" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th v-for="(item, idnex) in tableField" :key="index">
+                    {{ mapReportKey[item] ? mapReportKey[item] : item }}
+                  </th>
+                  <th>
+                    {{ mapReportKey.report_status }}
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, index) in adLocationReports" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td v-for="(field, i) in tableField" :key="i">
                     <div>{{ get(item, field) }}</div>
@@ -61,7 +90,9 @@ definePageMeta({
 })
 const { $modal } = useNuxtApp()
 const { getReports, reports } = useAdReport()
+const { getReports: getAdLocationsReports, reports: adLocationReports } = useAdLocationReport()
 await getReports()
+await getAdLocationsReports()
 const isShowAdsList = ref(false)
 
 const showAddressList = () => {

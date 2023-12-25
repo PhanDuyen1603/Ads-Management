@@ -90,6 +90,7 @@ const form = reactive({})
 const { getFileUrl } = useMedia()
 const { getReportTypes } = useReport()
 const { createReport } = useAdReport()
+const { createReport: createAdLocationReport } = useAdLocationReport()
 
 const reportTypes = await getReportTypes()
 
@@ -107,10 +108,9 @@ const handleRemoveMediaFiles = async (file, el$) => {
 }
 
 const handleSubmit = async (submitForm, el) => {
-  // const _id = props.updateType === 'ad' ? props.adId : props.addressId
-  const _id = props.adId
+  const _id = props.updateType === 'ad' ? props.adId : props.addressId
 
-  if (!_id) window.alert('Khong tim thay quang cao')
+  if (!_id) window.alert('Khong tim thay quang cao hay địa điểm')
   var formdata = new FormData();
 
   const keys = Object.keys(submitForm)
@@ -125,11 +125,13 @@ const handleSubmit = async (submitForm, el) => {
     }
   }
   formdata.append('fullName', `${form.firstName} ${form.lastName}`)
-  formdata.append('adsId', _id)
+  if(props.updateType === 'ad') formdata.append('adsId', _id)
+  if(props.updateType === 'location') formdata.append('adsLocationId', _id)
   try {
-    const res = await createReport(formdata)
-    const list = window.localStorage.getItem('reports') || ''
-    window.localStorage.setItem('reports', list && list.length ? `${list}, ${res.data?.adsReport?._id}` : res.data?.adsReport?._id)
+    const res = props.updateType === 'ad' ? await createReport(formdata) : await createAdLocationReport(formdata)
+    const list = props.updateType === 'ad' ? window.localStorage.getItem('reports') : window.localStorage.getItem('reports_location') || ''
+    if(props.updateType === 'ad') window.localStorage.setItem('reports', list && list.length ? `${list}, ${res.data?.adsReport?._id}` : res.data?.adsReport?._id)
+    if(props.updateType === 'location') window.localStorage.setItem('reports_location', list && list.length ? `${list}, ${res.data?.adsLocationReport?._id}` : res.data?.adsLocationReport?._id)
     emits('close')
   } catch (error) {
     console.log({error})

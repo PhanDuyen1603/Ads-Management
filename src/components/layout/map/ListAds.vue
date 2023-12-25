@@ -47,10 +47,11 @@
         </div>
       </div>
       <!-- TODO: seperate component list report -->
-      <div v-if="$route.query.entry === 'reports'" class="reports">
+      <div v-if="$route.query.entry === 'reports' && dataList.length" class="reports">
         <div v-for="(item, index) in dataList" :key="index" class="card card-report">
-          <div v-if="item.report.fullName" class="card-body">
-            <h5 class="card-title">{{ item.ads.title }}</h5>
+          <div v-if="item.report?.fullName" class="card-body">
+            <h5 v-if="item.ads" class="card-title">{{ item.ads.title }}</h5>
+            <h5 v-if="item.adsLocation?.address" class="card-title">{{ item.adsLocation.address.streetLine1 }}</h5>
             <p class="card-date">Ngày gửi: {{ formatDate(item.report?.createdAt) }}</p>
             <p class="card-text"><span>Nội dung: </span><span v-html="item.report?.content || '<div></div>'" /></p>
             <!-- <div v-if="item.report.images && item.report?.images.length" class="card-images"> -->
@@ -134,6 +135,7 @@
             </div>
             <div class="info_1_body">
               <div class="card mb-2">
+                <!-- TODO: seperate component -->
                 <div v-if="target.ads && target.adLocation" class="card-body">
                   <h5>{{ target.ads.title }}</h5>
                   <p>{{ target.ads.content }}</p>
@@ -145,9 +147,20 @@
                   </p>
                   <p>Kích thước: &nbsp{{ target.ads.width }}m x {{ target.ads.height }}m</p>
                 </div>
+                <!--  -->
+                <div v-if="target.adsLocation" class="card-body">
+                  <h5>Địa điểm đặt quảng cáo</h5>
+                  <p>{{ target.adsLocation.address.streetLine1 }},
+                    {{ target.adsLocation.address.ward }},
+                    {{ target.adsLocation.address.district }},
+                    {{ target.adsLocation.address.city }},
+                    {{ target.adsLocation.address.country }}
+                  </p>
+                  <p>Hình thức quảng cáo: &nbsp{{ target.adsLocation.adsCategory.name }}</p>
+                </div>
               </div>
               <div class="card mb-2">
-                <div v-if="target" class="card-body">
+                <div v-if="target && target.report" class="card-body">
                   <h5><strong>Tên người báo cáo: </strong>{{ target.report.fullName }}</h5>
                   <p><strong>Email: </strong>{{ target.report.email }}</p>
                   <p><strong>Nội dung báo cáo: </strong> <span v-html="target.report.content"></span></p>
@@ -179,6 +192,7 @@ const { $gMap, $modal, $dayjs } = useNuxtApp()
 const { getLocations, addresses, getLocation } = useLocation()
 const { getAds, ads, getBillboardType } = useAdvertise()
 const { getReportByIds, reports } = useAdReport()
+const { getReportByIds: getAdLocationReportByIds } = useAdLocationReport()
 const { getFileUrl } = useMedia()
 const $route = useRoute()
 
@@ -205,10 +219,12 @@ const getData = async (type) => {
       break;
 
     case 'reports':
+      dataList.value = []
       const ids = window.localStorage.getItem('reports')
-      console.log({ids})
-      await getReportByIds(ids)
-      dataList.value = await getReportByIds(ids)
+      const ids_location = window.localStorage.getItem('reports_location')
+      ids && ids.length && await getReportByIds(ids)
+      dataList.value = [...dataList.value, ...await getAdLocationReportByIds(ids_location)]
+      dataList.value = [...dataList.value, ...await getReportByIds(ids)]
       break;
 
     default:
@@ -235,15 +251,23 @@ const focusMap = (item) => {
 }
 
 const showReportDetail = async (item) => {
-  const adLocation = item.ads.adsLocation && await getLocation(item.ads.adsLocation)
-  const billboardType = item.ads.billboardType && await getBillboardType(item.ads.billboardType)
-  target.value = {
-    ...item,
-    _id: item.report._id,
-    adLocation,
-    billboardType
+  if(item.ads) {
+    const adLocation = item.ads.adsLocation && await getLocation(item.ads.adsLocation)
+    const billboardType = item.ads.billboardType && await getBillboardType(item.ads.billboardType)
+    target.value = {
+      ...item,
+      _id: item.report._id,
+      adLocation,
+      billboardType
+    }
+    showInfo.value = true
+  } else {
+    target.value = {
+      ...item,
+      _id: item.report._id,
+    }
+    showInfo.value = true
   }
-  showInfo.value = true
 }
 
 const openReportModal = async (type) => {

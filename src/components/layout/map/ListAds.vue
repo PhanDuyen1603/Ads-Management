@@ -71,7 +71,7 @@
                 <div class="action_groups">
                   <IconsInfoCircle style="cursor: pointer;" fill="blue" />
                   <div>
-                    <button class="btn btn-outline-danger bt-alert" @click="openReportModal()">
+                    <button class="btn btn-outline-danger bt-alert" @click="openReportModal('ad')">
                       <IconsExclamationOctagon class="icon_danger" />
                       <span>Báo cáo vi phạm</span>
                     </button>
@@ -96,7 +96,7 @@
                 <div class="action_groups">
                     <IconsInfoCircle style="cursor: pointer;" fill="blue" />
                   <div>
-                    <button class="btn btn-outline-danger bt-alert" @click="openReportModal()">
+                    <button class="btn btn-outline-danger bt-alert" @click="openReportModal('location')">
                       <IconsExclamationOctagon class="icon_danger" />
                       <span>Báo cáo vi phạm</span>
                     </button>
@@ -182,10 +182,14 @@ const focusMap = (item) => {
   showInfo.value = true
 }
 
-const openReportModal = async () => {
+const openReportModal = async (type) => {
   await $modal.show({
     component: 'FormCommonLocationReport',
-    props: {},
+    props: {
+      addressId: type === 'location' && unref(target)._id,
+      adId: type === 'ad' && unref(target)._id,
+      updateType: type
+    },
     wrapperProps: {
       styles: {
         maxWidth: '650px',

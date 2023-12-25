@@ -107,7 +107,10 @@ const handleRemoveMediaFiles = async (file, el$) => {
 }
 
 const handleSubmit = async (submitForm, el) => {
-  const _id = props.updateType === 'ad' ? props.adId : props.addressId
+  // const _id = props.updateType === 'ad' ? props.adId : props.addressId
+  const _id = props.adId
+
+  if (!_id) window.alert('Khong tim thay quang cao')
   var formdata = new FormData();
 
   const keys = Object.keys(submitForm)
@@ -126,7 +129,7 @@ const handleSubmit = async (submitForm, el) => {
   try {
     const res = await createReport(formdata)
     const list = window.localStorage.getItem('reports') || ''
-    window.localStorage.setItem('reports', list && list.length ? `${list}, ${res.data?.report?._id}` : res.data?.report?._id)
+    window.localStorage.setItem('reports', list && list.length ? `${list}, ${res.data?.adsReport?._id}` : res.data?.adsReport?._id)
     emits('close')
   } catch (error) {
     console.log({error})

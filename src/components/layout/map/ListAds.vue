@@ -1,6 +1,7 @@
 <template>
   <div class="list_items_wrap">
     <div class="list_items_horizontal">
+      <!-- TODO: seperate component list location -->
       <div
           v-if="$route.query.entry === 'address'"
         v-for="(item, index) in dataList"
@@ -23,6 +24,7 @@
           </div>
         </div>
       </div>
+      <!-- TODO: seperate component list ads -->
       <div
         v-if="$route.query.entry === 'ads'"
         v-for="(item, index) in ads"
@@ -44,6 +46,21 @@
           </div>
         </div>
       </div>
+      <!-- TODO: seperate component list report -->
+      <div v-if="$route.query.entry === 'reports'" class="reports">
+        <div v-for="(item, index) in dataList" :key="index" class="card card-report">
+          <div v-if="item.report.fullName" class="card-body">
+            <h5 class="card-title">{{ item.ads.title }}</h5>
+            <p class="card-date">Ngày gửi: {{ formatDate(item.report?.createdAt) }}</p>
+            <p class="card-text"><span>Nội dung: </span><span v-html="item.report?.content || '<div></div>'" /></p>
+            <!-- <div v-if="item.report.images && item.report?.images.length" class="card-images"> -->
+              <!-- TODO: get image -->
+              <!-- <img v-for="(img, j) in item.report?.images" :key="j" :src="getFileUrl('./uploads/' + img)" alt=""> -->
+            <!-- </div> -->
+            <button class="btn btn-outline-primary" @click="showReportDetail(item)">Xem chi tiết</button>
+          </div>
+        </div>
+      </div>
 
     </div>
     <div class="item_info" v-show="showInfo">
@@ -51,7 +68,7 @@
         <div class="close" @click="showInfo = false">
           <IconsCloseCircle />
         </div>
-        <div class="info_body" v-if="target && target._id">
+        <div class="info_body" v-if="target && target._id && $route.query.entry !== 'reports'">
           <div class="info_image">
             <img :src="getFileUrl(Array.isArray(target.images) && target.images.length && target.images[0].path)" alt="..">
           </div>
@@ -61,10 +78,10 @@
                 <strong>Thông tin quảng cáo</strong>
               </div>
               <div v-if="target.title" class="info_2_body">
+                <!-- TODO: missing information -->
                 <p>Kích thước: &nbsp{{ target.width }}m x {{ target.height }}m</p>
                 <p>{{ target.content }}</p>
                 <p>Số lượng: 1 trụ/bảng</p>
-<!--                TODO-->
                 <p>Hình thức: thiếu</p>
               </div>
               <div v-if="target.title || target.content" class="info_2_action">
@@ -110,6 +127,39 @@
             </div>
           </div>
         </div>
+        <div class="info_body" v-if="$route.query.entry === 'reports'">
+          <div class="info dialog report_info">
+            <div class="info_1_head">
+              <strong>Thông tin báo cáo</strong>
+            </div>
+            <div class="info_1_body">
+              <div class="card mb-2">
+                <div v-if="target.ads && target.adLocation" class="card-body">
+                  <h5>{{ target.ads.title }}</h5>
+                  <p>{{ target.ads.content }}</p>
+                  <p>{{ target.adLocation.address.streetLine1 }},
+                    {{ target.adLocation.address.ward }},
+                    {{ target.adLocation.address.district }},
+                    {{ target.adLocation.address.city }},
+                    {{ target.adLocation.address.country }}
+                  </p>
+                  <p>Kích thước: &nbsp{{ target.ads.width }}m x {{ target.ads.height }}m</p>
+                </div>
+              </div>
+              <div class="card mb-2">
+                <div v-if="target" class="card-body">
+                  <h5><strong>Tên người báo cáo: </strong>{{ target.report.fullName }}</h5>
+                  <p><strong>Email: </strong>{{ target.report.email }}</p>
+                  <p><strong>Nội dung báo cáo: </strong> <span v-html="target.report.content"></span></p>
+                  <!-- <div v-if="item.report.images && item.report?.images.length" class="card-images"> -->
+                    <!-- TODO: get image -->
+                    <!-- <img v-for="(img, j) in item.report?.images" :key="j" :src="getFileUrl('./uploads/' + img)" alt=""> -->
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -125,9 +175,9 @@ const props = defineProps({
     default:() => [],
   }
 })
-const { $gMap, $modal } = useNuxtApp()
-const { getLocations, addresses } = useLocation()
-const { getAds, ads } = useAdvertise()
+const { $gMap, $modal, $dayjs } = useNuxtApp()
+const { getLocations, addresses, getLocation } = useLocation()
+const { getAds, ads, getBillboardType } = useAdvertise()
 const { getReportByIds, reports } = useAdReport()
 const { getFileUrl } = useMedia()
 const $route = useRoute()
@@ -145,6 +195,8 @@ const components = {
 
 const dataList = ref([])
 
+const formatDate = (date) => $dayjs(date).format('DD-MM-YYYY')
+
 const getData = async (type) => {
   switch (type) {
     case 'ads':
@@ -156,7 +208,7 @@ const getData = async (type) => {
       const ids = window.localStorage.getItem('reports')
       console.log({ids})
       await getReportByIds(ids)
-      dataList.value = reports.value
+      dataList.value = await getReportByIds(ids)
       break;
 
     default:
@@ -179,6 +231,18 @@ const focusMap = (item) => {
   }
 
   target.value = data
+  showInfo.value = true
+}
+
+const showReportDetail = async (item) => {
+  const adLocation = item.ads.adsLocation && await getLocation(item.ads.adsLocation)
+  const billboardType = item.ads.billboardType && await getBillboardType(item.ads.billboardType)
+  target.value = {
+    ...item,
+    _id: item.report._id,
+    adLocation,
+    billboardType
+  }
   showInfo.value = true
 }
 
@@ -208,5 +272,35 @@ onMounted(async () => {
 <style lang="scss">
   .card_desc p {
     margin: 0
+  }
+  .reports {
+    padding: 15px;
+  }
+  .card-report {
+    .card-title {
+      font-weight: 700;
+    }
+    .card-text {
+      display: inline-flex;
+      margin-bottom: 1rem
+    }
+    .card-date {
+      font-size: .6rem;
+      color: gray;
+      margin-bottom: .5rem;
+    }
+    .card-body {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .report_info {
+    p {
+      font-size: .8rem;
+      margin-bottom: .5rem;
+    }
+    h5 {
+      font-size: 1rem;
+    }
   }
 </style>

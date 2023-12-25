@@ -47,8 +47,7 @@ export default function useAdReport() {
     else listId = ids
     for await (const id of listId) {
       const response = await getReport(id);
-      const data = response.data
-      res = [...res, data]
+      res = [...res, response]
     }
     return res
   }

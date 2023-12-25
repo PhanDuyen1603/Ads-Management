@@ -71,7 +71,17 @@ export default function useAdvertise() {
       const response = await $apiFetch(`/billboard-types`)
       if(response.success) {
         $store.billboardTypes = response.data
-        return
+        return response.data
+      }
+    } catch (error) {
+      console.log('GET: /ads', error)
+    }
+  }
+  const getBillboardType = async (id) => {
+    try {
+      const response = await $apiFetch(`/billboard-types/${id}`)
+      if(response.success) {
+        return response.data
       }
     } catch (error) {
       console.log('GET: /ads', error)
@@ -99,6 +109,7 @@ export default function useAdvertise() {
     getAdById,
     getAdsCategories,
     getBillboardTypes,
+    getBillboardType,
 // no return .value in composable it will not reactive any more
     adsLocations,
     ads,

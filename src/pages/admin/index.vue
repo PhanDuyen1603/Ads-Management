@@ -5,27 +5,7 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title"><span class="lstick"></span>Danh sách địa điểm đặt quảng cáo</h4>
-            <!-- <h4 class="card-title"><span class="lstick"></span>DS quảng cáo</h4> -->
-            <div class="table-responsive admin_table">
-              <table class="table table-hover" style="width: max-content;">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th v-for="(item, index) in Object.values(tableField)" :key="index" style="width: fit-content;">
-                      {{ item }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item, index) in addresses" @click="focusMap(item)">
-                    <td>{{ index + 1 }}</td>
-                    <td v-for="(field, i) in Object.keys(tableField)" :key="i">
-                      {{ item[field] }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <TableLocations :data="addresses" :key="`location_${new Date()}`" table-class="table-overflow" :show-update-btn="false" />
           </div>
         </div>
       </div>

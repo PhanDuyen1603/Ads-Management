@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <table class="table">
+    <table :class="['table', tableClass]">
       <thead>
         <tr>
           <th>#</th>
@@ -25,12 +25,12 @@
           <td class="detail_icon" @click="openDetailModal(item)">
             <i class="mdi mdi-eye-outline"></i>
           </td>
-          <td v-if="userPermission.address.request">
+          <td v-if="userPermission.address.request && showUpdateBtn">
             <button class="btn btn-success" @click="openReportModal(item)">
               Yêu cầu chỉnh sửa
             </button>
           </td>
-          <td v-if="userPermission.address.update">
+          <td v-if="userPermission.address.update && showUpdateBtn">
             <button class="btn btn-success" @click="openReportModal(item)">
               Chỉnh sửa
             </button>
@@ -50,6 +50,14 @@ const props = defineProps({
     type: Array,
     default:() => []
   },
+  tableClass: {
+    type: String,
+    default: ''
+  },
+  showUpdateBtn: {
+    type: Boolean,
+    default: true
+  }
 })
 
 const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x)) || [])
@@ -88,3 +96,9 @@ const openDetailModal = async (item) => {
 }
 
 </script>
+
+<style>
+.detail_icon {
+  cursor: pointer;
+}
+</style>

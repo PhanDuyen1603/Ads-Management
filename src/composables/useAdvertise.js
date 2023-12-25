@@ -18,6 +18,16 @@ export default function useAdvertise() {
       console.log('GET: /ads-locations', error)
     }
   }
+  const getAdsLocation = async (id) => {
+    try {
+      const response = await $apiFetch(`/ads-locations/${id}`)
+      if(response.success) {
+        return response.data
+      }
+    } catch (error) {
+      console.log('GET: /ads-locations', error)
+    }
+  }
 
   /**
    * @desc get all ads
@@ -105,6 +115,7 @@ export default function useAdvertise() {
 
   return {
     getAdsLocations,
+    getAdsLocation,
     getAds,
     getAdById,
     getAdsCategories,

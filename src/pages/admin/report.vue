@@ -1,40 +1,88 @@
 <template>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table v-if="reports.length" class="table table-hover">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th v-for="(item, idnex) in tableField" :key="index">
-              {{ mapReportKey[item] ? mapReportKey[item] : item }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in reports" :key="index" @click="openDetailModal(item)">
-            <td>{{ index + 1 }}</td>
-            <td v-for="(field, i) in tableField" :key="i">
-              <div v-if="!field.startsWith('ad_')">{{ item[field] }}</div>
-              <div v-else>{{ mapStore.getAdInfo(item.ad, field.split('_')[1] || '') }}</div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <ul class="nav nav-pills nav-fill mb-2 nav-blue">
+            <li class="nav-item" @click="showAddressList()">
+              <div :class="`nav-link ${ !isShowAdsList ? 'active' : ''}`">
+                Báo cáo điểm đặt quảng cáo
+              </div>
+            </li>
+            <li class="nav-item" @click="showAdsList()">
+              <div :class="`nav-link ${ isShowAdsList ? 'active' : ''}`">
+                Báo cáo danh sách quảng cáo
+              </div>
+            </li>
+          </ul>
+          <div class="table-responsive">
+            <table v-if="reports.length" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th v-for="(item, idnex) in tableField" :key="index">
+                    {{ mapReportKey[item] ? mapReportKey[item] : item }}
+                  </th>
+                  <th>
+                    {{ mapReportKey.report_status }}
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, index) in reports" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td v-for="(field, i) in tableField" :key="i">
+                    <div>{{ get(item, field) }}</div>
+                  </td>
+                  <td>
+                    <div>{{ status[item.report.status] }}</div>
+                  </td>
+                  <td>
+                    <button class="btn btn-success" @click="openDetailModal(item)">Chi tiết</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- <TableAds v-else :data="dataList" :key="`ad_${new Date()}`" /> -->
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { mapReportKey } from '~/utils/generateAdReports'
+import get from '~/utils/getter/get'
 definePageMeta({
   layout: 'admin',
   middleware: ['admin'],
 })
-const tableField = ['createdAt', 'ad_address', 'userName', 'phone', 'reportType', 'status']
+const { $modal } = useNuxtApp()
+const { getReports, reports } = useAdReport()
+await getReports()
+const isShowAdsList = ref(false)
+
+const showAddressList = () => {
+  isShowAdsList.value = false
+}
+const showAdsList = () => {
+  isShowAdsList.value = true
+}
+
+const tableField = ['report_createdAt', 'report_fullName', 'report_phone', 'report_reportType']
+const status = {
+  0: 'Chưa duyệt',
+  1: 'Đã duyệt'
+}
+
 const openDetailModal = async (item) => {
   await $modal.show({
     component: 'LazyModalAdminReportDetail',
-    props: {...item},
+    props: {
+      modelValue: item
+    },
     wrapperProps: {
       styles: {
         width: '650px'

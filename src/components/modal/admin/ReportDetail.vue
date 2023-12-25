@@ -1,79 +1,109 @@
 <template>
   <div class="modal_ad_detail">
-    <div class="detail_item mb-2">
-      <h4>{{ reportType }}</h4>
-    </div>
-    <div class="detail_item">
-      <h4>Họ và tên người gửi:</h4>
-      <p>{{ userName }}</p>
-    </div>
-    <div class="detail_item">
-      <h4>Số điện thoại: </h4>
-      <p>{{ phone }}</p>
-    </div>
-    <div class="detail_item">
-      <h4>Email:</h4>
-      <p>{{ advertisingType }}</p>
-    </div>
-
-    <div class="detail_item">
-      <h4>Nội dung báo cáo:</h4>
-      <p>{{ advertisingType }}</p>
-    </div>
-    <div class="detail_item">
-      <h4>Hình ảnh minh hoạ:</h4>
-      <p>{{ advertisingType }}</p>
-    </div>
-
-    <div class="detail_item">
-      <h4>Trạng thái xử lý: </h4>
-      <p>Đang xử lý</p>
-    </div>
-    <!-- <div class="detail_item">
-      <h4>Hình ảnh điểm đặt bảng quảng cáo:</h4>
-      <p></p>
-    </div> -->
-    <div>
-      <ElementGmap
-        class="map"
-        :map-styles="{
-          width: '100%',
-          height: '300px'
-        }"
-        :center="position"
-        :markers="[{ position }]"
-      />
-    </div>
-    <div class="modal_ad_btns">
-      <div class="btn btn-success">Gửi</div>
-      <div class="btn btn-danger">Đóng</div>
-    </div>
+    <Vueform
+      sync
+      :endpoint="(form, el) => handleSubmit(form, el)"
+      :form-data="form$ => form$.requestData"
+      v-model="form"
+    >
+        <TextElement
+          name="fullName"
+          class="disable_mouse"
+          :columns="{ container: 12, label: 4, wrapper: 12 }"
+          :submit="false"
+          label="Họ và tên người gửi: "
+        />
+        <TextElement
+          name="phone"
+          :columns="{ container: 12, label: 4, wrapper: 12 }"
+          class="disable_mouse"
+          :submit="false"
+          label="số điện thoại: "
+        />
+        <TextElement
+          name="email"
+          :columns="{ container: 12, label: 4, wrapper: 12 }"
+          class="disable_mouse"
+          :submit="false"
+          label="Email: "
+        />
+        <TextareaElement
+          name="content"
+          :columns="{ container: 12, label: 4, wrapper: 12 }"
+          class="disable_mouse"
+          :submit="false"
+          label="Nội dung báo cáo: "
+        />
+        <StaticElement name="map">
+          <!-- <b>Thông tin biển quảng cáo</b>
+          {{ modelValue.ads }}
+          <div class="row">
+            <div class="col-6">{{ modelValue.das.title }}</div>
+            <div class="col-6">{{ modelValue.das.content }}</div>
+            <div class="col-6"></div>
+          </div> -->
+          <!-- <ElementGmap
+            :map-styles="{
+              width: '100%',
+              height: '300px'
+            }"
+            :center="mapCenter"
+          /> -->
+        </StaticElement>
+        <!-- TODO: list image -->
+        <MultifileElement
+          v-if="modelValue.report?.images && modelValue.report?.images.lengths"
+          name="images"
+          view="gallery"
+          :url="false"
+          order-by="order" :object="true"
+          @mounted="el$ => imagesViews && imagesViews.length && el$.load(imagesViews)"
+        />
+        <EditorElement
+          name="handle"
+          :columns="{ container: 12, label: 4, wrapper: 12 }"
+          :submit="false"
+          label="Hình thức xử lý: "
+        />
+        <ToggleElement text="Trạng thái xử lý" name="status" :true-value="1" :false-value="0" />
+        <ButtonElement name="submit" submits>
+           Lưu thay đổi
+        </ButtonElement>
+    </Vueform>
   </div>
 </template>
 
 <script setup>
+import { keys } from '~/utils/generateAdReports'
+import get from '~/utils/getter/get';
 const props = defineProps({
+  modelValue: {
+    type: Object,
+    default:() => {}
+  },
   position: {
     type: Object,
     default:() => {}
   },
-  address: {
-    type: String,
-    default: ''
-  },
-  areaType: {
-    type: String,
-    default: ''
-  },
-  positionType: {
-    type: String,
-    default: ''
-  },
-  advertisingType: {
-    type: String,
-    default: ''
-  }
 })
+const emits = defineEmits(['close'])
+// const { getBillboardType, getAdsLocation } = useAdvertise()
+// const billboardType = props.modelValue.ads?.billboardType && await getBillboardType(props.modelValue.ads.billboardType)
+// const adsLocation = props.modelValue.ads?.adsLocation && await getAdsLocation(props.modelValue.ads.adsLocation)
+const imagesViews = []
+
+const form = ref({
+ fullName: get(props.modelValue, keys.fullName),
+ phone: get(props.modelValue, keys.phone),
+ email: get(props.modelValue, keys.email),
+ content: get(props.modelValue, keys.content),
+ status: get(props.modelValue, keys.status),
+})
+
+const handleSubmit = () => {
+  console.log(1)
+  emits('close')
+}
 
 </script>
 
@@ -92,5 +122,8 @@ const props = defineProps({
       // font-size: 14px
     }
   }
+}
+.disable_mouse {
+  pointer-events: none
 }
 </style>

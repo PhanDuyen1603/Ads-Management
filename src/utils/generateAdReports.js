@@ -26,15 +26,27 @@ function generateRandomReportType() {
 }
 
 export const mapReportKey = {
-  createdAt: 'Ngày gửi',
-  reportType: 'Hình thức báo cáo',
-  userName: 'Họ và tên',
-  email: 'Email',
-  phone: 'Số điện thoại',
-  reportDetail: 'Nội dung báo cáo',
-  images: 'Hình ảnh minh hoạ',
-  status: 'Tình trạng xử lý',
-  ad_address: 'Địa chỉ',
+  report_createdAt: 'Ngày gửi',
+  report_reportType: 'Hình thức báo cáo',
+  report_fullName: 'Họ và tên',
+  report_email: 'Email',
+  report_phone: 'Số điện thoại',
+  report_content: 'Nội dung báo cáo',
+  report_images: 'Hình ảnh minh hoạ',
+  report_status: 'Tình trạng xử lý',
+  ads_address: 'Điểm đặt quảng cáo',
+}
+
+export const keys = {
+  fullName: 'report_fullName',
+  createdAt: 'report_createdAt',
+  reportType: 'report_reportType',
+  email: 'report_email',
+  phone: 'report_phone',
+  content: 'report_content',
+  images: 'report_images',
+  status: 'report_status',
+  address: 'ads_address',
 }
 
 // Generate an array of 10 objects

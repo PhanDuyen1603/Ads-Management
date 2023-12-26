@@ -45,22 +45,25 @@
           :items="adsCategories"
         />
 
-        <TextElement
+        <SelectElement
           name="district"
           rules="required"
           label="Quận"
           placeholder="Quận"
           :columns="{ container: 6 }"
+          :items="listDistricts"
           readonly
           :disabled="true"
         />
-        <TextElement
+
+        <SelectElement
           name="ward"
           rules="required"
           label="Phường"
           placeholder="Phường"
           :columns="{ container: 6 }"
           readonly
+          :items="listWards"
           :disabled="true"
         />
         <TextElement
@@ -97,27 +100,45 @@
 </template>
 
 <script setup>
-const emits = defineEmits(['close'])
+import { standardize_district, standardize_ward } from '~/utils/location/locations'
+import { slugify } from "~/utils/string/slug"
+const emits = defineEmits(['close', 'refresh'])
 const form = reactive({})
-const { createLocation, getLocationTypes, locationsTypes } = useLocation()
+const { createLocation, getLocationTypes, locationsTypes, getWards, getDistricts } = useLocation()
 const { getAdsCategories, adsCategories } = useAdvertise()
 
 await getLocationTypes()
 await getAdsCategories()
+const listDistricts = await getDistricts(true)
+const listWards = await getWards(true)
 
-const setPlace = ({ value }) => {
+const setPlace = async ({ value }) => {
+  const district = standardize_district(value.full_address)
+  const ward = standardize_ward(value.full_address)
+  const isExistDistrict = listDistricts.find(x => {
+    let slugText = slugify(x.label)
+    if(!slugText.startsWith('quan')) slugText = `quan${slugText}`
+    return slugText === slugify(district)
+  })
+  const isExistWard = listWards.find(x => {
+    let slugText = slugify(x.label)
+    return slugText === slugify(ward)
+  })
+  if(!isExistDistrict) return window.alert('Quận không khả dụng')
+  if(!isExistWard) return window.alert('Phường không khả dụng')
   form.title = value.title
   form.streetLine1 = value.streetLine1
   form.lat = value.position?.lat
   form.long = value.position?.lng
-  form.ward = value.ward
-  form.city = value.city
-  form.district = value.district
+  form.city = 'Hồ Chí Minh'
+  form.ward = isExistWard.value
+  form.district = isExistDistrict.value
 }
 
 const handleCreateLocation = async (form, el$) => {
   try {
     const res = await createLocation(form)
+    emits('refresh')
     emits('close')
   } catch (error) {
     console.log({error})

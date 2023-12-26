@@ -14,7 +14,10 @@ const get = (obj, path, defaultValue = '', separator = '_') => {
     // console.log({
     //   index, val, res, key: keys[index]
     // })
-    if (val == null ) break;
+    if (val == null ) {
+      if( typeof res === 'object') res = defaultValue
+      break;
+    }
     res = val
   }
   return defaultValue || keys.length && res

@@ -33,7 +33,7 @@
                 <tr v-for="(item, index) in reports" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td v-for="(field, i) in tableField" :key="i">
-                    <div>{{ get(item, field) }}</div>
+                    <div>{{ getName(item, field) }}</div>
                   </td>
                   <td>
                     <div>{{ status[item.report.status] }}</div>
@@ -62,7 +62,7 @@
                 <tr v-for="(item, index) in adLocationReports" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td v-for="(field, i) in tableField" :key="i">
-                    <div>{{ get(item, field) }}</div>
+                    <div>{{ getName(item, field) }}</div>
                   </td>
                   <td>
                     <div>{{ status[item.report.status] }}</div>
@@ -83,7 +83,7 @@
 
 <script setup>
 import { mapReportKey } from '~/utils/generateAdReports'
-import get from '~/utils/getter/get'
+import getName from '~/utils/getter/getName'
 definePageMeta({
   layout: 'admin',
   middleware: ['admin'],

@@ -15,7 +15,7 @@ export const ROLES = {
   ADMIN_LV_1: 'canbo_quan',
   ADMIN_LV_2: 'canbo_phuong',
   // ADMIN_LV_3: 'admin_lv_3',
-  // GENERAL: 'general'
+  GENERAL: 'general'
 }
 
 export const ROLE_LABEL = {
@@ -109,16 +109,12 @@ export const permissions = {
       },
     }
   },
-  // [ROLES.ADMIN_LV_3]: {
-  //   "description": "Phân hệ người dân",
-  //   "permissions": {
-  //     "users": {},
-  //     "advertise": {
-  //       "request": true
-  //     },
-  //     "address": {
-  //       "request": true
-  //     },
-  //   }
-  // }
+  [ROLES.GENERAL]: {
+    "description": "Phân hệ người dân",
+    "permissions": {
+      "users": {},
+      "advertise": {},
+      "address": {},
+    }
+  }
 }

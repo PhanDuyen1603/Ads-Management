@@ -1,5 +1,6 @@
 import useAuthStore from "~/stores/auth.store";
 import { permissions } from '~/constant/user'
+import parseCookie from '~/utils/cookie/parseCookie'
 
 export default function useAuth() {
   const { $apiFetch } = useNuxtApp()
@@ -29,6 +30,15 @@ export default function useAuth() {
     }
   }
 
+  /**
+   * @desc set profile from cookie to stoe
+   */
+  const getMe = () => {
+    const cookies = parseCookie(document.cookie)
+    const user = JSON.parse(cookies.user || {})
+    $store.setProfile(user)
+  }
+
   const signOut = () => {
     $store.clearAccessToken()
     $store.clearProfile()
@@ -37,11 +47,12 @@ export default function useAuth() {
   const profile = computed(() => $store.profile)
   const isLoggedIn = computed(() => $store.isLoggedIn)
   const role = computed(() => $store.profile?.role)
-  const userPermission = computed(() => permissions[$store.profile?.role]?.permissions)
+  const userPermission = computed(() => permissions[$store.profile?.role]?.permissions || permissions.general.permissions)
 
   return {
     signIn,
     signOut,
+    getMe,
     profile,
     isLoggedIn,
     role,

@@ -91,6 +91,38 @@ export default function useLocation() {
     }
   }
 
+  /**
+   * @desc get wards list
+   */
+  const getWards = async (isTransform = false) => {
+    try {
+      const response = await $apiFetch('/wards')
+      if(response.success) {
+        return isTransform
+          ? response.data?.map(x => ({ label: x.name, value: x._id }))
+          : response.data || []
+      }
+    } catch (error) {
+      console.log('GET: /wards', error)
+    }
+  }
+
+  /**
+   * @desc get district list
+   */
+  const getDistricts = async (isTransform = false) => {
+    try {
+      const response = await $apiFetch('/districts')
+      if(response.success) {
+        return isTransform
+        ? response.data?.map(x => ({ label: x.name, value: x._id }))
+        : response.data || []
+      }
+    } catch (error) {
+      console.log('GET: /districts', error)
+    }
+  }
+
   const addresses = computed(() => $store.locations)
   const locationsTypes = computed(() => $store.locationsTypes.map(x => ({
     label: x.name,
@@ -107,6 +139,8 @@ export default function useLocation() {
     updateLocation,
     requestUpadte,
     getLocationTypes,
+    getWards,
+    getDistricts,
 
     addresses,
     locationsTypes,

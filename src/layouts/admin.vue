@@ -14,6 +14,10 @@
 </template>
 
 <script setup>
+const { getMe } = useAuth()
+onMounted(() => {
+  getMe()
+}),
 useHead({
   link: [
     {

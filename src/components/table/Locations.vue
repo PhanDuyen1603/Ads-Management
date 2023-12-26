@@ -19,7 +19,7 @@
           </td> -->
           <td v-for="(field, i) in Object.keys(tableField)" :key="i">
             <div class="tb-content">
-              {{ item[field] }}
+              {{ getName(item, field) }}
             </div>
           </td>
           <td class="detail_icon" @click="openDetailModal(item)">
@@ -43,6 +43,7 @@
 
 <script setup>
 import { mapAdsLocation } from '~/utils/mapData'
+import getName from '~/utils/getter/getName'
 const { $modal, $gMap } = useNuxtApp()
 const { userPermission } = useAuth()
 const props = defineProps({

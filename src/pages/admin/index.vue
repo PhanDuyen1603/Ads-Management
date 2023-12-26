@@ -33,25 +33,18 @@ definePageMeta({
 const { $gMap } = useNuxtApp()
 const { getAdsLocations, adsLocations } = useAdvertise()
 const { getLocations, addresses } = useLocation()
-
+await getAdsLocations()
+await getLocations()
 const map = ref(null)
-
-const tableField = {
-  streetLine1: 'Địa chỉ',
-  city: 'Thành phố',
-  ward: 'Quận',
-  district: 'Huyện'
-}
 
 // map interaction
 const focusMap = (item) => {
   $gMap.changeMapCenter({ lat: item.lat, lng: item.lng })
 }
 
-onMounted(async () => {
-  await getAdsLocations()
-  await getLocations()
-})
+// onMounted(async () => {
+
+// })
 </script>
 
 <style>

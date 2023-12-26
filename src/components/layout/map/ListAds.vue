@@ -3,7 +3,7 @@
     <div class="list_items_horizontal">
       <!-- TODO: seperate component list location -->
       <div
-          v-if="$route.query.entry === 'address'"
+        v-if="$route.query.entry === 'address'"
         v-for="(item, index) in dataList"
         :key="index"
         class="card_horizontal_wrap"
@@ -13,13 +13,13 @@
             <img :src="faker.image.urlPicsumPhotos()" alt="..">
           </div>
           <div class="card_content">
-            <div class="card_title">
+            <div class="line-clamp-1 card_title">
               {{ item.address.streetLine1 }}
             </div>
             <div class="card_desc">
-              <span>{{ item.address.ward }},&nbsp</span>
-              <span>{{ item.address.district }},&nbsp</span>
-              <span>{{ item.address.city }}</span>
+              <span><strong>Phường: </strong>{{ getName(item, 'address_ward') }},&nbsp</span>
+              <span><strong>Quận: </strong>{{ getName(item, 'address_district') }},&nbsp</span><br/>
+              <span><strong>Thành phố: </strong>{{ item.address.city }}</span>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@
     </div>
     <div class="item_info" v-show="showInfo">
       <div class="info_wrap">
-        <div class="close" @click="showInfo = false">
+        <div class="close_circle_icon" @click="showInfo = false">
           <IconsCloseCircle />
         </div>
         <div class="info_body" v-if="target && target._id && $route.query.entry !== 'reports'">
@@ -108,7 +108,7 @@
               <div v-if="target.streetLine1" class="info_2_body">
                 <p>{{ target.title }}</p>
                 <p>{{ target.streetLine1 }},</p>
-                <p>{{ target.ward }}, {{ target.district }}, {{ target.city }}</p>
+                <p>Phường {{ getName(target, 'ward') }}, Quận {{ getName(target, 'district') }}, {{ target.city }}</p>
               </div>
               <div v-if="target.streetLine1" class="info_2_action">
                 <div class="action_groups">
@@ -140,8 +140,8 @@
                   <h5>{{ target.ads.title }}</h5>
                   <p>{{ target.ads.content }}</p>
                   <p>{{ target.adLocation.address.streetLine1 }},
-                    {{ target.adLocation.address.ward }},
-                    {{ target.adLocation.address.district }},
+                    {{ getName(target, 'adLocation_address_ward') }},
+                    {{ getName(target, 'adLocation_address_district') }},
                     {{ target.adLocation.address.city }},
                     {{ target.adLocation.address.country }}
                   </p>
@@ -182,6 +182,7 @@
 import './leftmenu.scss'
 import { faker } from '@faker-js/faker';
 import { mapAdsLocation } from '~/utils/mapData.js'
+import getName from '~/utils/getter/getName';
 const props = defineProps({
   data: {
     type: Array,
@@ -212,6 +213,8 @@ const dataList = ref([])
 const formatDate = (date) => $dayjs(date).format('DD-MM-YYYY')
 
 const getData = async (type) => {
+  target.value = {}
+  showInfo.value = false
   switch (type) {
     case 'ads':
       await getAds()

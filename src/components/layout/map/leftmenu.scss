@@ -19,22 +19,6 @@
   }
   .info_wrap {
     position: relative;
-    .close {
-      position: absolute;
-      cursor: pointer;
-      color: rgba(255,255,255,1.0);
-      top: 15px;
-      right: 15px;
-      z-index: 10;
-      svg {
-        -webkit-transition: all 0.35s ease-in-out;
-        -moz-transition: all 0.35s ease-in-out;
-        transition: all 0.35s ease-in-out;
-        text-shadow: -1px 1px 2px #333;
-        width: 25px;
-        height: 25px;
-      }
-    }
   }
   .info_body {
     .info_image {
@@ -142,5 +126,28 @@
     .icon_danger {
       fill: red
     }
+  }
+}
+.close_circle_icon {
+  position: absolute;
+  cursor: pointer;
+  color: #000;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+
+  width: 30px;
+  height: 30px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border-radius: 50%;
+  background: #fff;
+  svg {
+    -webkit-transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+    text-shadow: -1px 1px 2px #333;
+    fill: #000;;
+    width: 30px;
+    height: 30px;
   }
 }

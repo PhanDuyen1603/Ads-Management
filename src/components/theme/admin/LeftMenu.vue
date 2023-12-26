@@ -28,6 +28,12 @@
               <i class="mdi mdi-logout"></i>
               <span class="hide-menu">Đăng suất</span></a>
           </li>
+          <li>
+            <NuxtLink :to="{ path:'/'}" class="waves-effect waves-dark" aria-expanded="false">
+              <i class="mdi mdi-arrow-left"></i>
+              <span class="hide-menu">Về trang chủ</span>
+            </NuxtLink>
+          </li>
         </ul>
       </nav>
       <!-- End Sidebar navigation -->

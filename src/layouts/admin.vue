@@ -22,19 +22,11 @@ useHead({
   link: [
     {
       rel: 'stylesheet',
-      href: '/admin/plugins/bootstrap/css/bootstrap.min.css',
-    },
-    {
-      rel: 'stylesheet',
       href: '/admin/css/style.css',
     },
     {
       rel: 'stylesheet',
       href: '/admin/css/pages/dashboard.css',
-    },
-    {
-      rel: 'stylesheet',
-      href: '/admin/css/colors/default-dark.css',
     },
   ],
   script: [

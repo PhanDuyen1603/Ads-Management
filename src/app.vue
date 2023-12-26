@@ -1,6 +1,7 @@
 <template>
   <ModalContainer />
   <NuxtLayout>
+    <NuxtLoadingIndicator color="#348feb" height="5" />
     <NuxtPage />
   </NuxtLayout>
 </template>
@@ -16,5 +17,15 @@ useHead({
       return '';
     }),
   },
+  link: [
+    {
+      rel: 'stylesheet',
+      href: '/admin/plugins/bootstrap/css/bootstrap.min.css',
+    },
+    {
+      rel: 'stylesheet',
+      href: '/admin/css/colors/default-dark.css',
+    },
+  ]
 })
 </script>

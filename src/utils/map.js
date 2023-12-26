@@ -12,12 +12,12 @@ const iconsList = {
 const getMarkerIcon = (marker) => {
   // quy hoach
   const isPlanned = marker.isPlanned
-  const ads = marker.ads
+  const ads = marker.countAds
   if(isPlanned) {
-    if(ads?.length) return iconsList.ad
+    if(ads) return iconsList.ad
     return iconsList.noAd
   }
-  if(ads?.length) return iconsList.adRed
+  if(ads) return iconsList.adRed
   return iconsList.noAdRed
 }
 

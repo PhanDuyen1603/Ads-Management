@@ -13,7 +13,7 @@
         <span><IconsReport style="height: 25px; width: 25px;"/></span>
         <span>Báo cáo</span>
       </li>
-      <li class="menu_item" @click="navigate({ modal: loginModal })">
+      <li class="menu_item" @click="navigate({ modal: loginModal, path: '/admin' })">
         <span><IconsProfileCircle style="height: 25px; width: 25px;"/></span>
         <span>Hồ sơ</span>
       </li>
@@ -51,6 +51,7 @@ import { useDebounceFn } from '@vueuse/core'
 
 const { target } = useLocation()
 const { $modal } = useNuxtApp()
+const { profile } = useAuth()
 const $router = useRouter()
 const $route = useRoute()
 const showTabContet = ref(false)
@@ -66,6 +67,8 @@ const hideTab = () => {
 // menu and navigate
 const loginModal = {
   component: 'LayoutLogin',
+  path: '/admin',
+  showOnLogin: false,
   wrapperProps: {
     styles: {
       background: 'unset',
@@ -75,18 +78,18 @@ const loginModal = {
   }
 }
 
-const navigate = async ({ query = {}, modal = {} }) => {
+const navigate = async ({ query = {}, modal = {}, path = '/' }) => {
   showTabContet.value = false
-  if(modal && modal.component) {
+  if(modal && modal.component && (!modal.showOnLogin && !profile.value?._id)) {
     await $modal.show({
       ...modal
     })
   } else {
     $router.push({
-      path: '/',
+      path,
       query,
     });
-    showTabContet.value = true
+    if(!modal.component) showTabContet.value = true
   }
 }
 

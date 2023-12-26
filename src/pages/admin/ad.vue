@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
-        <div v-if="userPermission.advertise.create || userPermission.address.create" class="card-header">
+        <div v-if="userPermission.advertise.create && userPermission.address.create" class="card-header">
           <button class="btn btn-outline-danger btn-add" @click="addAdsModal()">
             <IconsPlusCircle />
             <span>Thêm {{ isShowAdsList ? 'quảng cáo' : 'điểm đặt  quảng cáo' }}</span>
@@ -38,7 +38,6 @@ definePageMeta({
 const { userPermission } = useAuth()
 const { getAds, ads, getAdsLocations, adsLocations } = useAdvertise()
 const isShowAdsList = ref(false)
-// await getAds()
 await getAdsLocations()
 
 const dataList = computed(() => !isShowAdsList.value ? unref(adsLocations) : unref(ads))

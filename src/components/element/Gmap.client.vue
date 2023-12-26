@@ -80,8 +80,6 @@ export default {
     })
 
     const {
-      showAds,
-      showReports,
       stausControlButtons
     } = generateButtons()
 
@@ -106,13 +104,7 @@ export default {
       }
     });
 
-    watch(showAds, (n, o) => {
-      console.log('TODO: re-render address ')
-    })
 
-    watch(showReports, (n, o) => {
-      console.log('TODO: re-render address no report')
-    })
 
     onBeforeMount(() => {
       gmapStore.initCenter = null
@@ -121,7 +113,6 @@ export default {
     return {
       myMapRef,
       isLoading,
-      // markers,
       mapCenter,
       targetMarker,
       focusMarker,

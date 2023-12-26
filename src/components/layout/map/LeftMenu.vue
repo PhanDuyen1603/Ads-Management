@@ -1,7 +1,7 @@
 <template>
   <div class="map_right_menu">
     <ul class="menu_items">
-      <li class="menu_item" @click="navigate({ query: { entry: 'address' }})">
+      <li class="menu_item active_menu" @click="navigate({ query: { entry: 'address' }})">
         <span><IconsGeoAlt style="height: 25px; width: 25px;"/></span>
         <span>Địa điểm</span>
       </li>
@@ -229,5 +229,8 @@ const handleSearch = useDebounceFn((event) => {
       }
     }
   }
+}
+.active_menu {
+
 }
 </style>

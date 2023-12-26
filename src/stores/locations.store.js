@@ -4,6 +4,7 @@ export default defineStore({
   id: 'location-store',
   state:() => ({
     locations: [],
+    locationsFilters: [],
     locationsTypes: [],
 
     target: {},
@@ -37,6 +38,10 @@ export default defineStore({
         lat: x.lat,
         lng: x.lng
       }
-    }))
+    })),
+    mapMarkers:(state) => {
+      const list = state.locationsFilters.length ? state.locationsFilters : state.locations
+      return list
+    }
   }
 })

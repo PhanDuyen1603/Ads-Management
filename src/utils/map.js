@@ -1,7 +1,3 @@
-const onFocusMap = (item, $map) => {
-  $map.onCenterMap?.({ lat: item.lat, lng: item.lng })
-}
-
 const iconsList = {
   noAd: '/icons/icon-no-qc.svg',
   ad: '/icons/icon-qc.svg',
@@ -21,4 +17,4 @@ const getMarkerIcon = (marker) => {
   return iconsList.noAdRed
 }
 
-export { onFocusMap, getMarkerIcon }
+export { getMarkerIcon }

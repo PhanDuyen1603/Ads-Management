@@ -2,7 +2,7 @@
   <div class="modal_ad_detail">
     <div class="detail_item">
       <h4>Địa chỉ:</h4>
-      <p>{{ address }}</p>
+      <p>{{ address.streetLine1 }}</p>
     </div>
     <div class="detail_item">
       <h4>Khu vực:</h4>

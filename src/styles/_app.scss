@@ -51,3 +51,9 @@ body.modal-open {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.custom-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .8rem;
+}

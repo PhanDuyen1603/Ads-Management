@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import useLocationStore from '~/stores/locations.store'
 import { mapAdsLocation } from '~/utils/mapData'
+import filterData from '~/utils/array/filterData'
 
 export default function useLocation() {
   const { $apiFetch } = useNuxtApp()
@@ -18,6 +19,18 @@ export default function useLocation() {
     } catch (error) {
       console.log('GET: /addresses', error)
     }
+  }
+
+  /**
+   * @desc filter location
+   * @param {Object} filters
+   */
+  const filterAdLocation = async (filters) => {
+    let res = null
+    const { isPlanned = null, conditions = {} } = filters
+    res = filterData($store.locations, conditions)
+    $store.locationsFilters = res
+    return res
   }
 
   /**
@@ -130,7 +143,7 @@ export default function useLocation() {
   })))
   const target = computed(() => $store.target)
   const targetAds = computed(() => $store.targetAds)
-  const markers = computed(() => $store.locations.map(x => mapAdsLocation(x)))
+  const markers = computed(() => $store.mapMarkers.map(x => mapAdsLocation(x)))
 
   return {
     getLocations,
@@ -141,6 +154,7 @@ export default function useLocation() {
     getLocationTypes,
     getWards,
     getDistricts,
+    filterAdLocation,
 
     addresses,
     locationsTypes,

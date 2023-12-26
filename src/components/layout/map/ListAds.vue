@@ -285,7 +285,6 @@ const openReportModal = async (type) => {
       styles: {
         maxWidth: '650px',
         width: '100%',
-        'overflow-y': 'unset'
       }
     }
   })

@@ -6,35 +6,21 @@
       v-model="form"
       sync
     >
-      <TextElement
-        name="user"
-        :disabled="true"
-        :submit="false"
-        label="Tên người sửa"
-        placeholder="Nhập Tên người sửa"
-      />
-
-      <DateElement
-        name="date"
-        label="Ngày chỉnh sửa"
-      />
 
       <TextElement
         name="streetLine1"
-        :disabled="true"
-        :submit="false"
-        readonly
         label="Địa chỉ (số)"
         placeholder="Nhập số nhà"
+        :submit="submitType === 'request' ? false : true"
+        :readonly="submitType === 'request' ? true : false"
       />
 
       <TextElement
         name="streetLine2"
-        :disabled="true"
-        :submit="false"
-        readonly
         label="Địa chỉ (tên đường)"
         placeholder="Nhập tên đường"
+        :submit="submitType === 'request' ? false : true"
+        :readonly="submitType === 'request' ? true : false"
       />
 
       <SelectElement
@@ -42,9 +28,15 @@
         name="locationType"
         :native="false"
         :items="locationsTypes"
+        :submit="submitType === 'request' ? false : true"
+        :disabled="submitType === 'request' ? true : false"
       />
 
-      <ToggleElement name="isPlanned">
+      <ToggleElement
+        name="isPlanned"
+        :submit="submitType === 'request' ? false : true"
+        :disabled="submitType === 'request' ? true : false"
+      >
         Thông tin quy hoạch
       </ToggleElement>
 
@@ -53,6 +45,8 @@
         name="adsCategory"
         :native="false"
         :items="adsCategories"
+        :submit="submitType === 'request' ? false : true"
+        :disabled="submitType === 'request' ? true : false"
       />
 
       <TextElement
@@ -73,12 +67,19 @@
         :columns="{ container: 6 }"
       />
 
+      <TextareaElement
+        v-if="submitType === 'request'"
+        name="reason"
+        label="Nội dung chỉnh sửa"
+      />
+
       <StaticElement readonly name="position">
         <ElementGmap
           :map-styles="{
             width: '100%',
             height: '300px'
           }"
+          :markers="[defaultFormData]"
           @getPlace="(e) => getPlace(e)"
           :center="{ lat: form.lat, lng: form.long }"
         />
@@ -109,7 +110,7 @@ const props = defineProps({
   }
 })
 const emits = defineEmits(['close'])
-const { updateLocation, getLocation, getLocationTypes, locationsTypes } = useLocation()
+const { updateLocation, getLocation, getLocationTypes, requestUpdateLocation, locationsTypes } = useLocation()
 const { getAdsCategories, adsCategories } = useAdvertise()
 
 await getLocationTypes()
@@ -118,8 +119,12 @@ const initData = await getLocation(props.defaultFormData._id)
 
 const form = reactive(mapAdsLocationDetail(initData))
 
-const handleSubmit = async () => {
-  if(props.submitType === 'update') await updateLocation(props.defaultFormData._id, form)
+const handleSubmit = async (submitForm, el) => {
+  if(props.submitType === 'update') await updateLocation(props.defaultFormData._id, submitForm)
+  if(props.submitType === 'request') {
+    submitForm.adsLocation = props.defaultFormData._id
+    await requestUpdateLocation(submitForm)
+  }
   emits('close')
 }
 const getPlace = (data) => {

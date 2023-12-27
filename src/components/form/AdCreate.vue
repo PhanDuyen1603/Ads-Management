@@ -159,17 +159,17 @@ const { getLocations, addresses: locations} = useLocation()
 await getBillboardTypes()
 await getAdsLocations()
 await getLocations()
-const initData = props.submitType === 'update' && props.defaultFormData?._id ? await getAdById(props.defaultFormData._id) : {}
+const initData = props.submitType !== 'create' && props.defaultFormData?._id ? await getAdById(props.defaultFormData._id) : {}
 
 const transformData = (data) => {
   return {
     ...data,
-    billboardType: data.billboardType._id,
-    adsLocation: data.adsLocation._id,
+    billboardType: data.billboardType?._id,
+    adsLocation: data.adsLocation?._id,
   }
 }
 
-const form = reactive(props.defaultFormData && props.submitType === 'update'
+const form = reactive(props.defaultFormData._id && props.submitType !== 'create'
   ? JSON.parse(JSON.stringify(transformData(initData)))
   : {}
 )

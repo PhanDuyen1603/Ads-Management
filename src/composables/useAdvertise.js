@@ -4,13 +4,16 @@ import useAdsStore from '~/stores/ads.store'
 export default function useAdvertise() {
   const { $apiFetch } = useNuxtApp()
   const $store = useAdsStore()
+  const { queryByPermissionData } = useAuth()
 
   /**
    * @desc get ads addresses
    */
-  const getAdsLocations = async (query) => {
+  const getAdsLocations = async (query = {}) => {
     try {
-      const response = await $apiFetch('/ads-locations')
+      const response = await $apiFetch('/ads-locations', {
+        params: {...queryByPermissionData.value, ...query}
+      })
       if(response.success) {
         $store.ads_locations = response.data
       }
@@ -32,9 +35,11 @@ export default function useAdvertise() {
   /**
    * @desc get all ads
    */
-  const getAds = async () => {
+  const getAds = async (query = {}) => {
     try {
-      const response = await $apiFetch('/ads')
+      const response = await $apiFetch('/ads', {
+        params: {...queryByPermissionData.value, ...query}
+      })
       if(response.success) {
         $store.ads = response.data
       }
@@ -105,6 +110,21 @@ export default function useAdvertise() {
 
   }
 
+  /**
+   *
+   */
+  const requestUpdateAd = async (data) => {
+    if(!data.ads) return
+    const response = await $apiFetch(`edit-requests/ads`, {
+      method: 'POST',
+      body: data,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    return response
+  }
+
   const adsLocations = computed(() => $store.adsLocations)
   const ads = computed(() => $store.ads)
   const billboardTypes = computed(() => $store.adsBillboardTypes)
@@ -121,6 +141,7 @@ export default function useAdvertise() {
     getAdsCategories,
     getBillboardTypes,
     getBillboardType,
+    requestUpdateAd,
 // no return .value in composable it will not reactive any more
     adsLocations,
     ads,

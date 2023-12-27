@@ -16,7 +16,7 @@
             </li>
           </ul>
           <div class="table-responsive">
-            <table v-if="isShowAdsList && reports.length" class="table table-hover">
+            <table v-if="isShowAdsList && reports && reports.length" class="table table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -45,7 +45,7 @@
               </tbody>
             </table>
 
-            <table v-if="!isShowAdsList && reports.length" class="table table-hover">
+            <table v-if="!isShowAdsList && adLocationReports && adLocationReports.length" class="table table-hover">
               <thead>
                 <tr>
                   <th>#</th>

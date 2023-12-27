@@ -6,13 +6,15 @@ import filterData from '~/utils/array/filterData'
 export default function useLocation() {
   const { $apiFetch } = useNuxtApp()
   const $store = useLocationStore()
-
+  const { queryByPermissionData } = useAuth()
   /**
    * @desc get ads addresses
    */
-  const getLocations = async (query) => {
+  const getLocations = async (query = {}) => {
     try {
-      const response = await $apiFetch('/ads-locations/')
+      const response = await $apiFetch('/ads-locations/', {
+        params: {...query, ...queryByPermissionData.value}
+      })
       if(response.success) {
         $store.locations = response.data
       }
@@ -76,6 +78,17 @@ export default function useLocation() {
     return response
   }
 
+  const requestUpdateLocation = async (data) => {
+    const response = await $apiFetch(`edit-requests/ads-location`, {
+      method: 'POST',
+      body: data,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    return response
+  }
+
   /**
    * @desc send update request
    */
@@ -119,6 +132,17 @@ export default function useLocation() {
       console.log('GET: /wards', error)
     }
   }
+  const getWard = async (id) => {
+    try {
+      const response = await $apiFetch(`/wards/${id}`)
+      console.log(111, response)
+      if(response.success) {
+        return response.data
+      }
+    } catch (error) {
+      console.log('GET: /ward', error)
+    }
+  }
 
   /**
    * @desc get district list
@@ -133,6 +157,16 @@ export default function useLocation() {
       }
     } catch (error) {
       console.log('GET: /districts', error)
+    }
+  }
+  const getDistrict = async (id) => {
+    try {
+      const response = await $apiFetch(`/districts/${id}`)
+      if(response.success) {
+        return response.data
+      }
+    } catch (error) {
+      console.log('GET: /district', error)
     }
   }
 
@@ -153,8 +187,11 @@ export default function useLocation() {
     requestUpadte,
     getLocationTypes,
     getWards,
+    getWard,
     getDistricts,
+    getDistrict,
     filterAdLocation,
+    requestUpdateLocation,
 
     addresses,
     locationsTypes,

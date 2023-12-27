@@ -18,6 +18,7 @@
             width: '100%',
             height: '45rem'
           }"
+          :center="adsLocations[0]?.position"
         />
     </div>
 

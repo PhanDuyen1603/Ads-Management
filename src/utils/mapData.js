@@ -1,3 +1,4 @@
+import getName from "./getter/getName"
 export const mapAdsLocation = (value) => ({
   ...value.address,
   addressId: value.address._id,
@@ -16,6 +17,8 @@ export const mapAdsLocationDetail = (value) => ({
     lng: value.address.long
   },
   ...value,
+  ward: getName(value, 'address_ward'),
+  district: getName(value, 'address_district'),
   address: value.address._id,
   locationType: value.locationType._id,
   adsCategory: value.adsCategory._id,

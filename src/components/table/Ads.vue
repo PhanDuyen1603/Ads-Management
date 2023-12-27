@@ -49,9 +49,8 @@ const props = defineProps({
 const { getFileUrl } = useMedia()
 
 const openDetailModal = async (item) => {
-  console.log({ item })
   await $modal.show({
-    component: 'LazyFormAdCreate',
+    component: userPermission.value.advertise.update ? 'LazyFormAdCreate' : 'LazyFormAdRequestEdit',
     props: {
       defaultFormData: item,
       submitType: userPermission.value.advertise.update ? 'update' : 'request',

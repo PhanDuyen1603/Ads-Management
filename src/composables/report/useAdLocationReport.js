@@ -1,6 +1,9 @@
+import getName from "~/utils/getter/getName"
 export default function useAdReport() {
   const { $apiFetch } = useNuxtApp()
   const reports = ref(null)
+  const { queryByPermissionData } = useAuth()
+  const { getWard, getDistrict } = useLocation()
 
   /**
    * @desc get list ad locations reports
@@ -9,7 +12,22 @@ export default function useAdReport() {
     try {
       const response = await $apiFetch('/reports/ads-location')
       if(response.success) {
-        reports.value = response.data
+        const { data } = response
+        let res
+        if(queryByPermissionData.value?.data === 'district') {
+          const district = await getDistrict(queryByPermissionData.value.districts)
+          res = data.filter(x => getName(x, 'adsLocation_address_district') === district.name)
+          reports.value = res
+        } else if (queryByPermissionData.value?.data === 'ward') {
+          const district = await getDistrict(queryByPermissionData.value.districts)
+          const ward = await getWard(queryByPermissionData.value.wards)
+          res = data.filter(x => getName(x, 'adsLocation_address_district') === district.name
+            && getName(x, 'adsLocation_address_ward') === ward.name)
+          console.log({res, district, ward})
+          reports.value = res
+        } else {
+          reports.value = response.data
+        }
       }
     } catch (error) {
       console.log('GET: /reports/ads-location', error)

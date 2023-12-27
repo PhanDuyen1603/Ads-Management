@@ -135,7 +135,6 @@ export default function useLocation() {
   const getWard = async (id) => {
     try {
       const response = await $apiFetch(`/wards/${id}`)
-      console.log(111, response)
       if(response.success) {
         return response.data
       }

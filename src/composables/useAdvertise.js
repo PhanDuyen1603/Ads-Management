@@ -18,7 +18,7 @@ export default function useAdvertise() {
         $store.ads_locations = response.data
       }
     } catch (error) {
-      console.log('GET: /ads-locations', error)
+      console.log('GET: /ads-locations1', error)
     }
   }
   const getAdsLocation = async (id) => {
@@ -28,7 +28,7 @@ export default function useAdvertise() {
         return response.data
       }
     } catch (error) {
-      console.log('GET: /ads-locations', error)
+      console.log('GET: /ads-locations2', error)
     }
   }
 

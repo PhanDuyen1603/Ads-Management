@@ -8,6 +8,7 @@
 
 <script setup>
 import useModalStore from '~/stores/modal.store'
+import "vue-toastification/dist/index.css";
 
 const modalStore = useModalStore()
 useHead({

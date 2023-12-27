@@ -37,6 +37,22 @@ const { getLocations, addresses } = useLocation()
 await getAdsLocations()
 await getLocations()
 const map = ref(null)
+import { useToast } from "vue-toastification";
+const toast = useToast();
+
+// or with options
+toast.success("My toast content", {
+  timeout: 2000
+});
+toast.error("My toast content", {
+  timeout: 2000
+});
+toast.info("My toast content", {
+  timeout: 2000
+});
+toast.warning("My toast content", {
+  timeout: 2000
+});
 
 // map interaction
 const focusMap = (item) => {

@@ -50,7 +50,7 @@ export default function useAuth() {
   const role = computed(() => $store.profile?.role)
   const userPermission = computed(() => permissions[$store.profile?.role]?.permissions || permissions.general.permissions)
   const queryByPermissionData = computed(() => {
-    if(!$route.name.startsWith('admin')) return {}
+    if(!$route.name.startsWith('admin') || !profile.value) return {}
     const dataPermission = permissions[$store.profile?.role].data
     let query = {
       data: dataPermission

@@ -66,6 +66,9 @@
               height: '300px'
             }"
             :center="mapCenter"
+            @open-detail="showAdDetail"
+            :markers="markers"
+
           />
         </StaticElement>
 
@@ -154,7 +157,7 @@ const { $apiFetch } = useNuxtApp()
 const { getFileUrl } = useMedia()
 const emits = defineEmits(['close'])
 const { getBillboardTypes, getAdsLocations, adsLocations, billboardTypes, getAdById } = useAdvertise()
-const { getLocations, addresses: locations} = useLocation()
+const { getLocations, addresses: locations, markers} = useLocation()
 
 await getBillboardTypes()
 await getAdsLocations()
@@ -169,7 +172,7 @@ const transformData = (data) => {
   }
 }
 
-const form = reactive(props.defaultFormData._id && props.submitType !== 'create'
+const form = reactive(props.defaultFormData?._id && props.submitType !== 'create'
   ? JSON.parse(JSON.stringify(transformData(initData)))
   : {}
 )
@@ -186,9 +189,15 @@ const changeLocation = (e, fieldname) => {
   if(target && target._id) {
     form[fieldname] = e
     mapCenter.value = {
-      lat: target.lat,
-      lng: target.long
+      lat: target.address.lat,
+      lng: target.address.long
     }
+  }
+}
+
+const showAdDetail = ({value}) => {
+  if(value._id) {
+    form.adsLocation = value._id
   }
 }
 

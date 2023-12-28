@@ -3,6 +3,9 @@ import useLocationStore from '~/stores/locations.store'
 import { mapAdsLocation } from '~/utils/mapData'
 import filterData from '~/utils/array/filterData'
 import { useToast } from "vue-toastification";
+import { useCloned } from '@vueuse/core'
+import { slugify } from '~/utils/string/slug';
+import getName from '~/utils/getter/getName';
 
 export default function useLocation() {
   const { $apiFetch } = useNuxtApp()
@@ -242,6 +245,17 @@ export default function useLocation() {
     }
   }
 
+  /**
+   * @desc filter location by address (streetline1 + streetline2)
+   */
+  const filterLocations = async (str) => {
+    const { cloned, sync } = useCloned(addresses.value)
+    return cloned.value?.filter(x => {
+      const address = `${getName(x, 'address_streetLine1')} ${getName(x, 'address_streetLine2')}`
+      return slugify(address).includes(slugify(str))
+    })
+  }
+
   const addresses = computed(() => $store.locations)
   const locationsTypes = computed(() => $store.locationsTypes.map(x => ({
     label: x.name,
@@ -264,6 +278,7 @@ export default function useLocation() {
     getDistrict,
     filterAdLocation,
     requestUpdateLocation,
+    filterLocations,
 
     addresses,
     locationsTypes,

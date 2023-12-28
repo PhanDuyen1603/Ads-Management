@@ -39,6 +39,7 @@
         <component
           :is="resolveComponent(contentComponent)"
           :data="contentData"
+          ref="menuItems"
         />
       </div>
     </div>
@@ -55,6 +56,8 @@ const { profile } = useAuth()
 const $router = useRouter()
 const $route = useRoute()
 const showTabContet = ref(false)
+const menuItems = ref(null)
+const searchStr = ref('')
 
 const hideTab = () => {
   showTabContet.value = false
@@ -80,6 +83,7 @@ const loginModal = {
 
 const navigate = async ({ query = {}, modal = {}, path = '/' }) => {
   showTabContet.value = false
+  searchStr.value = ''
   if(modal && modal.component && (!modal.showOnLogin && !profile.value?._id)) {
     await $modal.show({
       ...modal
@@ -119,11 +123,9 @@ watch(() => $route.query, (val) => {
 });
 
 // search
-const searchStr = ref('')
-
-const handleSearch = useDebounceFn((event) => {
-  // do something
-}, 1000)
+const handleSearch = useDebounceFn(async (event) => {
+  await menuItems.value?.onSearch?.(event.target.value)
+}, 500)
 
 </script>
 

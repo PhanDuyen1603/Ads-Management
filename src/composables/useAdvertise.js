@@ -1,12 +1,15 @@
 import { computed } from 'vue'
 import useAdsStore from '~/stores/ads.store'
 import { useToast } from "vue-toastification";
+import { useCloned } from '@vueuse/core'
+import { slugify } from '~/utils/string/slug';
 
 export default function useAdvertise() {
   const { $apiFetch } = useNuxtApp()
   const $store = useAdsStore()
   const { queryByPermissionData } = useAuth()
   const toast = useToast();
+  const filterAds = ref(null)
   /**
    * @desc get ads addresses
    */
@@ -157,8 +160,16 @@ export default function useAdvertise() {
     }
   }
 
+  /**
+   * @desc filter ads by title
+   */
+  const filterAd = async (str) => {
+    const { cloned, sync } = useCloned(ads.value)
+    return cloned.value?.filter(x => slugify(x.title).includes(slugify(str)))
+  }
+
   const adsLocations = computed(() => $store.adsLocations)
-  const ads = computed(() => $store.ads)
+  const ads = computed(() => filterAds.value && filterAds.value.length ? filterAds.value : $store.ads)
   const billboardTypes = computed(() => $store.adsBillboardTypes)
   const adsCategories = computed(() => $store.categories.map(x => ({
     label: x.name,
@@ -174,6 +185,7 @@ export default function useAdvertise() {
     getBillboardTypes,
     getBillboardType,
     requestUpdateAd,
+    filterAd,
 // no return .value in composable it will not reactive any more
     adsLocations,
     ads,

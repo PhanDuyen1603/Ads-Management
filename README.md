@@ -2,30 +2,55 @@
 
 ## project structure
 ├── ...
-├── src                    # Documentation files (alternatively `doc`)
-│   ├── TOC.md              # Table of contents
-│   ├── faq.md              # Frequently asked questions
-│   ├── misc.md             # Miscellaneous information
-│   ├── usage.md            # Getting started guide
-│   └── ...                 # etc.
+├── src                    # source folder
+│   ├── components          # vue component
+│   ├── composables         # contain custom hook and api calling
+│   ├── constant            # app constant
+│   ├── layouts             # general layout and admin layout
+│   ├── middleware          # middleware for admin page
+│   ├── pages               # pages route
+│   ├── pllugins            # global variables and third party plugin
+│   ├── stores              # app states
+│   ├── utils               # app helpers
+│   └── styles              # global styles
 └── ...
 
-## connect db
-- create free mongoDb account https://cloud.mongodb.com/
-- add current ip to connect
-- go to connect -> driver
-- copy uri to env file (remember replace password)
+## Getting Started
+```bash
+# Install dependencies
+$ yarn
 
-## init default data
-- call post api `/api/initMongo`
+# Run as development mode http://localhost:3030
+$ yarn dev
 
-## stands for
-- r_location_type: hình thức báo cáo
--
+# Build as production mode and launch server
+$ yarn build
+$ yarn start
+```
 
-- rp_ : report
-- rq  : request
-- a_  : for all admin user
-- aw_ : for ward user
-- ad_ : for district user
-- af_ : for user cấp sở
+## Components
+auto import by folder directory
+
+## Composable
+[Composable documentation](https://nuxt.com/docs/getting-started/data-fetching#fetch)
+
+## API
+$apiFetch: using same with $fetch
+[$fetch documentation](https://nuxt.com/docs/getting-started/data-fetching#fetch)
+
+```javascript
+const { $apiFetch } = useNuxtApp()
+const list = await $apiFetch(....)
+```
+
+## Modal
+```javascript
+const { $modal } = useNuxtApp()
+const openModal = async () => {
+  await $modal.show({
+    component: [component name to show]
+  })
+}
+```
+
+## toast

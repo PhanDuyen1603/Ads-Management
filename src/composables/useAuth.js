@@ -1,12 +1,13 @@
 import useAuthStore from "~/stores/auth.store";
 import { permissions } from '~/constant/user'
 import parseCookie from '~/utils/cookie/parseCookie'
+import { useToast } from "vue-toastification";
 
 export default function useAuth() {
   const { $apiFetch } = useNuxtApp()
   const $store = useAuthStore()
   const $route = useRoute()
-
+  const toast = useToast()
   /**
    * @desc login
    */
@@ -24,9 +25,15 @@ export default function useAuth() {
         $store.setProfile(response.data.staff)
         $store.isLoggedIn = true
       }
+      toast.success("Đăng nhập thành công", {
+        timeout: 2000
+      })
       return {...response, isLoggedIn: $store.isLoggedIn};
     } catch (error) {
       console.log('POST: /login', error)
+      toast.error("Đăng nhập thất bại", {
+        timeout: 2000
+      })
       return { isLoggedIn:false }
     }
   }
@@ -50,16 +57,17 @@ export default function useAuth() {
   const role = computed(() => $store.profile?.role)
   const userPermission = computed(() => permissions[$store.profile?.role]?.permissions || permissions.general.permissions)
   const queryByPermissionData = computed(() => {
-    if(!$route.name.startsWith('admin') || !profile.value) return {}
-    const dataPermission = permissions[$store.profile?.role].data
+    const profile = $store.profile
+    if(!$route.name.startsWith('admin') || !profile) return {}
+    const dataPermission = permissions[profile?.role]?.data
     let query = {
       data: dataPermission
     }
     if (dataPermission === 'ward') {
-      query.wards = profile.value.assigned?.ward
-      query.districts = profile.value.assigned?.district
+      query.wards = profile.assigned?.ward
+      query.districts = profile.assigned?.district
     } if (dataPermission === 'district') {
-      query.districts = profile.value.assigned?.district
+      query.districts = profile.assigned?.district
     }
     return query
   })

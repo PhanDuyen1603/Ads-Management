@@ -38,9 +38,7 @@ const { getStaff, updateStaff } = useStaff()
 const { data: profileDetail, error } = await useAsyncData('profile', () => getStaff(profile.value._id))
 
 const handleUpdate = async ({value}) => {
-  const res = await updateStaff(value)
-  if(res && res.success) {
-    alert('cap nhap thanh cong')
-  }
+  await updateStaff(value)
+  await getStaff(profile.value._id)
 }
 </script>

@@ -1,24 +1,28 @@
 import { computed } from 'vue'
 import useAdsStore from '~/stores/ads.store'
+import { useToast } from "vue-toastification";
 
 export default function useAdvertise() {
   const { $apiFetch } = useNuxtApp()
   const $store = useAdsStore()
   const { queryByPermissionData } = useAuth()
-
+  const toast = useToast();
   /**
    * @desc get ads addresses
    */
   const getAdsLocations = async (query = {}) => {
     try {
       const response = await $apiFetch('/ads-locations', {
-        params: {...queryByPermissionData.value, ...query}
+        params: {...queryByPermissionData?.value || {}, ...query}
       })
       if(response.success) {
         $store.ads_locations = response.data
       }
     } catch (error) {
       console.log('GET: /ads-locations1', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
   const getAdsLocation = async (id) => {
@@ -29,6 +33,9 @@ export default function useAdvertise() {
       }
     } catch (error) {
       console.log('GET: /ads-locations2', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -45,6 +52,9 @@ export default function useAdvertise() {
       }
     } catch (error) {
       console.log('GET: /ads', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -60,6 +70,9 @@ export default function useAdvertise() {
       }
     } catch (error) {
       console.log('GET: /ads', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -75,6 +88,9 @@ export default function useAdvertise() {
       }
     } catch (error) {
       console.log('GET: /ads', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -90,6 +106,9 @@ export default function useAdvertise() {
       }
     } catch (error) {
       console.log('GET: /ads', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
   const getBillboardType = async (id) => {
@@ -100,6 +119,9 @@ export default function useAdvertise() {
       }
     } catch (error) {
       console.log('GET: /ads', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -115,14 +137,24 @@ export default function useAdvertise() {
    */
   const requestUpdateAd = async (data) => {
     if(!data.ads) return
-    const response = await $apiFetch(`edit-requests/ads`, {
-      method: 'POST',
-      body: data,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    return response
+    try {
+      const response = await $apiFetch(`edit-requests/ads`, {
+        method: 'POST',
+        body: data,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      toast.success("Gửi yêu cầu thành công", {
+        timeout: 2000
+      })
+      return response
+    } catch (error) {
+      console.log('POST: /edit-requests/ads', error)
+      toast.error("Gửi yêu cầu thất bại", {
+        timeout: 2000
+      })
+    }
   }
 
   const adsLocations = computed(() => $store.adsLocations)

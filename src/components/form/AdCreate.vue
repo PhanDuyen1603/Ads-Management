@@ -156,11 +156,10 @@ const props = defineProps({
 const { $apiFetch } = useNuxtApp()
 const { getFileUrl } = useMedia()
 const emits = defineEmits(['close'])
-const { getBillboardTypes, getAdsLocations, adsLocations, billboardTypes, getAdById } = useAdvertise()
+const { getBillboardTypes, billboardTypes, getAdById } = useAdvertise()
 const { getLocations, addresses: locations, markers} = useLocation()
 
 await getBillboardTypes()
-await getAdsLocations()
 await getLocations()
 const initData = props.submitType !== 'create' && props.defaultFormData?._id ? await getAdById(props.defaultFormData._id) : {}
 
@@ -177,7 +176,7 @@ const form = reactive(props.defaultFormData?._id && props.submitType !== 'create
   : {}
 )
 
-const addresses = computed(() => adsLocations.value?.map(x => ({
+const addresses = computed(() => locations.value?.map(x => ({
   value: x._id,
   label: x.address?.streetLine1
 })))
@@ -236,8 +235,10 @@ const handleSubmit = async (form, $el) => {
     }
     const res = await $apiFetch(endpoint, options)
     emits('close')
+    return true
   } catch (error) {
     console.log({error})
+    return false
   }
 
 }

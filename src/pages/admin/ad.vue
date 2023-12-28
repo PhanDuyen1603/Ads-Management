@@ -21,7 +21,7 @@
               </div>
             </li>
           </ul>
-          <TableLocations v-if="!isShowAdsList" :data="dataList" :key="`location_${new Date()}`" />
+          <TableLocations v-if="!isShowAdsList" :data="dataList" :key="`location_${new Date()}`" @refresh="initData()" />
           <TableAds v-else :data="dataList" :key="`ad_${new Date()}`" />
         </div>
       </div>
@@ -42,20 +42,25 @@ await getAdsLocations()
 
 const dataList = computed(() => !isShowAdsList.value ? unref(adsLocations) : unref(ads))
 
+const initData = async () => {
+  if(isShowAdsList.value) await getAds()
+  else await getAdsLocations()
+}
+
 const showAddressList = async () => {
   if(!isShowAdsList.value) return
   isShowAdsList.value = false
-  await getAdsLocations()
+  await initData()
 }
 
 const showAdsList = async () => {
   if(isShowAdsList.value) return
   isShowAdsList.value = true
-  await getAds()
+  await initData()
 }
 
 const addAdsModal = async (item) => {
-  const result = await $modal.show({
+  await $modal.show({
     component: isShowAdsList.value ? 'FormAdCreate' : 'FormLocationCreate',
     props: {
       info: item
@@ -68,6 +73,7 @@ const addAdsModal = async (item) => {
       }
     }
   })
+  await initData()
 }
 </script>
 <style lang="scss">

@@ -1,10 +1,11 @@
-import get from "~/utils/getter/getName"
+import { useToast } from "vue-toastification";
 
 export default function useAdReport() {
   const { $apiFetch } = useNuxtApp()
   const reports = ref(null)
   const { queryByPermissionData } = useAuth()
   const { getLocations, addresses } = useLocation()
+  const toast = useToast()
 
   /**
    * @desc get list reports
@@ -27,6 +28,9 @@ export default function useAdReport() {
       }
     } catch (error) {
       console.log('GET: /reports/ads', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -38,6 +42,9 @@ export default function useAdReport() {
       }
     } catch (error) {
       console.log('GET: /reports/ads/:id', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -48,9 +55,15 @@ export default function useAdReport() {
         body: formdata,
         redirect: 'follow',
       })
+      toast.success("Gửi báo cáo thành công", {
+        timeout: 2000
+      })
       return response
     } catch (error) {
       console.log('POST: /reports/ads', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 

@@ -46,6 +46,7 @@ import { mapAdsLocation } from '~/utils/mapData'
 import getName from '~/utils/getter/getName'
 const { $modal, $gMap } = useNuxtApp()
 const { userPermission } = useAuth()
+const emits = defineEmits(['refresh'])
 const props = defineProps({
   data: {
     type: Array,
@@ -82,6 +83,7 @@ const openReportModal = async (item) => {
       }
     }
   })
+  emits('refresh')
 }
 
 const openDetailModal = async (item) => {

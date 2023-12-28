@@ -29,6 +29,7 @@ const addUserModal = async () => {
   await $modal.show({
     component: 'FormUser',
   })
+  await getStaffs()
 }
 </script>
 <style>

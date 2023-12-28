@@ -2,11 +2,13 @@ import { computed } from 'vue'
 import useLocationStore from '~/stores/locations.store'
 import { mapAdsLocation } from '~/utils/mapData'
 import filterData from '~/utils/array/filterData'
+import { useToast } from "vue-toastification";
 
 export default function useLocation() {
   const { $apiFetch } = useNuxtApp()
   const $store = useLocationStore()
   const { queryByPermissionData } = useAuth()
+  const toast = useToast()
   /**
    * @desc get ads addresses
    */
@@ -20,6 +22,9 @@ export default function useLocation() {
       }
     } catch (error) {
       console.log('GET: /addresses', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -46,6 +51,9 @@ export default function useLocation() {
       }
     } catch (error) {
       console.log('GET: /ads-locations/', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
       return null
     }
   }
@@ -54,53 +62,102 @@ export default function useLocation() {
    * @desc create location
    */
   const createLocation = async (data) => {
-    const response = await $apiFetch('/ads-locations', {
-      method: 'POST',
-      body: data,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    return response
+    try {
+      const response = await $apiFetch('/ads-locations', {
+        method: 'POST',
+        body: data,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      toast.success("Tạo địa điểm thành công", {
+        timeout: 2000
+      })
+      return response
+    } catch (error) {
+      console.log('POST: /ads-locations', error)
+      toast.error("Tạo địa điểm thất bại", {
+        timeout: 2000
+      })
+      return null
+    }
   }
 
   /**
    * @desc update location
    */
   const updateLocation = async (id, data) => {
-    const response = await $apiFetch(`/ads-locations/${id}`, {
-      method: 'PATCH',
-      body: data,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    return response
+    try {
+      const response = await $apiFetch(`/ads-locations/${id}`, {
+        method: 'PATCH',
+        body: data,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      toast.success("Cập nhập điểm thành công", {
+        timeout: 2000
+      })
+      return response
+    } catch (error) {
+      console.log('PATCH: /ads-locations', error)
+      toast.error("Cập nhập điểm thất bại", {
+        timeout: 2000
+      })
+      return null
+    }
   }
 
+  /**
+   * @desc send update request ads-location
+   * @param {*} data
+   * @returns
+   */
   const requestUpdateLocation = async (data) => {
-    const response = await $apiFetch(`edit-requests/ads-location`, {
-      method: 'POST',
-      body: data,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    return response
+    try {
+      const response = await $apiFetch(`/edit-requests/ads-location`, {
+        method: 'POST',
+        body: data,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      toast.success("Tạo yêu cầu chỉnh sửa thành công", {
+        timeout: 2000
+      })
+      return response
+    } catch (error) {
+      console.log('POST: edit-requests/ads-location', error)
+      toast.error("Tạo yêu cầu chỉnh sửa thất bại", {
+        timeout: 2000
+      })
+      return null
+    }
   }
 
   /**
    * @desc send update request
    */
   const requestUpadte = async (id, data) => {
-    const response = await $fetch(`/api/address/request/${id}`, {
-      method: 'POST',
-      body: data,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    return response
+    try {
+      const response = await $fetch(`/api/address/request/${id}`, {
+        method: 'POST',
+        body: data,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      toast.success("Tạo yêu cầu chỉnh sửa thành công", {
+        timeout: 2000
+      })
+      return response
+    } catch (error) {
+      console.log('POST: /api/address/request/', error)
+      toast.error("Tạo yêu cầu chỉnh sửa thất bại", {
+        timeout: 2000
+      })
+      return null
+    }
   }
 
   /**
@@ -114,6 +171,9 @@ export default function useLocation() {
       }
     } catch (error) {
       console.log('GET: /location-types', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -130,8 +190,12 @@ export default function useLocation() {
       }
     } catch (error) {
       console.log('GET: /wards', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
+
   const getWard = async (id) => {
     try {
       const response = await $apiFetch(`/wards/${id}`)
@@ -140,6 +204,9 @@ export default function useLocation() {
       }
     } catch (error) {
       console.log('GET: /ward', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 
@@ -156,6 +223,9 @@ export default function useLocation() {
       }
     } catch (error) {
       console.log('GET: /districts', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
   const getDistrict = async (id) => {
@@ -166,6 +236,9 @@ export default function useLocation() {
       }
     } catch (error) {
       console.log('GET: /district', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
     }
   }
 

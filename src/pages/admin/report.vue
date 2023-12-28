@@ -120,5 +120,7 @@ const openDetailModal = async (item) => {
       }
     }
   })
+  await getReports()
+  await getAdLocationsReports()
 }
 </script>

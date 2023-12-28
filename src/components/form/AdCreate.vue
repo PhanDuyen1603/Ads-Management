@@ -178,7 +178,7 @@ const form = reactive(props.defaultFormData?._id && props.submitType !== 'create
 
 const addresses = computed(() => locations.value?.map(x => ({
   value: x._id,
-  label: x.address?.streetLine1
+  label: `${x.address?.streetLine1}, ${x.address?.streetLine2}`
 })))
 
 const mapCenter = ref(null)

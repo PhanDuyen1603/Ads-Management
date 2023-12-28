@@ -9,11 +9,29 @@ const mapKeys = {
   height: 'Dài',
 }
 
-export const tableField = {
-  title: mapKeys.title,
-  content: mapKeys.content,
-  address: mapKeys.address,
-  adCategory: mapKeys.adCategory,
-  billboardType: mapKeys.billboardType,
-  images: mapKeys.images
+export const tableAd = {
+  title: {
+    label: mapKeys.title,
+    key: 'title'
+  },
+  content: {
+    label: mapKeys.content,
+    key: 'content'
+  },
+  address: {
+    label: mapKeys.address,
+    key: 'address'
+  },
+  adCategory: {
+    label: mapKeys.adCategory,
+    key: 'adsLocation_adsCategory'
+  },
+  billboardType: {
+    label: mapKeys.billboardType,
+    key: 'billboardType'
+  },
+  images: {
+    label: mapKeys.images,
+    key: 'images'
+  }
 }

@@ -51,6 +51,12 @@ body.modal-open {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .custom-check {
   display: flex;
   align-items: center;

@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th>#</th>
-          <!-- <th >goto</th> -->
+          <th>Địa chỉ</th>
           <th v-for="(item, index) in Object.values(tableField)" :key="`head_${index}`" style="width: fit-content;">
             {{ item }}
           </th>
@@ -14,9 +14,9 @@
       <tbody>
         <tr v-for="(item, index) in transformData">
           <td>{{ index + 1 }}</td>
-          <!-- <td @click="focusMap(item)">
-            <i class="bi bi-crosshair"></i>
-          </td> -->
+          <td>
+            {{ `${item.streetLine1}, ${item.streetLine2}` }}
+          </td>
           <td v-for="(field, i) in Object.keys(tableField)" :key="i">
             <div class="tb-content">
               {{ getName(item, field) }}
@@ -65,7 +65,6 @@ const props = defineProps({
 const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x)) || [])
 
 const tableField = {
-  streetLine1: 'Địa chỉ',
   city: 'Thành phố',
   ward: 'Phường',
   district: 'Quận'

@@ -21,7 +21,7 @@
               </div>
               <div class="info_2_body">
                 <p>{{ target.title }}</p>
-                <p>{{ target.streetLine1 }}</p>
+                <p>{{ target.streetLine1 }}, {{ target.streetLine2 }}</p>
                 <p>{{ getName(target, 'ward') }} {{ getName(target, 'district') }}, {{ target.city }}</p>
               </div>
               <div class="info_2_action">

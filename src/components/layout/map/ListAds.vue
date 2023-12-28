@@ -14,7 +14,7 @@
           </div>
           <div class="card_content">
             <div class="line-clamp-1 card_title">
-              {{ item.address.streetLine1 }}
+              {{ item.address.streetLine1 }},&nbsp {{ item.address.streetLine2 }}
             </div>
             <div class="card_desc">
               <span><strong>Phường: </strong>{{ getName(item, 'address_ward') }},&nbsp</span>
@@ -51,7 +51,7 @@
         <div v-for="(item, index) in dataList" :key="index" class="card card-report">
           <div v-if="item.report?.fullName" class="card-body">
             <h5 v-if="item.ads" class="card-title">{{ item.ads.title }}</h5>
-            <h5 v-if="item.adsLocation?.address" class="card-title">{{ item.adsLocation.address.streetLine1 }}</h5>
+            <h5 v-if="item.adsLocation?.address" class="card-title">{{ item.adsLocation.address.streetLine1 }}, {{ item.adsLocation.address.streetLine2 }}</h5>
             <p class="card-date">Ngày gửi: {{ formatDate(item.report?.createdAt) }}</p>
             <p class="card-text"><span>Nội dung: </span><span v-html="item.report?.content || '<div></div>'" /></p>
             <!-- <div v-if="item.report.images && item.report?.images.length" class="card-images"> -->
@@ -107,7 +107,7 @@
               </div>
               <div v-if="target.streetLine1" class="info_2_body">
                 <p>{{ target.title }}</p>
-                <p>{{ target.streetLine1 }},</p>
+                <p>{{ target.streetLine1 }}, {{ target.streetLine2 }}</p>
                 <p>Phường {{ getName(target, 'ward') }}, Quận {{ getName(target, 'district') }}, {{ target.city }}</p>
               </div>
               <div v-if="target.streetLine1" class="info_2_action">

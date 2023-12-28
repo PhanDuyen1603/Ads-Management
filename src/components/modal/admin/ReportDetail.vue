@@ -27,11 +27,17 @@
           :submit="false"
           label="Email: "
         />
-        <TextareaElement
+        <EditorElement
           name="content"
           :columns="{ container: 12, label: 4, wrapper: 12 }"
           class="disable_mouse"
           :submit="false"
+          :hide-tools="['attach', 'bold', 'italic',
+            'strike', 'link', 'heading',
+            'quote', 'code', 'bullet-list',
+            'number-list', 'decrease-nesting', 'increase-nesting',
+            'attach', 'undo', 'redo'
+          ]"
           label="Nội dung báo cáo: "
         />
         <StaticElement name="map">

@@ -4,8 +4,8 @@
       <thead>
         <tr>
           <th>#</th>
-          <th v-for="(item, index) in Object.values(tableField)" :key="`head_${index}`" style="width: fit-content;">
-            {{ item }}
+          <th v-for="(item, index) in Object.keys(tableAd)" :key="`head_${index}`" style="width: fit-content;">
+            {{ tableAd[item].label }}
           </th>
           <th></th>
         </tr>
@@ -13,8 +13,9 @@
       <tbody>
         <tr v-for="(item, index) in data">
           <td>{{ index + 1 }}</td>
-          <td v-for="(field, i) in Object.keys(tableField)" :key="i">
-            <div v-if="field !== 'images'">{{ getName(item, field) }}</div>
+          <td v-for="(field, i) in Object.keys(tableAd)" :key="i">
+            <div v-if="field !== 'images' && field !== 'address'" class="line-clamp-5">{{ getName(item, tableAd[field].key) }}</div>
+            <div v-else-if="field === 'address'" class="line-clamp-5">{{ buildAddress(item) }}</div>
             <div class="table_images" v-else>
               <img v-for="(img, img_i) in item[field]" :key="`img_${img_i}`" :src="getFileUrl(img.path)" >
             </div>
@@ -37,7 +38,7 @@
 
 <script setup>
 import getName from '~/utils/getter/getName'
-import { tableField } from '~/constant/ads'
+import { tableAd } from '~/constant/ads'
 const { userPermission } = useAuth()
 
 const { $modal } = useNuxtApp()
@@ -62,6 +63,10 @@ const openDetailModal = async (item) => {
       }
     }
   })
+}
+
+const buildAddress = (item) => {
+  return `${getName(item, 'adsLocation_address_streetLine1')}, ${getName(item, 'adsLocation_address_streetLine2')}, phường ${getName(item, 'adsLocation_address_ward')}, quận ${getName(item, 'adsLocation_address_district')}, TP HCM`
 }
 
 </script>

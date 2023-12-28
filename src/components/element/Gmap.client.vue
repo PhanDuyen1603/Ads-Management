@@ -27,9 +27,9 @@
           :opened="targetMarker === m.id"
         >
           <div v-if="!markers.ads" class="marker_info">
-            <h3>{{ m.streetLine1 }}</h3>
-            <p>{{ m.ward }}</p>
-            <p>{{ m.district }}</p>
+            <h3>{{ `${m.streetLine1} ${m.streetLine2 || ''}` }}</h3>
+            <p>Phường: {{ getName(m, 'ward') }}</p>
+            <p>Quận: {{ getName(m, 'district') }}</p>
             <p>{{ m.city }}</p>
             <h4>{{ m.isPlanned ? 'Đã' : 'Chưa' }} quy hoạch</h4>
           </div>
@@ -45,6 +45,7 @@ import { getMarkerIcon } from '~/utils/map'
 import useGmapStore from '~/stores/gmap.store'
 import getLocationFromClick from '~/utils/map/getLocationFromClick'
 import generateButtons from '~/composables/map/generateButtons'
+import getName from '~/utils/getter/getName'
 export default {
   props: {
     mapStyles: {
@@ -120,6 +121,9 @@ export default {
       getMarkerIcon,
     }
   },
+  methods: {
+    getName
+  }
 };
 </script>
 

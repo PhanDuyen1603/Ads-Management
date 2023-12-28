@@ -22,7 +22,7 @@
               <div class="info_2_body">
                 <p>{{ target.title }}</p>
                 <p>{{ target.streetLine1 }}</p>
-                <p>{{ target.ward }} {{ target.district }}, {{ target.city }}</p>
+                <p>{{ getName(target, 'ward') }} {{ getName(target, 'district') }}, {{ target.city }}</p>
               </div>
               <div class="info_2_action">
                 <div class="action_groups">
@@ -48,11 +48,11 @@
               <div v-else class="info_1_body_empty">
                 <!--  -->
                 <div v-for="(item, index) in targetAds" :key="index" class="ad_info">
-                  <h3>{{ getName(item.billboardType) }}</h3>
+                  <h3>{{ getName(item, 'billboardType') }}</h3>
                   <p>{{ item.address.streetLine1 }}</p>
                   <p>Kích thước: {{ item.width }} x {{ item.height }}</p>
                   <p>Số lượng: <strong>1 tru/bang</strong></p>
-                  <p>Hình thức: <strong>{{ getName(item.adCategory) }}</strong></p>
+                  <p>Hình thức: <strong>{{ getName(item, 'adCategory') }}</strong></p>
                   <p>Phân loại: <strong>dat cong</strong></p>
                   <div class="action_groups">
                       <IconsInfoCircle fill="blue" />
@@ -79,7 +79,7 @@
 
 <script setup>
 import { faker } from '@faker-js/faker';
-import getName from '~/utils/string/getName'
+import getName from '~/utils/getter/getName';
 
 const { $modal } = useNuxtApp()
 const { target, targetAds} = useLocation()

@@ -14,7 +14,7 @@
         <tr v-for="(item, index) in data">
           <td>{{ index + 1 }}</td>
           <td v-for="(field, i) in Object.keys(tableField)" :key="i">
-            <div v-if="field !== 'images'">{{ getName(item[field]) }}</div>
+            <div v-if="field !== 'images'">{{ getName(item, field) }}</div>
             <div class="table_images" v-else>
               <img v-for="(img, img_i) in item[field]" :key="`img_${img_i}`" :src="getFileUrl(img.path)" >
             </div>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import getName from '~/utils/string/getName'
+import getName from '~/utils/getter/getName'
 import { tableField } from '~/constant/ads'
 const { userPermission } = useAuth()
 

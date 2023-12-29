@@ -46,7 +46,8 @@ const handleLogin = async (data = {}) => {
   const res = await signIn(form)
 
   if(res.success) {
-    $router.push({ name: 'admin' })
+    await $router.push({ name: 'admin' })
+    $router.go()
     emits('close')
   } else {
     alert('user or password not correct')

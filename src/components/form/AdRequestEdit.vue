@@ -9,8 +9,8 @@
       <StaticElement>
         <h3>Yêu cầu chỉnh sửa</h3>
       </StaticElement>
-      <TextareaElement name="reason" label="Nội dung" />
-      <TextareaElement name="content" label="Lý do chỉnh sửa" />
+      <TextareaElement rules="required" name="reason" label="Nội dung" />
+      <TextareaElement rules="required" name="content" label="Lý do chỉnh sửa" />
       <ButtonElement name="submit" submits>
         gửi
       </ButtonElement>

@@ -55,6 +55,7 @@
         <SelectElement
           label="Địa chỉ đặt quảng cáo"
           name="adsLocation"
+          rules="required"
           :native="false"
           :items="addresses"
           @change="(e) => changeLocation(e, 'adsLocation')"
@@ -68,13 +69,13 @@
             :center="mapCenter"
             @open-detail="showAdDetail"
             :markers="markers"
-
           />
         </StaticElement>
 
         <!-- step 3 -->
         <SelectElement
           label="Loại bảng quảng cáo"
+          rules="required"
           name="billboardType"
           :items="billboardTypes"
         />
@@ -104,7 +105,7 @@
           label="ngay dat qc"
           :columns="{ container: 4 }"
           display-format="DD-MM-YYYY"
-          />
+        />
 
         <DateElement
           name="endDate"

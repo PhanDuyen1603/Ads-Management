@@ -10,12 +10,14 @@
         name="firstName"
         label="Họ và tên đệm"
         placeholder="Nhập họ và tên đệm"
+        rules="required"
         :columns="{ container: 6 }"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
         :submit="false"
       />
       <TextElement
         name="lastName"
+        rules="required"
         label="Tên"
         placeholder="Nhập tên"
         :columns="{ container: 6 }"
@@ -31,6 +33,7 @@
 
       <TextElement
         name="phone"
+        rules="required"
         label="Số điện thoại"
         placeholder="Điện thoại liên lạc"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
@@ -38,6 +41,7 @@
 
       <SelectElement
         label="Hình thức báo cáo"
+        rules="required"
         name="reportType"
         :native="false"
         :items="reportTypes"
@@ -45,6 +49,7 @@
 
       <EditorElement
         name="content"
+        rules="required"
         label="Nội dung báo cáo"
         :accept="['image/png', 'image/jpeg']"
       />

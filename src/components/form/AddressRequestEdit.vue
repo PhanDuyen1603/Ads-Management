@@ -26,6 +26,7 @@
       <SelectElement
         label="Loại địa điểm"
         name="locationType"
+        rules="required"
         :native="false"
         :items="locationsTypes"
         :submit="submitType === 'request' ? false : true"
@@ -43,6 +44,7 @@
       <SelectElement
         label="Loại quảng cáo"
         name="adsCategory"
+        rules="required"
         :native="false"
         :items="adsCategories"
         :submit="submitType === 'request' ? false : true"

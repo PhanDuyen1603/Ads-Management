@@ -41,6 +41,7 @@
         <SelectElement
           label="Loại quảng cáo"
           name="adsCategory"
+          rules="required"
           :native="false"
           :items="adsCategories"
         />

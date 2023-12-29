@@ -61,6 +61,10 @@
         @mounted="el$ => imagesViews && imagesViews.length && el$.load(imagesViews)"
       />
 
+      <StaticElement>
+        <ElementCaptcha ref="captcha" />
+      </StaticElement>
+
       <ButtonElement name="submit" submits>
         Gửi báo cáo
       </ButtonElement>
@@ -86,6 +90,7 @@ const props = defineProps({
   }
 })
 const emits = defineEmits(['close'])
+const captcha = ref(null)
 const form = reactive({})
 const { getFileUrl } = useMedia()
 const { getReportTypes } = useReport()
@@ -108,6 +113,10 @@ const handleRemoveMediaFiles = async (file, el$) => {
 }
 
 const handleSubmit = async (submitForm, el) => {
+  // check captcha
+  const { value: captchaRes } = await captcha.value.checkCaptcha()
+  // console.log({ captchaRes, captcha: captcha.value })
+  if(!captchaRes) return false
   const _id = props.updateType === 'ad' ? props.adId : props.addressId
 
   if (!_id) window.alert('Khong tim thay quang cao hay địa điểm')

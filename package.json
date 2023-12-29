@@ -25,6 +25,9 @@
     "nuxt-mongoose": "^1.0.3",
     "sass": "^1.60.0",
     "sass-loader": "10.1.1",
+    "svg-captcha": "^1.4.0",
+    "unstorage": "^1.10.1",
+    "uuid": "^9.0.1",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5",
     "vue-toastification": "^2.0.0-rc.5"

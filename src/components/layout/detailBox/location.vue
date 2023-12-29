@@ -63,6 +63,7 @@
 
 <script setup>
 import getName from '~/utils/getter/getName';
+const { $modal } = useNuxtApp()
 const props = defineProps({
   modelValue: {
     type: Object,

@@ -8,10 +8,11 @@
             {{ tableAd[item].label }}
           </th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in data">
+        <tr v-for="(item, index) in data" :key="`ad_${index}`">
           <td>{{ index + 1 }}</td>
           <td v-for="(field, i) in Object.keys(tableAd)" :key="i">
             <div v-if="field !== 'images' && field !== 'address'" class="line-clamp-5">{{ getName(item, tableAd[field].key) }}</div>
@@ -20,13 +21,16 @@
               <img v-for="(img, img_i) in item[field]" :key="`img_${img_i}`" :src="getFileUrl(img.path)" >
             </div>
           </td>
+          <td class="detail_icon" @click="openDetailModal(item)">
+            <i class="mdi mdi-eye-outline"></i>
+          </td>
           <td v-if="userPermission.advertise.update">
-            <button class="btn btn-success" @click="openDetailModal(item)">
+            <button class="btn btn-success" @click="openUpdateModal(item)">
               chỉnh sửa
             </button>
           </td>
           <td v-if="userPermission.advertise.request">
-            <button class="btn btn-success" @click="openDetailModal(item)">
+            <button class="btn btn-success" @click="openUpdateModal(item)">
               Yêu cầu chỉnh sửa
             </button>
           </td>
@@ -51,7 +55,23 @@ const { getFileUrl } = useMedia()
 
 const openDetailModal = async (item) => {
   await $modal.show({
-    component: userPermission.value.advertise.update ? 'LazyFormAdCreate' : 'LazyFormAdRequestEdit',
+    component: 'LazyModalAdminAdDetail',
+    props: {
+      modelValue: item
+    },
+    wrapperProps: {
+      styles: {
+        width: '650px'
+      }
+    }
+  })
+}
+
+const openUpdateModal = async (item) => {
+  console.log(222)
+
+  await $modal.show({
+    component: userPermission.value.advertise.update ? 'FormAdCreate' : 'FormAdRequestEdit',
     props: {
       defaultFormData: item,
       submitType: userPermission.value.advertise.update ? 'update' : 'request',
@@ -59,7 +79,7 @@ const openDetailModal = async (item) => {
     wrapperProps: {
       styles: {
         width: '650px',
-        'overflow-y': 'unset'
+        'overflow-y': userPermission.value.advertise.update ? 'unset' : 'scroll'
       }
     }
   })

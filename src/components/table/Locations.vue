@@ -71,10 +71,12 @@ const tableField = {
 }
 const openReportModal = async (item) => {
   const result = await $modal.show({
-    component: 'FormAddressRequestEdit',
+    component: userPermission.value.advertise.update ? 'FormAddressRequestEdit' : 'LazyFormAdRequestEdit',
+    // component: 'FormAddressRequestEdit',
     props: {
       defaultFormData: item,
       submitType: userPermission.value.advertise.update ? 'update' : 'request',
+      formType: 'location'
     },
     wrapperProps: {
       styles: {
@@ -87,8 +89,10 @@ const openReportModal = async (item) => {
 
 const openDetailModal = async (item) => {
   await $modal.show({
-    component: 'LazyModalAdminAdDetail',
-    props: {...item},
+    component: 'LazyModalAdminAdLocationDetail',
+    props: {
+      modelValue: item
+    },
     wrapperProps: {
       styles: {
         width: '650px'

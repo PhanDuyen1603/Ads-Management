@@ -8,7 +8,8 @@ export default defineStore({
     accessToken: null,
     refreshToken: null,
     profile: {},
-    isLoggedIn: false
+    isLoggedIn: false,
+    clientId: null,
   }),
   actions: {
     /**

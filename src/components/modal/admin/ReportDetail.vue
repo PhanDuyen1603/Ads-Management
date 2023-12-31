@@ -87,15 +87,14 @@ const props = defineProps({
     type: Object,
     default:() => {}
   },
-  position: {
-    type: Object,
-    default:() => {}
-  },
+  type: {
+    type: String,
+    default: 'ad',
+    validator:(x) => ['ad', 'location'].includes(x)
+  }
 })
+const { changeStatue } = useAdReport()
 const emits = defineEmits(['close'])
-// const { getBillboardType, getAdsLocation } = useAdvertise()
-// const billboardType = props.modelValue.ads?.billboardType && await getBillboardType(props.modelValue.ads.billboardType)
-// const adsLocation = props.modelValue.ads?.adsLocation && await getAdsLocation(props.modelValue.ads.adsLocation)
 const imagesViews = []
 
 const form = ref({
@@ -106,8 +105,14 @@ const form = ref({
  status: get(props.modelValue, keys.status),
 })
 
-const handleSubmit = () => {
+const handleSubmit = async (form, el) => {
   console.log(1)
+  if (props.type === 'ad') {
+    // awa
+    const status = form.status
+    const res = await changeStatue(props.modelValue._id, { status })
+    console.log({res})
+  }
   emits('close')
 }
 

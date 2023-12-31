@@ -1,34 +1,20 @@
-import getName from "~/utils/getter/getName"
 import { useToast } from "vue-toastification";
 export default function useAdReport() {
   const { $apiFetch } = useNuxtApp()
   const reports = ref(null)
   const { queryByPermissionData } = useAuth()
-  const { getWard, getDistrict } = useLocation()
   const toast = useToast()
   /**
    * @desc get list ad locations reports
    */
   const getReports = async (query) => {
     try {
-      const response = await $apiFetch('/reports/ads-location')
+      const response = await $apiFetch('/reports/ads-location', {
+        params: {...queryByPermissionData?.value || {}, ...query}
+      })
       if(response.success) {
         const { data } = response
-        let res
-        if(queryByPermissionData.value?.data === 'district') {
-          const district = await getDistrict(queryByPermissionData.value.districts)
-          res = data.filter(x => getName(x, 'adsLocation_address_district') === district.name)
-          reports.value = res
-        } else if (queryByPermissionData.value?.data === 'ward') {
-          const district = await getDistrict(queryByPermissionData.value.districts)
-          const ward = await getWard(queryByPermissionData.value.wards)
-          res = data.filter(x => getName(x, 'adsLocation_address_district') === district.name
-            && getName(x, 'adsLocation_address_ward') === ward.name)
-          console.log({res, district, ward})
-          reports.value = res
-        } else {
-          reports.value = response.data
-        }
+        reports.value = data
       }
     } catch (error) {
       console.log('GET: /reports/ads-location', error)

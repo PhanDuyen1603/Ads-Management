@@ -4,7 +4,6 @@ export default function useAdReport() {
   const { $apiFetch } = useNuxtApp()
   const reports = ref(null)
   const { queryByPermissionData } = useAuth()
-  const { getLocations, addresses } = useLocation()
   const toast = useToast()
 
   /**
@@ -12,19 +11,12 @@ export default function useAdReport() {
    */
   const getReports = async (query) => {
     try {
-      const response = await $apiFetch('/reports/ads')
+      const response = await $apiFetch('/reports/ads', {
+        params: {...queryByPermissionData?.value || {}, ...query}
+      })
       if(response.success) {
         const { data } = response
-        let res
-        if(Array.isArray(addresses.value) && !addresses.value.length) await getLocations()
-        const ids = addresses.value.map(x => x._id)
-
-        if(queryByPermissionData?.value?.data === 'district' || queryByPermissionData?.value?.data === 'ward') {
-          res = data.filter(x => ids.includes(x.ads?.adsLocation))
-          reports.value = res
-        } else {
-          reports.value = data
-        }
+        reports.value = data
       }
     } catch (error) {
       console.log('GET: /reports/ads', error)
@@ -79,11 +71,44 @@ export default function useAdReport() {
     return res
   }
 
+  /**
+   * @desc send request update
+   */
+  const requestUpate = async (id, data) => {
+
+  }
+
+  /**
+   * @desc update status
+   */
+  const changeStatue = async (id, { status }) => {
+    try {
+      const response = await $apiFetch(`/reports/ads/${id}`, {
+        method: 'PATCH',
+        body: {
+          status
+        },
+        redirect: 'follow',
+      })
+      toast.success("Cập nhập trạng thái thành công", {
+        timeout: 2000
+      })
+      return response
+    } catch (error) {
+      console.log('PATCH: /reports/ads/', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
+    }
+  }
+
   return {
     getReports,
     getReport,
     createReport,
     getReportByIds,
+    requestUpate,
+    changeStatue,
 
     reports,
   }

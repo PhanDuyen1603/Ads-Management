@@ -1,40 +1,38 @@
 <template>
   <div class="modal_ad_detail">
     <div class="detail_item">
-      <h4>Địa chỉ:</h4>
-      <p>{{ address.streetLine1 }}, {{ address.streetLine2 }}</p>
+      <h4>Tên bảng QC:</h4>
+      <p>{{ getName(modelValue, 'title') }}</p>
     </div>
     <div class="detail_item">
-      <h4>Khu vực:</h4>
-      <p>{{ areaType }}</p>
+      <h4>Nội dung:</h4>
+      <p>{{ getName(modelValue, 'content') }}</p>
+    </div>
+    <div class="detail_item">
+      <h4>Địa chỉ:</h4>
+      <p>{{ getFullAddress(modelValue) }}</p>
+    </div>
+    <div class="detail_item">
+      <h4>Loại bảng QC:</h4>
+      <p>{{ getName(modelValue, 'billboardType') }}</p>
     </div>
     <div class="detail_item">
       <h4>Loại vị trí:</h4>
-      <p>{{ positionType }}</p>
-    </div>
-    <div class="detail_item">
-      <h4>Hình thức quảng cáo:</h4>
-      <p>{{ advertisingType }}</p>
-    </div>
-    <div class="detail_item">
-      <h4>Hình ảnh điểm đặt bảng quảng cáo:</h4>
-      <p></p>
-    </div>
-    <div class="detail_item">
-      <h4>Thông tin quy hoạch:</h4>
-      <p>Chưa quy hoạch</p>
-    </div>
-    <div class="detail_item">
-      <h4>Loại bảng quảng cáo:</h4>
-      <p>Trụ bảng hiflex</p>
+      <p>{{ getName(modelValue, 'adsLocation_locationType') }}</p>
     </div>
     <div class="detail_item">
       <h4>Kích thước:</h4>
-      <p>2.5x1m</p>
+      <p>{{ `${ +modelValue.width / 100 } x ${ +modelValue.height / 100 }m` }}</p>
     </div>
     <div class="detail_item">
-      <h4>Số lượng:</h4>
-      <p>1</p>
+      <h4>Giá:</h4>
+      <p>{{ getName(modelValue, 'price') }}</p>
+    </div>
+    <div v-if="modelValue.images" class="detail_item">
+      <h4>Hình ảnh:</h4>
+      <div class="group_images">
+        <img v-for="(image, index) in modelValue.images" :key="index" :src="getFileUrl(image.path)" alt="">
+      </div>
     </div>
     <div>
       <ElementGmap
@@ -43,37 +41,35 @@
           width: '100%',
           height: '300px'
         }"
-        :center="position"
-        :markers="[{ position }]"
+        :center="address?.position"
+        :markers="[address]"
       />
     </div>
   </div>
 </template>
 
 <script setup>
+import getName from '~/utils/getter/getName';
+import { mapAdsLocation } from '~/utils/mapData'
+
 const props = defineProps({
-  position: {
+  modelValue: {
     type: Object,
     default:() => {}
   },
-  address: {
-    type: String,
-    default: ''
-  },
-  areaType: {
-    type: String,
-    default: ''
-  },
-  positionType: {
-    type: String,
-    default: ''
-  },
-  advertisingType: {
-    type: String,
-    default: ''
-  }
 })
-
+const { getFileUrl } = useMedia()
+const address = computed(() => mapAdsLocation(props.modelValue.adsLocation))
+console.log({
+  address: address.value
+})
+const getFullAddress = (item) => {
+  return `${getName(item, 'adsLocation_address_streetLine1') } ${ getName(item, 'adsLocation_address_streetLine2') },
+    ${ getName(item, 'adsLocation_address_ward') },
+    ${ getName(item, 'adsLocation_address_district') },
+    ${ getName(item, 'adsLocation_address_city') },
+    ${ getName(item, 'adsLocation_address_country') }`
+}
 </script>
 
 <style lang="scss">
@@ -83,12 +79,24 @@ const props = defineProps({
   .detail_item {
     display: inline-flex;
     gap: 10px;
+    margin-bottom: .5rem;
     h4 {
       font-weight: 600;
-      font-size: 16px;
+      font-size: 1rem;
+      margin: 0;
     }
     p {
-      // font-size: 14px
+      font-size: .9rem;
+      margin: 0;
+    }
+  }
+  .group_images {
+    display: flex;
+    gap: 20px;
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 6px;
     }
   }
 }

@@ -63,15 +63,5 @@ export default defineStore({
         value: x._id
       })) : []
     },
-    adsLocations:(state) => {
-      return state.ads_locations.map(x => ({
-        ...x.address,
-        position: {
-          lat: x.address.lat,
-          lng: x.address.long
-        },
-        ...x,
-      }))
-    }
   }
 })

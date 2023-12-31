@@ -7,7 +7,7 @@
   <!-- TODO: loading -->
     <div v-if="item.adsCategory" class="card_horizontal" @click="focusMap(item)">
       <div class="card_image">
-        <img :src="faker.image.urlPicsumPhotos()" alt="..">
+        <img :src="getRandomLocationImage()" alt="..">
       </div>
       <div class="card_content">
         <div class="line-clamp-1 card_title">
@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-import { faker } from '@faker-js/faker';
 import getName from '~/utils/getter/getName';
 const props = defineProps({
   dataList: {
@@ -33,6 +32,7 @@ const props = defineProps({
   }
 })
 const emits = defineEmits(['focus-item'])
+const { getRandomLocationImage } = useMedia()
 
 const focusMap = (item) => {
   emits('focus-item', item)

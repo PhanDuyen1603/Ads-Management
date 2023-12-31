@@ -15,7 +15,13 @@ const standardize_ward = (locationName) => {
   const slugText = slugify(locationName)
   const district = standardize_district(locationName)
   const wards = hcmCity.districts.find(x => slugify(`${x.type.name} ${x.names[0]}`) === slugify(district)).wards
-  const ward = wards.find(x => slugText.indexOf(slugify(x.names[0])) !== -1)?.names[0]
+  const ward = wards.find(x => {
+    let name = slugify(x.names[0])
+    if (parseInt(name) && parseInt(name) > 0) {
+      name = 'phuong' + name
+    }
+    return slugText.indexOf(name) !== -1
+  })?.names[0]
   if (ward) {
     return ward
   }

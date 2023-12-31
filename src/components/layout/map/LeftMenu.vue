@@ -1,15 +1,15 @@
 <template>
   <div class="map_right_menu">
     <ul class="menu_items">
-      <li class="menu_item active_menu" @click="navigate({ query: { entry: 'address' }})">
+      <li :class="['menu_item', { active_menu: $route.query.entry === 'address' && showTabContet}]" @click="navigate({ query: { entry: 'address' }})">
         <span><IconsGeoAlt style="height: 25px; width: 25px;"/></span>
         <span>Địa điểm</span>
       </li>
-      <li class="menu_item" @click="navigate({ query: { entry: 'ads' }})">
+      <li :class="['menu_item', { active_menu: $route.query.entry === 'ads' && showTabContet}]" @click="navigate({ query: { entry: 'ads' }})">
         <span><IconsAdvertise style="height: 25px; width: 25px;"/></span>
         <span>Quảng cáo</span>
       </li>
-      <li class="menu_item" @click="navigate({ query: { entry: 'reports' }})">
+      <li :class="['menu_item', { active_menu: $route.query.entry === 'reports' && showTabContet}]" @click="navigate({ query: { entry: 'reports' }})">
         <span><IconsReport style="height: 25px; width: 25px;"/></span>
         <span>Báo cáo</span>
       </li>
@@ -233,6 +233,6 @@ const handleSearch = useDebounceFn(async (event) => {
   }
 }
 .active_menu {
-
+ color: #3480fa !important;
 }
 </style>

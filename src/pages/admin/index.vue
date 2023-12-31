@@ -13,12 +13,12 @@
         <ElementGmap
           class="map"
           ref="map"
-          :markers="adsLocations"
+          :markers="markers"
           :map-styles="{
             width: '100%',
             height: 'calc(100vh - 100px)'
           }"
-          :center="adsLocations[0]?.position"
+          :center="markers[0]?.position"
         />
     </div>
 
@@ -32,9 +32,7 @@ definePageMeta({
   middleware: ["admin"],
 })
 const { $gMap } = useNuxtApp()
-const { getAdsLocations, adsLocations } = useAdvertise()
-const { getLocations, addresses } = useLocation()
-await getAdsLocations()
+const { getLocations, markers, addresses } = useLocation()
 await getLocations()
 const map = ref(null)
 

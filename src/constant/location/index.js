@@ -515,7 +515,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 26890,
@@ -523,7 +523,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 26893,
@@ -531,7 +531,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 26896,
@@ -539,7 +539,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 26897,
@@ -571,7 +571,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         }
       ],
       "id": 764,
@@ -637,7 +637,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 26926,
@@ -645,7 +645,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 26929,
@@ -661,7 +661,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 26935,
@@ -685,7 +685,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 26944,
@@ -693,7 +693,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 26947,
@@ -701,7 +701,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 26950,
@@ -759,7 +759,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 26968,
@@ -767,7 +767,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 26971,
@@ -791,7 +791,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 26980,
@@ -799,7 +799,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 26983,
@@ -815,7 +815,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 26989,
@@ -823,7 +823,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 26992,
@@ -839,7 +839,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 26998,
@@ -847,7 +847,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27001,
@@ -855,7 +855,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27004,
@@ -987,7 +987,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 27046,
@@ -995,7 +995,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 27049,
@@ -1003,7 +1003,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27052,
@@ -1011,7 +1011,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 27055,
@@ -1019,7 +1019,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 27058,
@@ -1027,7 +1027,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 27061,
@@ -1035,7 +1035,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 27064,
@@ -1043,7 +1043,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27067,
@@ -1215,7 +1215,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27124,
@@ -1223,7 +1223,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 27127,
@@ -1263,7 +1263,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 27142,
@@ -1271,7 +1271,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27145,
@@ -1287,7 +1287,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 27151,
@@ -1295,7 +1295,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 27154,
@@ -1303,7 +1303,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 27157,
@@ -1311,7 +1311,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 27160,
@@ -1319,7 +1319,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         }
       ],
       "id": 770,
@@ -1385,7 +1385,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27184,
@@ -1393,7 +1393,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 27187,
@@ -1401,7 +1401,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27190,
@@ -1409,7 +1409,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 27193,
@@ -1417,7 +1417,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 27196,
@@ -1425,7 +1425,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 27199,
@@ -1433,7 +1433,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 27202,
@@ -1441,7 +1441,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 27205,
@@ -1449,7 +1449,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         }
       ],
       "id": 771,
@@ -1475,7 +1475,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 27214,
@@ -1499,7 +1499,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 27223,
@@ -1523,7 +1523,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27232,
@@ -1531,7 +1531,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27235,
@@ -1547,7 +1547,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 27241,
@@ -1555,7 +1555,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 27244,
@@ -1563,7 +1563,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 27247,
@@ -1571,7 +1571,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 27250,
@@ -1579,7 +1579,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 27253,
@@ -1621,7 +1621,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27265,
@@ -1629,7 +1629,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 27268,
@@ -1637,7 +1637,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27271,
@@ -1653,7 +1653,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 27277,
@@ -1677,7 +1677,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 27286,
@@ -1685,7 +1685,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 27289,
@@ -1701,7 +1701,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 27295,
@@ -1717,7 +1717,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         }
       ],
       "id": 773,
@@ -1735,7 +1735,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 27304,
@@ -1743,7 +1743,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27307,
@@ -1751,7 +1751,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 27310,
@@ -1767,7 +1767,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 27316,
@@ -1775,7 +1775,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27319,
@@ -1791,7 +1791,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 27325,
@@ -1799,7 +1799,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 27328,
@@ -1823,7 +1823,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 27337,
@@ -1831,7 +1831,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 27340,
@@ -1881,7 +1881,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27355,
@@ -1889,7 +1889,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 27358,
@@ -1905,7 +1905,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 27364,
@@ -1921,7 +1921,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 27370,
@@ -1929,7 +1929,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 27373,
@@ -1937,7 +1937,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 27376,
@@ -1945,7 +1945,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27379,
@@ -1953,7 +1953,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 27382,
@@ -1961,7 +1961,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         },
         {
           "id": 27385,
@@ -1987,7 +1987,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["08"]
+          "names": ["8"]
         },
         {
           "id": 27391,
@@ -1995,7 +1995,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["02"]
+          "names": ["2"]
         },
         {
           "id": 27394,
@@ -2003,7 +2003,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["01"]
+          "names": ["1"]
         },
         {
           "id": 27397,
@@ -2011,7 +2011,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["03"]
+          "names": ["3"]
         },
         {
           "id": 27400,
@@ -2027,7 +2027,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["09"]
+          "names": ["9"]
         },
         {
           "id": 27406,
@@ -2043,7 +2043,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["04"]
+          "names": ["4"]
         },
         {
           "id": 27412,
@@ -2067,7 +2067,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["05"]
+          "names": ["5"]
         },
         {
           "id": 27421,
@@ -2083,7 +2083,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["06"]
+          "names": ["6"]
         },
         {
           "id": 27427,
@@ -2107,7 +2107,7 @@ export const hcmCity = {
             "name": "Phường",
             "slug": "phuong"
           },
-          "names": ["07"]
+          "names": ["7"]
         }
       ],
       "id": 776,

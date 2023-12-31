@@ -22,6 +22,7 @@ export function changeToSlug(text, keepAccent = false) {
 }
 
 export function slugify(str, separator = '') {
+  if(!str) return ''
   str = str
     .toLowerCase()
     .trim()

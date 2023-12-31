@@ -10,37 +10,6 @@ export default function useAdvertise() {
   const { queryByPermissionData } = useAuth()
   const toast = useToast();
   const filterAds = ref(null)
-  /**
-   * @desc get ads addresses
-   */
-  const getAdsLocations = async (query = {}) => {
-    try {
-      const response = await $apiFetch('/ads-locations', {
-        params: {...queryByPermissionData?.value || {}, ...query}
-      })
-      if(response.success) {
-        $store.ads_locations = response.data
-      }
-    } catch (error) {
-      console.log('GET: /ads-locations1', error)
-      toast.error("có lỗi xảy ra", {
-        timeout: 2000
-      })
-    }
-  }
-  const getAdsLocation = async (id) => {
-    try {
-      const response = await $apiFetch(`/ads-locations/${id}`)
-      if(response.success) {
-        return response.data
-      }
-    } catch (error) {
-      console.log('GET: /ads-locations2', error)
-      toast.error("có lỗi xảy ra", {
-        timeout: 2000
-      })
-    }
-  }
 
   /**
    * @desc get all ads
@@ -139,14 +108,10 @@ export default function useAdvertise() {
    *
    */
   const requestUpdateAd = async (data) => {
-    if(!data.ads) return
     try {
-      const response = await $apiFetch(`edit-requests/ads`, {
+      const response = await $apiFetch(`/edit-requests/ads`, {
         method: 'POST',
         body: data,
-        headers: {
-          "Content-Type": "application/json"
-        }
       })
       toast.success("Gửi yêu cầu thành công", {
         timeout: 2000
@@ -168,7 +133,6 @@ export default function useAdvertise() {
     return cloned.value?.filter(x => slugify(x.title).includes(slugify(str)))
   }
 
-  const adsLocations = computed(() => $store.adsLocations)
   const ads = computed(() => filterAds.value && filterAds.value.length ? filterAds.value : $store.ads)
   const billboardTypes = computed(() => $store.adsBillboardTypes)
   const adsCategories = computed(() => $store.categories.map(x => ({
@@ -177,8 +141,6 @@ export default function useAdvertise() {
   })))
 
   return {
-    getAdsLocations,
-    getAdsLocation,
     getAds,
     getAdById,
     getAdsCategories,
@@ -187,7 +149,6 @@ export default function useAdvertise() {
     requestUpdateAd,
     filterAd,
 // no return .value in composable it will not reactive any more
-    adsLocations,
     ads,
     billboardTypes,
     adsCategories

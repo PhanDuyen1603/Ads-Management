@@ -11,7 +11,16 @@ export default function useMedia() {
     return `${fileHost}/${url}`
   }
 
+  const randomInteger = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const getRandomLocationImage = () => {
+    return `/images/locations/${randomInteger(1, 22)}.jpeg`
+  }
+
   return {
-    getFileUrl
+    getFileUrl,
+    getRandomLocationImage
   }
 }

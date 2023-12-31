@@ -2,7 +2,7 @@
   <!--  v-if="modelValue && modelValue._id && $route.query.entry !== 'reports'" -->
   <div class="info_body">
     <div class="info_image">
-      <img :src="getFileUrl(Array.isArray(modelValue.images) && modelValue.images.length && modelValue.images[0].path)" alt="..">
+      <img :src="getFileUrl(Array.isArray(modelValue.images) && modelValue.images.length && modelValue.images[0].path) || getRandomLocationImage()" alt="..">
     </div>
     <div class="info">
       <div class="info_1">
@@ -71,6 +71,7 @@ const props = defineProps({
   }
 })
 const { getFileUrl } = useMedia()
+const { getRandomLocationImage } = useMedia()
 
 const openReportModal = async (type) => {
   await $modal.show({

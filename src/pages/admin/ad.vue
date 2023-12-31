@@ -36,15 +36,16 @@ definePageMeta({
   middleware: ['admin'],
 })
 const { userPermission } = useAuth()
-const { getAds, ads, getAdsLocations, adsLocations } = useAdvertise()
+const { getAds, ads } = useAdvertise()
+const { getLocations, addresses } = useLocation()
 const isShowAdsList = ref(false)
-await getAdsLocations()
+await getLocations()
 
-const dataList = computed(() => !isShowAdsList.value ? unref(adsLocations) : unref(ads))
+const dataList = computed(() => !isShowAdsList.value ? unref(addresses) : unref(ads))
 
 const initData = async () => {
   if(isShowAdsList.value) await getAds()
-  else await getAdsLocations()
+  else await getLocations()
 }
 
 const showAddressList = async () => {

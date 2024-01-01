@@ -39,6 +39,7 @@ const close = () => {
   display: inline-block;
   text-align: initial;
   max-height: calc(100vh - 10%);
+  overflow: auto;
 }
 .modal-overlay {
   position: fixed;

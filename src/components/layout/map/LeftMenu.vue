@@ -141,7 +141,7 @@ const handleSearch = useDebounceFn(async (event) => {
     padding-top: 30px;
 
     height: 100%;
-    width: 82px;
+    width: 106px;
   }
   .menu_item {
     margin: 0 auto;
@@ -166,7 +166,7 @@ const handleSearch = useDebounceFn(async (event) => {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     position: absolute;
     top: 0;
-    left: 80px;
+    left: 106px;
     z-index: 100;
 
     width: 0;

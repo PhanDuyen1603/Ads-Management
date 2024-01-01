@@ -2,19 +2,19 @@
   <div class="map_right_menu">
     <ul class="menu_items">
       <li :class="['menu_item', { active_menu: $route.query.entry === 'address' && showTabContet}]" @click="navigate({ query: { entry: 'address' }})">
-        <span><IconsGeoAlt style="height: 25px; width: 25px;"/></span>
+        <span><IconsGeoAlt style="height: 16px; width: 16px;"/></span>
         <span>Địa điểm</span>
       </li>
       <li :class="['menu_item', { active_menu: $route.query.entry === 'ads' && showTabContet}]" @click="navigate({ query: { entry: 'ads' }})">
-        <span><IconsAdvertise style="height: 25px; width: 25px;"/></span>
+        <span><IconsAdvertise style="height: 16px; width: 16px;"/></span>
         <span>Quảng cáo</span>
       </li>
       <li :class="['menu_item', { active_menu: $route.query.entry === 'reports' && showTabContet}]" @click="navigate({ query: { entry: 'reports' }})">
-        <span><IconsReport style="height: 25px; width: 25px;"/></span>
+        <span><IconsReport style="height: 16px; width: 16px;"/></span>
         <span>Báo cáo</span>
       </li>
       <li class="menu_item" @click="navigate({ modal: loginModal, path: '/admin' })">
-        <span><IconsProfileCircle style="height: 25px; width: 25px;"/></span>
+        <span><IconsProfileCircle style="height: 16px; width: 16px;"/></span>
         <span>Hồ sơ</span>
       </li>
     </ul>
@@ -141,13 +141,14 @@ const handleSearch = useDebounceFn(async (event) => {
     padding-top: 30px;
 
     height: 100%;
-    width: 80px;
+    width: 82px;
   }
   .menu_item {
-    color: #70757a;
+    margin: 0 auto;
+    color: black;
     margin-left: 8px;
     margin-right: 8px;
-    font-size: 12px;
+    font-size: 13px;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
@@ -223,8 +224,8 @@ const handleSearch = useDebounceFn(async (event) => {
       right: 0;
       cursor: pointer;
       svg {
-        width: 25px;
-        height: 25px;
+        width: 16px;
+        height: 16px;
       }
       &.search_icon {
         right: 48px;

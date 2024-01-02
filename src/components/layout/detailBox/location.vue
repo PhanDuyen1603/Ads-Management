@@ -44,7 +44,7 @@
           <p>{{ getName(modelValue, 'adsLocation_address_streetLine1') }}, {{ getName(modelValue, 'adsLocation_address_streetLine2') }}</p>
           <p>Phường {{ getName(modelValue, 'adsLocation_address_ward') }}, Quận {{ getName(modelValue, 'adsLocation_address_district') }}, TP Hồ Chí Minh</p>
         </div>
-        <div v-if="modelValue.streetLine1" class="info_2_action">
+        <div v-if="getName(modelValue, 'address_streetLine1') || getName(modelValue, 'adsLocation_address_streetLine1')" class="info_2_action">
           <div class="action_groups">
               <IconsInfoCircle style="cursor: pointer;" fill="blue" />
             <div>

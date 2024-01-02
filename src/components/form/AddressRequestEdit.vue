@@ -89,7 +89,7 @@
 
       <GroupElement name="group">
         <ButtonElement name="submit" submits>
-          gửi
+          Gửi
         </ButtonElement>
       </GroupElement>
 

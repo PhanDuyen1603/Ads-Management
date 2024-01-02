@@ -14,7 +14,7 @@
           <p>Kích thước: &nbsp{{ modelValue.width }}m x {{ modelValue.height }}m</p>
           <p>{{ modelValue.content }}</p>
           <p>Số lượng: 1 trụ/bảng</p>
-          <p>Hình thức: thiếu</p>
+          <p>Hình thức: {{modelValue.billboardType.name}}</p>
         </div>
         <div v-if="modelValue.title || modelValue.content" class="info_2_action">
           <div class="action_groups">
@@ -36,9 +36,8 @@
         <div class="info_2_head">
           <strong>Thông tin địa điểm</strong>
         </div>
-        <div v-if="modelValue.streetLine1" class="info_2_body">
-          <p>{{ modelValue.title }}</p>
-          <p>{{ modelValue.streetLine1 }}, {{ modelValue.streetLine2 }}</p>
+        <div v-if="modelValue.adsLocation.address.streetLine1" class="info_2_body">
+          <p>{{ modelValue.adsLocation.address.streetLine1 }}, {{ modelValue.adsLocation.address.streetLine2 }}</p>
           <p>Phường {{ getName(modelValue, 'ward') }}, Quận {{ getName(modelValue, 'district') }}, {{ modelValue.city }}</p>
         </div>
         <div v-if="modelValue.streetLine1" class="info_2_action">

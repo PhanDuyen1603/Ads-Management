@@ -54,14 +54,14 @@
       <DateElement
         name="startDate"
         rules="required"
-        label="ngay dat qc"
+        label="Ngày đặt quảng cáo"
         :columns="{ container: 4 }"
         display-format="DD-MM-YYYY"
       />
 
       <DateElement
         name="endDate"
-        label="ngay ket thuc"
+        label="Ngày kết thúc"
         rules="required"
         :columns="{ container: 4 }"
         display-format="DD-MM-YYYY"
@@ -69,10 +69,10 @@
 
       <TextElement
         name="price"
-        label="gia"
+        label="Giá"
         :columns="{ container: 4 }"
         type="number"
-        placeholder="gia"
+        placeholder="Giá"
       />
 
       <TextareaElement
@@ -81,7 +81,7 @@
         label="Lý do chỉnh sửa"
       />
       <ButtonElement name="submit" submits>
-        gửi
+        Gửi
       </ButtonElement>
     </Vueform>
   </ClientOnly>

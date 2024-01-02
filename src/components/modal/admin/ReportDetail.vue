@@ -18,7 +18,7 @@
           :columns="{ container: 12, label: 4, wrapper: 12 }"
           class="disable_mouse"
           :submit="false"
-          label="số điện thoại: "
+          label="Số điện thoại: "
         />
         <TextElement
           name="email"

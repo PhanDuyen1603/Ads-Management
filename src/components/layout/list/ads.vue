@@ -11,8 +11,8 @@
           {{ item.title }}
         </div>
         <div class="card_desc">
-          <span>Kích thước: &nbsp{{ item.width }}m x {{ item.height }}m</span>
-          <span>Địa chỉ</span>
+          <p><strong>Kích thước:</strong> &nbsp{{ item.width }}m x {{ item.height }}m</p>
+          <p><strong>Địa chỉ:</strong> {{item.adsLocation.address.streetLine1}}, {{item.adsLocation.address.streetLine2}}, quận {{item.adsLocation.address.district.name}}, thành phố {{item.adsLocation.address.city}}</p>
         </div>
       </div>
     </div>

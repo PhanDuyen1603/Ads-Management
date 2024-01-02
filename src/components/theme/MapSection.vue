@@ -40,7 +40,7 @@ const showAdDetail = ({value}) => {
 const mapStyles = computed(() => {
   return {
     height: '100vh',
-    width: `calc(100vw - 80px)`,
+    width: `calc(100vw - 106px)`,
     'margin-left': 'auto'
   }
 })

@@ -137,7 +137,6 @@ defineExpose({ onSearch })
       font-weight: 700;
     }
     .card-text {
-      display: inline-flex;
       margin-bottom: 1rem
     }
     .card-date {

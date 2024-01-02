@@ -36,9 +36,13 @@
         <div class="info_2_head">
           <strong>Thông tin địa điểm</strong>
         </div>
-        <div v-if="modelValue.adsLocation.address.streetLine1" class="info_2_body">
-          <p>{{ modelValue.adsLocation.address.streetLine1 }}, {{ modelValue.adsLocation.address.streetLine2 }}</p>
-          <p>Phường {{ getName(modelValue, 'ward') }}, Quận {{ getName(modelValue, 'district') }}, {{ modelValue.city }}</p>
+        <div v-if="getName(modelValue, 'address_streetLine1')" class="info_2_body">
+          <p>{{ getName(modelValue, 'address_streetLine1') }}, {{ getName(modelValue, 'address_streetLine2') }}</p>
+          <p>Phường {{ getName(modelValue, 'ward') }}, Quận {{ getName(modelValue, 'district') }}, TP Hồ Chí Minh</p>
+        </div>
+        <div v-if="getName(modelValue, 'adsLocation_address_streetLine1')" class="info_2_body">
+          <p>{{ getName(modelValue, 'adsLocation_address_streetLine1') }}, {{ getName(modelValue, 'adsLocation_address_streetLine2') }}</p>
+          <p>Phường {{ getName(modelValue, 'adsLocation_address_ward') }}, Quận {{ getName(modelValue, 'adsLocation_address_district') }}, TP Hồ Chí Minh</p>
         </div>
         <div v-if="modelValue.streetLine1" class="info_2_action">
           <div class="action_groups">

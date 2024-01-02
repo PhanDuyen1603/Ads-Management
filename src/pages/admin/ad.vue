@@ -8,6 +8,33 @@
             <span>Thêm {{ isShowAdsList ? 'quảng cáo' : 'điểm đặt  quảng cáo' }}</span>
           </button>
         </div>
+        <!-- <ul class="filter-list">
+          <li v-for="(item, index) in filters.districts" :key="index" class="filter-badget">
+            <input
+              type="checkbox"
+              :id="item.slug"
+              :value="item.label"
+              v-model="checkedDistrict"
+            >
+            <label for="filter-1">{{ item.label }}</label>
+          </li>
+        </ul> -->
+        <div>Checked names: {{ checkedNames }}</div>
+
+        <div v-for="item in ['jack', 'john', 'mike']">
+          <input type="checkbox" :id="item" :value="item" v-model="checkedNames">
+          <label for="jack">item</label>
+        </div>
+
+        <!-- <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label> -->
+
         <div class="card-body">
           <ul class="nav nav-pills nav-fill mb-2 nav-blue">
             <li class="nav-item" @click="showAddressList()">
@@ -41,6 +68,23 @@ const { getLocations, addresses } = useLocation()
 const isShowAdsList = ref(false)
 await getLocations()
 
+const filters = ref({
+  districts: [
+    {
+      label: 'quan 1',
+      selected: false,
+      slug: 'quan1'
+    },
+    {
+      label: 'quan binh thanh',
+      selected: true,
+      slug: 'quanbinhthanh'
+    },
+  ]
+})
+
+const checkedNames = ref([])
+
 const dataList = computed(() => !isShowAdsList.value ? unref(addresses) : unref(ads))
 
 const initData = async () => {
@@ -58,6 +102,10 @@ const showAdsList = async () => {
   if(isShowAdsList.value) return
   isShowAdsList.value = true
   await initData()
+}
+
+const test = (tes) => {
+  console.log({tes})
 }
 
 const addAdsModal = async (item) => {
@@ -96,5 +144,41 @@ const addAdsModal = async (item) => {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+.filter-list {
+  list-style: none;
+  padding: 0;
+}
+
+.filter-list li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.filter-list input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+.filter-list label {
+  /* Style the label to resemble a badge */
+  background-color: #eee;
+  padding: 5px 10px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.filter-list input[type="checkbox"]:checked + label {
+  /* Style the checked badge differently */
+  background-color: #007bff;
+  color: white;
+}
+
+.filter-badget {
+  [type=checkbox]+label:before,
+  [type=checkbox]+label:after {
+    content: unset;
+  }
 }
 </style>

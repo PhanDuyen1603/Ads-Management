@@ -36,7 +36,7 @@
                     <div>{{ getName(item, field) }}</div>
                   </td>
                   <td>
-                    <div>{{ status[item.report.status] }}</div>
+                    <div>{{ status[item.status] }}</div>
                   </td>
                   <td>
                     <button class="btn btn-success" @click="openDetailModal(item)">Chi tiết</button>
@@ -65,7 +65,7 @@
                     <div>{{ getName(item, field) }}</div>
                   </td>
                   <td>
-                    <div>{{ status[item.report.status] }}</div>
+                    <div>{{ status[item.status] || status[0] }}</div>
                   </td>
                   <td>
                     <button class="btn btn-success" @click="openDetailModal(item)">Chi tiết</button>
@@ -104,8 +104,9 @@ const showAdsList = () => {
 
 const tableField = ['report_createdAt', 'report_fullName', 'report_phone', 'report_reportType']
 const status = {
-  0: 'Chưa duyệt',
-  1: 'Đã duyệt'
+  0: 'Đang chờ',
+  1: 'Đang xử lý',
+  2: 'Đã xử lý',
 }
 
 const openDetailModal = async (item) => {

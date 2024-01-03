@@ -4,6 +4,9 @@
       <thead>
         <tr>
           <th>#</th>
+          <th>
+             Báo cáo
+          </th>
           <th>Địa chỉ</th>
           <th v-for="(item, index) in Object.values(tableField)" :key="`head_${index}`" style="width: fit-content;">
             {{ item }}
@@ -14,6 +17,11 @@
       <tbody>
         <tr v-for="(item, index) in transformData">
           <td>{{ index + 1 }}</td>
+          <td>
+            <div @click="openModalListReport(item)" class="count badge rounded-pill bg-danger">
+              {{ item.adLocationReport?.length || '' }}
+            </div>
+          </td>
           <td>
             {{ `${item.streetLine1}, ${item.streetLine2}` }}
           </td>
@@ -62,7 +70,12 @@ const props = defineProps({
   }
 })
 
-const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x)) || [])
+// const { getReports, reports } = useAdReport()
+const { getReports: getAdLocationsReports } = useAdLocationReport()
+// await getReports(false)
+const list = await getAdLocationsReports(false)
+
+const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x, list)) || [])
 
 const tableField = {
   city: 'Thành phố',
@@ -101,10 +114,26 @@ const openDetailModal = async (item) => {
   })
 }
 
+const openModalListReport = async (item) => {
+  // console.log({item})
+  console.log(item.adLocationReport)
+  await $modal.show({
+    component: 'LazyModalAdminListReport',
+    props: {
+      modelValue: item.adLocationReport || []
+    },
+    wrapperProps: {
+      styles: {
+        width: '650px'
+      }
+    }
+  })
+}
+
 </script>
 
 <style>
-.detail_icon {
+.detail_icon, .count {
   cursor: pointer;
 }
 </style>

@@ -246,6 +246,16 @@ export default function useLocation() {
   }
 
   /**
+   * @desc resetData
+   */
+  const resetData = () => {
+    $store.locations = null
+    $store.target = null
+    $store.targetAds = null
+    $store.mapMarkers = null
+  }
+
+  /**
    * @desc filter location by address (streetline1 + streetline2)
    */
   const filterLocations = async (str) => {
@@ -279,6 +289,7 @@ export default function useLocation() {
     filterAdLocation,
     requestUpdateLocation,
     filterLocations,
+    resetData,
 
     addresses,
     locationsTypes,

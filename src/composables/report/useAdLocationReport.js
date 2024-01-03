@@ -7,20 +7,22 @@ export default function useAdReport() {
   /**
    * @desc get list ad locations reports
    */
-  const getReports = async (query) => {
+  const getReports = async (useQuerry = true, query) => {
     try {
       const response = await $apiFetch('/reports/ads-location', {
-        params: {...queryByPermissionData?.value || {}, ...query}
+        params: useQuerry ? {...queryByPermissionData?.value || {}, ...query} : {}
       })
       if(response.success) {
         const { data } = response
         reports.value = data
+        return data
       }
     } catch (error) {
       console.log('GET: /reports/ads-location', error)
       toast.error("có lỗi xảy ra", {
         timeout: 2000
       })
+      return null
     }
   }
 
@@ -69,11 +71,36 @@ export default function useAdReport() {
     return res
   }
 
+    /**
+   * @desc update status
+   */
+    const changeStatus = async (id, { status }) => {
+      try {
+        const response = await $apiFetch(`/reports/ads-location/${id}`, {
+          method: 'PATCH',
+          body: {
+            status
+          },
+          redirect: 'follow',
+        })
+        toast.success("Cập nhập trạng thái thành công", {
+          timeout: 2000
+        })
+        return response
+      } catch (error) {
+        console.log('PATCH: /reports/ads/', error)
+        toast.error("có lỗi xảy ra", {
+          timeout: 2000
+        })
+      }
+    }
+
   return {
     getReports,
     getReport,
     createReport,
     getReportByIds,
+    changeStatus,
 
     reports,
   }

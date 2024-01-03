@@ -4,6 +4,9 @@
       <thead>
         <tr>
           <th>#</th>
+          <th>
+             Báo cáo
+          </th>
           <th v-for="(item, index) in Object.keys(tableAd)" :key="`head_${index}`" style="width: fit-content;">
             {{ tableAd[item].label }}
           </th>
@@ -14,6 +17,14 @@
       <tbody>
         <tr v-for="(item, index) in data" :key="`ad_${index}`">
           <td>{{ index + 1 }}</td>
+          <td>
+            <div class="count badge rounded-pill bg-danger">
+              0
+            </div>
+            <!-- <div @click="openModalListReport(item)" class="count badge rounded-pill bg-danger">
+              {{ item.adLocationReport?.length || '' }}
+            </div> -->
+          </td>
           <td v-for="(field, i) in Object.keys(tableAd)" :key="i">
             <div v-if="field !== 'images' && field !== 'address'" class="line-clamp-5">{{ getName(item, tableAd[field].key) }}</div>
             <div v-else-if="field === 'address'" class="line-clamp-5">{{ buildAddress(item) }}</div>
@@ -53,6 +64,15 @@ const props = defineProps({
 })
 const { getFileUrl } = useMedia()
 
+const { getReports } = useAdReport()
+// const { getReports: getAdLocationsReports } = useAdLocationReport()
+const list = await getReports(false)
+// const list = await getAdLocationsReports(false)
+console.log({
+  data: props.data,
+  list
+})
+
 const openDetailModal = async (item) => {
   await $modal.show({
     component: 'LazyModalAdminAdDetail',
@@ -68,8 +88,6 @@ const openDetailModal = async (item) => {
 }
 
 const openUpdateModal = async (item) => {
-  console.log(222)
-
   await $modal.show({
     component: userPermission.value.advertise.update ? 'FormAdCreate' : 'FormAdRequestEdit',
     props: {

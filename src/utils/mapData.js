@@ -1,14 +1,20 @@
 import getName from "./getter/getName"
-export const mapAdsLocation = (value) => ({
-  ...value.address,
-  addressId: value.address._id,
-  position: {
-    lat: value.address.lat,
-    lng: value.address.long
-  },
-  id: value._id,
-  ...value,
-})
+export const mapAdsLocation = (value, reportList = []) => {
+  const adLocationReport = reportList.length
+    ? reportList.filter(x => { return x.adsLocation?.address?._id === value.address?._id && x.report.status === 0})
+    : []
+  return {
+    ...value.address,
+    addressId: value.address._id,
+    position: {
+      lat: value.address.lat,
+      lng: value.address.long
+    },
+    adLocationReport,
+    id: value._id,
+    ...value,
+  }
+}
 
 export const mapAdsLocationDetail = (value) => ({
   ...value.address,

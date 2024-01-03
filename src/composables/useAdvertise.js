@@ -133,6 +133,14 @@ export default function useAdvertise() {
     return cloned.value?.filter(x => slugify(x.title).includes(slugify(str)))
   }
 
+  /**
+   * @desc resetData
+   */
+  const resetData = () => {
+    filterAds.value = null;
+    $store.ads = null
+  }
+
   const ads = computed(() => filterAds.value && filterAds.value.length ? filterAds.value : $store.ads)
   const billboardTypes = computed(() => $store.adsBillboardTypes)
   const adsCategories = computed(() => $store.categories.map(x => ({
@@ -141,6 +149,7 @@ export default function useAdvertise() {
   })))
 
   return {
+    resetData,
     getAds,
     getAdById,
     getAdsCategories,

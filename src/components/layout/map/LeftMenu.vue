@@ -50,7 +50,10 @@
 import { resolveComponent } from 'vue';
 import { useDebounceFn } from '@vueuse/core'
 
-const { target } = useLocation()
+//
+const { resetData: resetAdData } = useAdvertise()
+const { target, resetData: resetLocationData } = useLocation()
+//
 const { $modal } = useNuxtApp()
 const { profile } = useAuth()
 const $router = useRouter()
@@ -84,10 +87,16 @@ const loginModal = {
 const navigate = async ({ query = {}, modal = {}, path = '/' }) => {
   showTabContet.value = false
   searchStr.value = ''
+  if(path === '/admin') {
+    resetAdData()
+    resetLocationData()
+  }
   if(modal && modal.component && (!modal.showOnLogin && !profile.value?._id)) {
     await $modal.show({
       ...modal
     })
+    resetAdData()
+    resetLocationData()
   } else {
     $router.push({
       path,

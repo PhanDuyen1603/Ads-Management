@@ -24,7 +24,7 @@
               <span class="hide-menu">Đăng suất</span></a>
           </li>
           <li>
-            <NuxtLink :to="{ path:'/'}" class="waves-effect waves-dark" aria-expanded="false">
+            <NuxtLink :to="{ path:'/'}" class="waves-effect waves-dark" aria-expanded="false" @click="resetData">
               <i class="mdi mdi-arrow-left"></i>
               <span class="hide-menu">Về trang chủ</span>
             </NuxtLink>
@@ -43,10 +43,20 @@ const route = useRoute()
 const router = useRouter()
 const { role: userRole, signOut } = useAuth()
 
+//
+const { resetData: resetAdData } = useAdvertise()
+const { resetData: resetLocationData } = useLocation()
+//
+
 const activeMenu = ref(route.name)
 const logOut = () => {
   signOut()
   router.push({ path: '/' })
+}
+
+const resetData = () => {
+  resetAdData()
+  resetLocationData()
 }
 //
 watch(() => route.name, (newRouteName, oldRouteName) => {

@@ -11,16 +11,12 @@
         name="streetLine1"
         label="Địa chỉ (số)"
         placeholder="Nhập số nhà"
-        :submit="submitType === 'request' ? false : true"
-        :readonly="submitType === 'request' ? true : false"
       />
 
       <TextElement
         name="streetLine2"
         label="Địa chỉ (tên đường)"
         placeholder="Nhập tên đường"
-        :submit="submitType === 'request' ? false : true"
-        :readonly="submitType === 'request' ? true : false"
       />
 
       <SelectElement
@@ -29,14 +25,10 @@
         rules="required"
         :native="false"
         :items="locationsTypes"
-        :submit="submitType === 'request' ? false : true"
-        :disabled="submitType === 'request' ? true : false"
       />
 
       <ToggleElement
         name="isPlanned"
-        :submit="submitType === 'request' ? false : true"
-        :disabled="submitType === 'request' ? true : false"
       >
         Thông tin quy hoạch
       </ToggleElement>
@@ -47,8 +39,6 @@
         rules="required"
         :native="false"
         :items="adsCategories"
-        :submit="submitType === 'request' ? false : true"
-        :disabled="submitType === 'request' ? true : false"
       />
 
       <TextElement

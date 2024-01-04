@@ -82,7 +82,7 @@ const tableField = {
 }
 const openReportModal = async (item) => {
   const result = await $modal.show({
-    component: userPermission.value.advertise.update ? 'FormAddressRequestEdit' : 'LazyFormAdRequestEdit',
+    component: userPermission.value.advertise.update ? 'FormAddressRequestEdit' : 'FormAddressRequestEdit',
     // component: 'FormAddressRequestEdit',
     props: {
       defaultFormData: item,

@@ -22,22 +22,20 @@
         label="Thông tin bảng quảng cáo"
         placeholder="Nhập thông tin bảng quảng cáo"
       />
-      <MultifileElement
-        :drop="true"
-        name="images"
-        view="gallery"
-        :url="false"
-        :object="true"
-        :upload-temp-endpoint="(file, el$) => handleUploadMediaFiles(file, el$)"
-        :remove-endpoint="(file, el$) => handleRemoveMediaFiles(file, el$)"
-      />
 
-      <!-- <SelectElement
+      <StaticElement name="images">
+        <div v-if="form.images?.length" class="group_images">
+          <img v-for="(image, index) in form.images" :key="index" :src="image.file" :alt="image.path">
+        </div>
+      </StaticElement>
+
+      <SelectElement
         label="Loại bảng quảng cáo"
         rules="required"
         name="billboardType"
         :items="billboardTypes"
-      /> -->
+      />
+
       <TextElement
         name="height"
         label="Chiều dài"
@@ -105,12 +103,10 @@ const props = defineProps({
   }
 })
 const emits = defineEmits(['close'])
-// const { getBillboardTypes, billboardTypes, requestUpdateAd } = useAdvertise()
-const { requestUpdateAd } = useAdvertise()
-import { useCloned } from '@vueuse/core'
+const { getBillboardTypes, billboardTypes, requestUpdateAd } = useAdvertise()
 const { getFileUrl } = useMedia()
 
-// await getBillboardTypes()
+await getBillboardTypes()
 
 const transformData = (data) => {
   return {
@@ -142,8 +138,8 @@ const handleSubmit = async (submitForm, el) => {
     for (let k = 0; k < submitForm.images.length; k++) {
       if(submitForm.images[k]?.file?.file) formdata.append('images', submitForm.images[k].file.file)
     }
-}
-formdata.append('ads', props.defaultFormData._id)
+  }
+  formdata.append('ads', props.defaultFormData._id)
   formdata.append('title', submitForm.title)
   formdata.append('content', submitForm.content)
   formdata.append('price', submitForm.price)

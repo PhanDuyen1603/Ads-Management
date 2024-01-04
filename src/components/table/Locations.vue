@@ -52,7 +52,7 @@
 <script setup>
 import { mapAdsLocation } from '~/utils/mapData'
 import getName from '~/utils/getter/getName'
-const { $modal, $gMap } = useNuxtApp()
+const { $modal } = useNuxtApp()
 const { userPermission } = useAuth()
 const emits = defineEmits(['refresh'])
 const props = defineProps({
@@ -70,9 +70,7 @@ const props = defineProps({
   }
 })
 
-// const { getReports, reports } = useAdReport()
 const { getReports: getAdLocationsReports } = useAdLocationReport()
-// await getReports(false)
 const list = await getAdLocationsReports(false)
 
 const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x, list)) || [])

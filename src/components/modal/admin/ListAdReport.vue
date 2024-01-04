@@ -39,7 +39,7 @@ const openDetailModal = async (item) => {
     component: 'LazyModalAdminReportDetail',
     props: {
       modelValue: item,
-      type: 'location'
+      type: 'ad'
     },
     wrapperProps: {
       styles: {

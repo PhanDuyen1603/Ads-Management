@@ -37,10 +37,10 @@
                     <div>{{ getName(item, field) }}</div>
                   </td>
                   <td>
-                    <div>{{ status[item.report.status] }}</div>
+                    <div>{{ item.report.status ? status[item.report.status] : status[0] }}</div>
                   </td>
                   <td>
-                    <button class="btn btn-success" @click="openDetailModal(item)">Chi tiết</button>
+                    <button class="btn btn-success" @click="openDetailModal(item, 'ad')">Chi tiết</button>
                   </td>
                 </tr>
               </tbody>
@@ -66,16 +66,15 @@
                     <div>{{ getName(item, field) }}</div>
                   </td>
                   <td>
-                    <div>{{ status[item.report.status] }}</div>
+                    <div>{{ item.status ? status[item.status] : status[0] }}</div>
                   </td>
                   <td>
-                    <button class="btn btn-success" @click="openDetailModal(item)">Chi tiết</button>
+                    <button class="btn btn-success" @click="openDetailModal(item, 'location')">Chi tiết</button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <!-- <TableAds v-else :data="dataList" :key="`ad_${new Date()}`" /> -->
         </div>
       </div>
     </div>
@@ -108,14 +107,16 @@ const showAdsList = () => {
 const tableField = ['report_createdAt', 'report_fullName', 'report_phone', 'report_reportType']
 const status = {
   0: 'Chưa duyệt',
-  1: 'Đã duyệt'
+  1: 'Chờ duyệt',
+  2: 'Đã duyệt'
 }
 
-const openDetailModal = async (item) => {
+const openDetailModal = async (item, type = 'location') => {
   await $modal.show({
     component: 'LazyModalAdminReportDetail',
     props: {
-      modelValue: item
+      modelValue: item,
+      type
     },
     wrapperProps: {
       styles: {

@@ -107,9 +107,7 @@ const form = ref({
 })
 
 const handleSubmit = async (form, el) => {
-  // console.log(1)
   if (props.type === 'ad') {
-    // awa
     const status = form.status
     const res = await changeStatus(props.modelValue._id, { status })
     // console.log({res})

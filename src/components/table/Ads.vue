@@ -15,15 +15,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in data" :key="`ad_${index}`">
+        <tr v-for="(item, index) in initialData" :key="`ad_${index}`">
           <td>{{ index + 1 }}</td>
           <td>
-            <div class="count badge rounded-pill bg-danger">
-              0
+            <div class="count badge rounded-pill bg-danger" @click="openListReportModal(item.adReports)">
+              {{ item.adReports?.length || '' }}
             </div>
-            <!-- <div @click="openModalListReport(item)" class="count badge rounded-pill bg-danger">
-              {{ item.adLocationReport?.length || '' }}
-            </div> -->
           </td>
           <td v-for="(field, i) in Object.keys(tableAd)" :key="i">
             <div v-if="field !== 'images' && field !== 'address'" class="line-clamp-5">{{ getName(item, tableAd[field].key) }}</div>
@@ -59,18 +56,20 @@ const { userPermission } = useAuth()
 const { $modal } = useNuxtApp()
 const props = defineProps({
   data: {
-    type: Array
+    type: Array,
+    default:() => []
   },
 })
 const { getFileUrl } = useMedia()
 
 const { getReports } = useAdReport()
-// const { getReports: getAdLocationsReports } = useAdLocationReport()
 const list = await getReports(false)
-// const list = await getAdLocationsReports(false)
-console.log({
-  data: props.data,
-  list
+
+const initialData = computed(() => {
+  return props.data.length ? props.data.map(x => ({
+    ...x,
+    adReports: list.filter(i => i.ads?._id === x._id  (!i.report.status || i.report.status === 0)),
+  })) : []
 })
 
 const openDetailModal = async (item) => {
@@ -105,6 +104,15 @@ const openUpdateModal = async (item) => {
 
 const buildAddress = (item) => {
   return `${getName(item, 'adsLocation_address_streetLine1')}, ${getName(item, 'adsLocation_address_streetLine2')}, phường ${getName(item, 'adsLocation_address_ward')}, quận ${getName(item, 'adsLocation_address_district')}, TP HCM`
+}
+
+const openListReportModal = async (item) => {
+  await $modal.show({
+    component: 'LazyModalAdminListAdReport',
+    props: {
+      modelValue: item,
+    },
+  })
 }
 
 </script>

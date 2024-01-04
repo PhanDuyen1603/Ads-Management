@@ -1,6 +1,7 @@
 <template>
   <div>
     <div v-for="item in modelValue" class="item_horizonal mb-3">
+      <!-- {{ item }} -->
       <div class="item_resolve_btn">
         <div class="icon" @click="openDetailModal(item)">
           <IconsPencil />
@@ -12,7 +13,7 @@
       </div>
       <div class="item_content">
         <div class="item_title">{{ item.report.fullName }}</div>
-        <div class="item_text"><strong>BC địa điểm: </strong>{{ getAdLocationFullAddress(item) }}</div>
+        <div class="item_text"><strong>BC quảng cáo: </strong>{{ item.ads.title }}</div>
         <div class="item_extra">
           <p><strong>Loại báo cáo: </strong>{{ getName(item, 'report_reportType') }}</p>
           <p><strong>Ngày gửi: </strong>{{ item.report.createdAt }}</p>
@@ -32,11 +33,6 @@ const props = defineProps({
 })
 const { getFileUrl } = useMedia()
 const { $modal } = useNuxtApp()
-
-const getAdLocationFullAddress = (value) => {
-  return `${getName(value, 'adsLocation_address_streetLine1')}, ${getName(value, 'adsLocation_address_streetLine2')},
-    phường ${getName(value, 'adsLocation_address_ward')}, quận ${getName(value, 'adsLocation_address_district')}, TP HCM `
-}
 
 const openDetailModal = async (item) => {
   await $modal.show({

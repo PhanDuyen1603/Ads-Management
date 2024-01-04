@@ -1,7 +1,7 @@
 import getName from "./getter/getName"
 export const mapAdsLocation = (value, reportList = []) => {
   const adLocationReport = reportList.length
-    ? reportList.filter(x => { return x.adsLocation?.address?._id === value.address?._id && x.report.status === 0})
+    ? reportList.filter(x => { return x.adsLocation?._id === value._id && (!x.report.status || x.report.status === 0)})
     : []
   return {
     ...value.address,

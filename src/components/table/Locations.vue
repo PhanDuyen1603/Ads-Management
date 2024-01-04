@@ -115,8 +115,6 @@ const openDetailModal = async (item) => {
 }
 
 const openModalListReport = async (item) => {
-  // console.log({item})
-  console.log(item.adLocationReport)
   await $modal.show({
     component: 'LazyModalAdminListReport',
     props: {

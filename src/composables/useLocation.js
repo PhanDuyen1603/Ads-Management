@@ -249,10 +249,9 @@ export default function useLocation() {
    * @desc resetData
    */
   const resetData = () => {
-    $store.locations = null
-    $store.target = null
-    $store.targetAds = null
-    $store.mapMarkers = null
+    $store.locations = []
+    $store.target = {}
+    $store.targetAds = []
   }
 
   /**

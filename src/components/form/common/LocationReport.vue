@@ -97,7 +97,7 @@ const props = defineProps({
 const emits = defineEmits(['close'])
 const captcha = ref(null)
 const form = reactive({})
-// const { $clientId } = useNuxtApp()
+const { $clientId } = useNuxtApp()
 const { getFileUrl } = useMedia()
 const { getReportTypes } = useReport()
 const { createReport } = useAdReport()
@@ -140,7 +140,7 @@ const handleSubmit = async (submitForm, el) => {
     }
   }
   formdata.append('fullName', `${form.firstName} ${form.lastName}`)
-  // formdata.append('guestId', $clientId)
+  formdata.append('guestId', $clientId)
   if(props.updateType === 'ad') formdata.append('adsId', _id)
   if(props.updateType === 'location') formdata.append('adsLocationId', _id)
   try {

@@ -29,3 +29,12 @@ export const mapAdsLocationDetail = (value) => ({
   locationType: value.locationType._id,
   adsCategory: value.adsCategory._id,
 })
+
+export const dataMapAdsWithLocation = (adsLocations, ads) => {
+  return adsLocations.map(x => {
+   return {
+     ...x,
+     ads: ads.filter(i => i.adsLocation?._id === x._id)
+   }
+  })
+ }

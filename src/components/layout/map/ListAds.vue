@@ -22,7 +22,7 @@
 
 <script setup>
 import './leftmenu.scss'
-import { mapAdsLocation } from '~/utils/mapData.js'
+import { mapAdsLocation, dataMapAdsWithLocation } from '~/utils/mapData.js'
 const props = defineProps({
   data: {
     type: Array,
@@ -30,23 +30,15 @@ const props = defineProps({
   }
 })
 const { $gMap } = useNuxtApp()
-const { getLocations, addresses, getLocation, filterLocations } = useLocation()
-const { getAds, ads, getBillboardType, filterAd } = useAdvertise()
+const { addresses, getLocation, filterLocations } = useLocation()
+const { ads, getBillboardType, filterAd } = useAdvertise()
 const { getReportByIds } = useAdReport()
 const { getReportByIds: getAdLocationReportByIds } = useAdLocationReport()
 const $route = useRoute()
 
 const listType = computed(() => $route.query.entry || 'ads')
-
 const showInfo = ref(false)
 const target = ref({})
-
-const components = {
-  ads: 'ListAdsHorizontal',
-  address: 'ListAdsHorizontal',
-  reports: 'ListReports'
-}
-
 const dataList = ref([])
 
 const getData = async (type) => {
@@ -54,7 +46,6 @@ const getData = async (type) => {
   showInfo.value = false
   switch (type) {
     case 'ads':
-      await getAds()
       dataList.value = ads.value
       break;
 
@@ -62,14 +53,14 @@ const getData = async (type) => {
       dataList.value = []
       const ids = window.localStorage.getItem('reports')
       const ids_location = window.localStorage.getItem('reports_location')
+      if(!ids || !ids_location || ids.length === 0 || ids_location.length === 0) break;
       ids && ids.length && await getReportByIds(ids)
       dataList.value = [...dataList.value, ...await getAdLocationReportByIds(ids_location)]
       dataList.value = [...dataList.value, ...await getReportByIds(ids)]
       break;
 
     default:
-      await getLocations()
-      dataList.value = addresses.value
+      dataList.value = dataMapAdsWithLocation(addresses.value, ads.value)
       break;
   }
 }

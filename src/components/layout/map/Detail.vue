@@ -41,23 +41,22 @@
               <div class="info_1_head">
                 <strong>Thông tin quảng cáo</strong>
               </div>
-              <div v-if="!(targetAds && targetAds.length)" class="info_1_body_empty">
+              <div v-if="!(target.ads && target.ads.length)" class="info_1_body_empty">
                 <p>Chưa có dữ liệu</p>
-                <p>Vui lòng chọn trên bản đồ để xem</p>
               </div>
               <div v-else class="info_1_body_empty">
                 <!--  -->
-                <div v-for="(item, index) in targetAds" :key="index" class="ad_info">
+                <div v-for="(item, index) in target.ads" :key="index" class="ad_info">
                   <h3>{{ getName(item, 'billboardType') }}</h3>
-                  <p>{{ item.address.streetLine1 }}</p>
+                  <!-- <p>{{ getName(item, 'adsLocation_address_streetLine1') }}</p> -->
                   <p>Kích thước: {{ item.width }} x {{ item.height }}</p>
                   <p>Số lượng: <strong>1 tru/bang</strong></p>
-                  <p>Hình thức: <strong>{{ getName(item, 'adCategory') }}</strong></p>
-                  <p>Phân loại: <strong>dat cong</strong></p>
+                  <p>Hình thức: <strong>{{ getName(item, 'adsLocation_adCategory') }}</strong></p>
+                  <p>Phân loại: <strong>{{ locationTypes.find(x => x._id === item.adsLocation.locationType).name }}</strong></p>
                   <div class="action_groups">
                       <IconsInfoCircle fill="blue" />
                     <div>
-                      <button class="btn btn-outline-danger bt-alert">
+                      <button class="btn btn-outline-danger bt-alert" @click="openReportModal('ad')">
                         <span>
                           <IconsExclamationOctagon fill="red" />
                         </span>
@@ -80,17 +79,20 @@
 <script setup>
 import { faker } from '@faker-js/faker';
 import getName from '~/utils/getter/getName';
+import locationTypes from '~/constant/app/locationTypes'
 
 const { $modal } = useNuxtApp()
-const { target, targetAds} = useLocation()
+const { target } = useLocation()
 
-const openReportModal = async () => {
+const openReportModal = async (type = 'location') => {
+  const props = {
+    updateType: type
+  }
+  if(type === 'location') props.addressId = unref(target)._id
+  if(type === 'ad') props.adId = unref(target).ads?.[0]._id
   await $modal.show({
     component: 'FormCommonLocationReport',
-    props: {
-      addressId: unref(target)._id,
-      updateType: 'location'
-    },
+    props,
     wrapperProps: {
       styles: {
         maxWidth: '650px',
@@ -99,5 +101,17 @@ const openReportModal = async () => {
     }
   })
 }
-
 </script>
+
+<style lang="scss">
+.ad_info {
+  h3 {
+    font-size: 1.3rem;
+  }
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dadce0;
+  }
+}
+</style>

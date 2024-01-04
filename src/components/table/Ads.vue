@@ -24,7 +24,7 @@
           </td>
           <td v-for="(field, i) in Object.keys(tableAd)" :key="i">
             <div v-if="field !== 'images' && field !== 'address'" class="line-clamp-5">{{ getName(item, tableAd[field].key) }}</div>
-            <div v-else-if="field === 'address'" class="line-clamp-5">{{ buildAddress(item) }}</div>
+            <div v-else-if="field === 'address'" class="line-clamp-5">{{ getFullAddressByAdsLocation(item) }}</div>
             <div class="table_images" v-else>
               <img v-for="(img, img_i) in item[field]" :key="`img_${img_i}`" :src="getFileUrl(img.path)" >
             </div>
@@ -51,6 +51,7 @@
 <script setup>
 import getName from '~/utils/getter/getName'
 import { tableAd } from '~/constant/ads'
+import { getFullAddressByAdsLocation } from '~/utils/location/address'
 const { userPermission } = useAuth()
 
 const { $modal } = useNuxtApp()
@@ -100,10 +101,6 @@ const openUpdateModal = async (item) => {
       }
     }
   })
-}
-
-const buildAddress = (item) => {
-  return `${getName(item, 'adsLocation_address_streetLine1')}, ${getName(item, 'adsLocation_address_streetLine2')}, phường ${getName(item, 'adsLocation_address_ward')}, quận ${getName(item, 'adsLocation_address_district')}, TP HCM`
 }
 
 const openListReportModal = async (item) => {

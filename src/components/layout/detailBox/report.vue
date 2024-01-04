@@ -10,25 +10,13 @@
           <div v-if="modelValue.ads && modelValue.adLocation" class="card-body">
             <h5>{{ getName(modelValue, 'ads_title') }}</h5>
             <p>{{ getName(modelValue, 'ads_content') }}</p>
-            <p>{{ getName(modelValue, 'adLocation_address_streetLine1') }},
-              {{ getName(modelValue, 'adLocation_address_streetLine2') }},
-              {{ getName(modelValue, 'adLocation_address_ward') }},
-              {{ getName(modelValue, 'adLocation_address_district') }},
-              {{ getName(modelValue, 'adLocation_address_city') }},
-              {{ getName(modelValue, 'adLocation_address_country') }}
-            </p>
+            <p>{{ getFullAddressByAdsLocation(modelValue) }}</p>
             <p>Kích thước: &nbsp{{ modelValue.ads.width }}m x {{ modelValue.ads.height }}m</p>
           </div>
           <!--  -->
           <div v-if="modelValue.adsLocation" class="card-body">
             <h5>Địa điểm đặt quảng cáo</h5>
-            <p>{{ getName(modelValue, 'adLocation_address_streetLine1') }},
-              {{ getName(modelValue, 'adLocation_address_streetLine2') }},
-              {{ getName(modelValue, 'adLocation_address_ward') }},
-              {{ getName(modelValue, 'adLocation_address_district') }},
-              {{ getName(modelValue, 'adLocation_address_city') }},
-              {{ getName(modelValue, 'adLocation_address_country') }}
-            </p>
+            <p>{{ getFullAddressByAdsLocation(modelValue) }}</p>
             <p>Hình thức quảng cáo: &nbsp{{ getName(modelValue, 'adsLocation_adsCategory_name') }}</p>
           </div>
         </div>
@@ -50,6 +38,7 @@
 
 <script setup>
 import getName from '~/utils/getter/getName';
+import { getFullAddressByAdsLocation } from '~/utils/location/address'
 const props = defineProps({
   modelValue: {
     type: Object,

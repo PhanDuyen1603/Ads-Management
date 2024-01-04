@@ -6,21 +6,13 @@
       sync
     >
       <TextElement
-        name="firstName"
-        label="Họ và tên đệm"
-        placeholder="Nhập họ và tên đệm"
-        :columns="{ container: 6 }"
+        name="fullName"
+        label="Họ và tên"
+        placeholder="Nhập họ và tên"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
         :submit="false"
       />
-      <TextElement
-        name="lastName"
-        label="Tên"
-        placeholder="Nhập tên"
-        :columns="{ container: 6 }"
-        :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
-        :submit="false"
-      />
+
       <TextElement
         name="username"
         label="Tên đăng nhập"
@@ -49,6 +41,7 @@
         value-format="DD-MM-YYYY"
         display-format="DD-MM-YYYY"
       />
+
       <SelectElement
         label="Quyền"
         name="role"
@@ -60,6 +53,7 @@
       />
 
       <SelectElement
+        v-if="['update', 'authUpdate'].includes(submitType) && form.role === 'canbo_quan'"
         label="Quận"
         name="district"
         :native="true"
@@ -70,6 +64,7 @@
       />
 
       <SelectElement
+        v-if="['update', 'authUpdate'].includes(submitType) && form.role === 'canbo_quan' || form.role === 'canbo_phuong'"
         label="Phường"
         name="ward"
         :native="false"
@@ -121,7 +116,6 @@ const handleSubmit = async (submitForm, $el) => {
   try {
     if (props.submitType === 'create') {
       submitForm.password = '123456'
-      submitForm.fullName = `${form?.firstName || ''} ${form?.lastName || ''}`
       const res = await createStaff(submitForm)
       if(res.success) {
         emits('close')

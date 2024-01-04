@@ -6,7 +6,7 @@
       class="map"
       ref="Gmap"
       :map-styles="mapStyles"
-      :markers="markers"
+      :markers="initialMarkers"
       @open-detail="showAdDetail"
     />
   </div>
@@ -15,10 +15,14 @@
 <script setup>
 import { changeToSlug } from '~/utils/string/slug'
 import useLocationStore from '~/stores/locations.store'
-import { mapAdsLocation } from '~/utils/mapData'
+import { mapAdsLocation, dataMapAdsWithLocation } from '~/utils/mapData'
 
 const { getLocations, markers } = useLocation()
+const { getAds, ads } = useAdvertise()
 await getLocations()
+await getAds()
+
+const initialMarkers = computed(() => dataMapAdsWithLocation(markers.value, ads.value))
 
 const mapStore = useLocationStore()
 const $router = useRouter()
@@ -32,7 +36,7 @@ const showAdDetail = ({value}) => {
   $router.push({
     path: '/',
     query: {
-      detail: changeToSlug(ad?.streetLine1 || '')
+      detail: changeToSlug(`${ ad?.streetLine1 || '' },${ad?.streetLine2 || ''}`)
     },
   });
 }

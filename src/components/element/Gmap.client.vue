@@ -27,10 +27,9 @@
           :opened="targetMarker === m.id"
         >
           <div v-if="!markers.ads" class="marker_info">
-            <h3>{{ `${m.streetLine1} ${m.streetLine2 || ''}` }}</h3>
-            <p>Phường: {{ getName(m, 'ward') }}</p>
-            <p>Quận: {{ getName(m, 'district') }}</p>
-            <p>{{ m.city }}</p>
+            <h3>{{ getName(m, 'locationType') }}</h3>
+            <p>{{ getName(m, 'adsCategory') }}</p>
+            <p>{{ `${m.streetLine1} ${m.streetLine2 || ''}` }}, Phường: {{ getName(m, 'ward') }}, Quận: {{ getName(m, 'district') }}, TP Hồ Chí Minh</p>
             <h4>{{ m.isPlanned ? 'Đã' : 'Chưa' }} quy hoạch</h4>
           </div>
         </GMapInfoWindow>

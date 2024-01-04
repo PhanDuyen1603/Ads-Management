@@ -9,7 +9,7 @@
   .item_info {
     width: var(--el-width);
     min-width: var(--el-width);
-    max-height: var(--el-height);
+    max-height: calc(100vh - 100px);
     position: var(--el-position);
     top: var(--el-top);
     right: var(--el-right);

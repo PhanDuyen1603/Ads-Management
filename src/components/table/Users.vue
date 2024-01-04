@@ -40,10 +40,6 @@ const { $modal } = useNuxtApp()
 const props = defineProps({
   data: {
     type: Array
-  },
-  $map: {
-    type: Object,
-    default:() => {}
   }
 })
 

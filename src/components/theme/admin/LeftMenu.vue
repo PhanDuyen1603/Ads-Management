@@ -1,4 +1,5 @@
 <template>
+  <ClientOnly>
   <aside class="left-sidebar">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
@@ -21,10 +22,11 @@
           <li>
             <a class="waves-effect waves-dark" aria-expanded="false" @click="logOut()">
               <i class="mdi mdi-logout"></i>
-              <span class="hide-menu">Đăng suất</span></a>
+              <span class="hide-menu">Đăng suất</span>
+            </a>
           </li>
           <li>
-            <NuxtLink :to="{ path:'/'}" class="waves-effect waves-dark" aria-expanded="false" @click="resetData">
+              <NuxtLink :to="{ path:'/'}" class="waves-effect waves-dark" aria-expanded="false">
               <i class="mdi mdi-arrow-left"></i>
               <span class="hide-menu">Về trang chủ</span>
             </NuxtLink>
@@ -34,7 +36,9 @@
       <!-- End Sidebar navigation -->
   </div>
   <!-- End Sidebar scroll-->
-</aside></template>
+    </aside>
+  </ClientOnly>
+</template>
 
 <script setup>
 import { adminMenu } from '~/constant/layout/admin/leftMenu'

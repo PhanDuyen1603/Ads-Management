@@ -55,4 +55,5 @@
   </header>
 </template>
 
-<script></script>
+<script setup>
+</script>

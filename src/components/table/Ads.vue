@@ -67,7 +67,7 @@ const { getReports } = useAdReport()
 const list = await getReports(false)
 
 const initialData = computed(() => {
-  return props.data.length ? props.data.map(x => ({
+  return props.data?.length ? props.data.map(x => ({
     ...x,
     adReports: list.filter(i => i.ads?._id === x._id && (!i.report.status || i.report.status === 0)),
   })) : []

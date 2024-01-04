@@ -32,8 +32,8 @@ const props = defineProps({
 const { $gMap } = useNuxtApp()
 const { addresses, getLocation, filterLocations } = useLocation()
 const { ads, getBillboardType, filterAd } = useAdvertise()
-const { getReportByIds } = useAdReport()
-const { getReportByIds: getAdLocationReportByIds } = useAdLocationReport()
+const { getReportByGuest } = useAdReport()
+const { getReportByGuest: getAdLocationReportByGuest } = useAdLocationReport()
 const $route = useRoute()
 
 const listType = computed(() => $route.query.entry || 'ads')
@@ -51,12 +51,8 @@ const getData = async (type) => {
 
     case 'reports':
       dataList.value = []
-      const ids = window.localStorage.getItem('reports')
-      const ids_location = window.localStorage.getItem('reports_location')
-      if(!ids || !ids_location || ids.length === 0 || ids_location.length === 0) break;
-      ids && ids.length && await getReportByIds(ids)
-      dataList.value = [...dataList.value, ...await getAdLocationReportByIds(ids_location)]
-      dataList.value = [...dataList.value, ...await getReportByIds(ids)]
+      dataList.value = [...dataList.value, ...await getAdLocationReportByGuest()]
+      dataList.value = [...dataList.value, ...await getReportByGuest()]
       break;
 
     default:
@@ -97,6 +93,10 @@ const showReportDetail = async (item) => {
       ...item,
       _id: item.report._id,
     }
+    $gMap.changeMapCenter({
+      lat: item.adsLocation?.address.lat,
+      lng: item.adsLocation?.address.long
+    })
     showInfo.value = true
   }
 }

@@ -11,7 +11,7 @@
       <div class="info_wrap">
         <div class="info_body" v-if="target && (target.id || target._id)">
           <div class="info_image">
-            <img :src="faker.image.urlPicsumPhotos()" alt="..">
+            <img :src="getRandomLocationImage()" alt="..">
           </div>
           <div class="info">
             <!-- ads -->
@@ -83,6 +83,7 @@ import locationTypes from '~/constant/app/locationTypes'
 
 const { $modal } = useNuxtApp()
 const { target } = useLocation()
+const { getRandomLocationImage } = useMedia()
 
 const openReportModal = async (type = 'location') => {
   const props = {

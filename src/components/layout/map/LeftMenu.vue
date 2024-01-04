@@ -65,9 +65,9 @@ const searchStr = ref('')
 const hideTab = () => {
   showTabContet.value = false
   $router.push({
-      path: '/',
-      query: {},
-    });
+    path: '/',
+    query: {},
+  });
 }
 
 // menu and navigate

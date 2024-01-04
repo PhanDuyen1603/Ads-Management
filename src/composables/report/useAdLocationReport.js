@@ -4,6 +4,7 @@ export default function useAdReport() {
   const reports = ref(null)
   const { queryByPermissionData } = useAuth()
   const toast = useToast()
+  const { $clientId } = useNuxtApp()
   /**
    * @desc get list ad locations reports
    */
@@ -71,6 +72,27 @@ export default function useAdReport() {
     return res
   }
 
+  const getReportByGuest = async () => {
+    try {
+      const response = await $apiFetch('/reports/ads-location', {
+        params: {
+          guestId: $clientId
+        }
+      })
+      if(response.success) {
+        const { data } = response
+        console.log({ data, $clientId})
+        return data
+      }
+    } catch (error) {
+      console.log('GET: /reports/ads', error)
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000
+      })
+      return null
+    }
+  }
+
     /**
    * @desc update status
    */
@@ -100,6 +122,7 @@ export default function useAdReport() {
     getReport,
     createReport,
     getReportByIds,
+    getReportByGuest,
     changeStatus,
 
     reports,

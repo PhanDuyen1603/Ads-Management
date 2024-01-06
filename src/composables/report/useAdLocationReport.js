@@ -10,7 +10,7 @@ export default function useAdReport() {
    */
   const getReports = async (useQuerry = true, query) => {
     try {
-      const response = await $apiFetch('/reports/ads-location', {
+      const response = await $apiFetch('/reports/location', {
         params: useQuerry ? {...queryByPermissionData?.value || {}, ...query} : {}
       })
       if(response.success) {
@@ -29,7 +29,7 @@ export default function useAdReport() {
 
   const getReport = async (id) => {
     try {
-      const response = await $apiFetch('/reports/ads-location/' + id)
+      const response = await $apiFetch('/reports/location/' + id)
       if(response.success) {
         return response.data
       }
@@ -43,7 +43,7 @@ export default function useAdReport() {
 
   const createReport = async (formdata) => {
     try {
-      const response = await $apiFetch('/reports/ads-location', {
+      const response = await $apiFetch('/reports/location', {
         method: 'POST',
         body: formdata,
         redirect: 'follow',
@@ -74,7 +74,7 @@ export default function useAdReport() {
 
   const getReportByGuest = async () => {
     try {
-      const response = await $apiFetch('/reports/ads-location', {
+      const response = await $apiFetch('/reports/location', {
         params: {
           guestId: $clientId
         }
@@ -98,7 +98,7 @@ export default function useAdReport() {
    */
     const changeStatus = async (id, { status }) => {
       try {
-        const response = await $apiFetch(`/reports/ads-location/${id}`, {
+        const response = await $apiFetch(`/reports/location/${id}`, {
           method: 'PATCH',
           body: {
             status

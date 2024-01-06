@@ -71,7 +71,7 @@ export default function useAdReport() {
       })
       if(response.success) {
         const { data } = response
-        console.log({ data, $clientId})
+        reports.value = data
         return data
       }
     } catch (error) {
@@ -79,6 +79,7 @@ export default function useAdReport() {
       toast.error("có lỗi xảy ra", {
         timeout: 2000
       })
+      reports.value = []
       return null
     }
   }

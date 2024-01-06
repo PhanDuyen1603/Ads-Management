@@ -8,21 +8,28 @@
       :map-styles="mapStyles"
       :markers="initialMarkers"
       @open-detail="showAdDetail"
+      @getPlace="(e) => getPlace(e)"
     />
   </div>
 </template>
 
 <script setup>
+import { v4 as uuidv4 } from 'uuid';
 import { changeToSlug } from '~/utils/string/slug'
 import useLocationStore from '~/stores/locations.store'
 import { mapAdsLocation, dataMapAdsWithLocation } from '~/utils/mapData'
 
 const { getLocations, markers } = useLocation()
 const { getAds, ads } = useAdvertise()
+const { getReportByGuest, reports: adsReports } = useAdReport()
+const { getReportByGuest: getAdLocationReportByGuest } = useAdLocationReport()
+const { getPhotos } = useGoogleMap()
 await getLocations()
 await getAds()
+await getReportByGuest()
+await getAdLocationReportByGuest()
 
-const initialMarkers = computed(() => dataMapAdsWithLocation(markers.value, ads.value))
+const initialMarkers = computed(() => dataMapAdsWithLocation(markers.value, ads.value, adsReports.value))
 
 const mapStore = useLocationStore()
 const $router = useRouter()
@@ -32,11 +39,22 @@ const isMapLoading = computed(() => Gmap.value?.isLoading)
 
 const showAdDetail = ({value}) => {
   const ad = mapAdsLocation(value) || {}
-  mapStore.setDetailTarget(ad)
+  mapStore.setDetailTarget({...ad, displayType: 'ad'})
   $router.push({
     path: '/',
     query: {
       detail: changeToSlug(`${ ad?.streetLine1 || '' },${ad?.streetLine2 || ''}`)
+    },
+  });
+}
+
+const getPlace = async (place) => {
+  const photos = await getPhotos(place.placeId)
+  mapStore.setDetailTarget({ ...place.value, photos: photos.data, displayType: 'location', id: uuidv4() })
+  $router.push({
+    path: '/',
+    query: {
+      detail: changeToSlug(`${ place.value?.streetLine1 || '' }`)
     },
   });
 }

@@ -10,7 +10,10 @@
     <div class="item_info">
       <div class="info_wrap">
         <div class="info_body" v-if="target && (target.id || target._id)">
-          <div class="info_image">
+          <div v-if="target.photos && target.photos.length" class="info_image">
+            <img :src="target.photos[0]" alt="..">
+          </div>
+          <div v-else class="info_image">
             <img :src="getRandomLocationImage()" alt="..">
           </div>
           <div class="info">
@@ -77,7 +80,6 @@
 </template>
 
 <script setup>
-import { faker } from '@faker-js/faker';
 import getName from '~/utils/getter/getName';
 import locationTypes from '~/constant/app/locationTypes'
 
@@ -87,7 +89,8 @@ const { getRandomLocationImage } = useMedia()
 
 const openReportModal = async (type = 'location') => {
   const props = {
-    updateType: type
+    updateType: type,
+    modelValue: target.value
   }
   if(type === 'location') props.addressId = unref(target)._id
   if(type === 'ad') props.adId = unref(target).ads?.[0]._id

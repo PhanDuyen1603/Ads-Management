@@ -53,9 +53,10 @@ const { resetData: resetLocationData } = useLocation()
 //
 
 const activeMenu = ref(route.name)
-const logOut = () => {
+const logOut = async () => {
   signOut()
-  router.push({ path: '/' })
+  await router.push({ path: '/' })
+  router.go()
 }
 
 const resetData = () => {

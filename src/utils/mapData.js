@@ -30,7 +30,9 @@ export const mapAdsLocationDetail = (value) => ({
   adsCategory: value.adsCategory._id,
 })
 
-export const dataMapAdsWithLocation = (adsLocations, ads) => {
+export const dataMapAdsWithLocation = (adsLocations, ads = [], reports = []) => {
+  const reportIds = reports.map(x => x.ads?._id) || []
+  ads = reportIds.length && ads.length ? ads.map(x => ({ ...x, reportsCount: reportIds.includes(x._id) ? 1 : 0 })) : ads
   return adsLocations.map(x => {
    return {
      ...x,

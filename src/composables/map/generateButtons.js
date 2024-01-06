@@ -1,3 +1,4 @@
+import { iconsList, iconNote } from '~/utils/map'
 export default function () {
   const { filterAdLocation } = useLocation()
   const $route = useRoute()
@@ -63,7 +64,28 @@ export default function () {
     map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(groupButtons); // eslint-disable-line no-undef
   }
 
+  const generateListMarkers = (map) => {
+    var wrapper = document.createElement('div')
+    wrapper.classList.add('list_wrapper', 'card-body')
+    const ul = document.createElement('ul')
+    ul.classList.add('list-group')
+    let list = ''
+    const iconsKey = Object.keys(iconsList)
+    for (let index = 0; index < iconsKey.length; index++) {
+      list += `<li class="list-group-item">
+        <div class="icon_wrapper">
+          <img src="${iconsList[iconsKey[index]]}">
+          <span>${iconNote[iconsKey[index]]}</span>
+        </div>
+      </li>`  
+    }
+    ul.innerHTML += list
+    wrapper.appendChild(ul)
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(wrapper); // eslint-disable-line no-undef
+  }
+
   return {
-    stausControlButtons
+    stausControlButtons,
+    generateListMarkers
   }
 }

@@ -22,14 +22,14 @@ import { mapAdsLocation, dataMapAdsWithLocation } from '~/utils/mapData'
 const { getLocations, markers } = useLocation()
 const { getAds, ads } = useAdvertise()
 const { getReportByGuest, reports: adsReports } = useAdReport()
-const { getReportByGuest: getAdLocationReportByGuest } = useAdLocationReport()
+const { getReportByGuest: getAdLocationReportByGuest, reports: locationReports } = useAdLocationReport()
 const { getPhotos } = useGoogleMap()
 await getLocations()
 await getAds()
 await getReportByGuest()
 await getAdLocationReportByGuest()
 
-const initialMarkers = computed(() => dataMapAdsWithLocation(markers.value, ads.value, adsReports.value))
+const initialMarkers = computed(() => dataMapAdsWithLocation(markers.value, ads.value, adsReports.value, locationReports.value))
 
 const mapStore = useLocationStore()
 const $router = useRouter()

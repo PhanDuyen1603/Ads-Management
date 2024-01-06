@@ -30,13 +30,29 @@ export const mapAdsLocationDetail = (value) => ({
   adsCategory: value.adsCategory._id,
 })
 
-export const dataMapAdsWithLocation = (adsLocations, ads = [], reports = []) => {
+export const dataMapAdsWithLocation = (adsLocations, ads = [], reports = [], locationReports = []) => {
   const reportIds = reports.map(x => x.ads?._id) || []
   ads = reportIds.length && ads.length ? ads.map(x => ({ ...x, reportsCount: reportIds.includes(x._id) ? 1 : 0 })) : ads
-  return adsLocations.map(x => {
-   return {
-     ...x,
-     ads: ads.filter(i => i.adsLocation?._id === x._id)
-   }
+  const adsLocationWithReport = adsLocations.map(x => {
+    return {
+      ...x,
+      ads: ads.filter(i => i.adsLocation?._id === x._id)
+    }
   })
+  if(locationReports.length) {
+    for (let index = 0; index < locationReports.length; index++) {
+      const location = adsLocationWithReport.findIndex(x => x.lat === locationReports[index].lat && x.long === locationReports[index].long)
+      if (adsLocationWithReport[location]) {
+        adsLocationWithReport[location].fullAddress = locationReports[index].fullAddress
+      } else {
+        adsLocationWithReport.push(locationReports[index])
+      }
+      console.log({
+        location,
+        locationReports: locationReports[index],
+        adsLocationWithReport,
+      })
+    }
+  }
+  return adsLocationWithReport
  }

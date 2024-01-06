@@ -61,9 +61,6 @@ const props = defineProps({
 })
 const { getFileUrl } = useMedia()
 const address = computed(() => mapAdsLocation(props.modelValue.adsLocation))
-console.log({
-  address: address.value
-})
 </script>
 
 <style lang="scss">

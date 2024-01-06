@@ -80,7 +80,8 @@ export default {
     })
 
     const {
-      stausControlButtons
+      stausControlButtons,
+      generateListMarkers
     } = generateButtons()
 
     const focusMarker = (id) => {
@@ -97,6 +98,7 @@ export default {
         googleMap.$mapPromise.then(map=> {
           getLocationFromClick(map, emit)
           stausControlButtons(map)
+          generateListMarkers(map)
           //
           //
           isLoading.value = false

@@ -1,10 +1,9 @@
 import { useToast } from "vue-toastification";
 export default function useAdReport() {
-  const { $apiFetch } = useNuxtApp()
-  const reports = ref(null)
+  const { $apiFetch, $clientId } = useNuxtApp()
   const { queryByPermissionData } = useAuth()
   const toast = useToast()
-  const { $clientId } = useNuxtApp()
+  const reports = ref(null)
   /**
    * @desc get list ad locations reports
    */
@@ -81,7 +80,7 @@ export default function useAdReport() {
       })
       if(response.success) {
         const { data } = response
-        console.log({ data, $clientId})
+        reports.value = data
         return data
       }
     } catch (error) {

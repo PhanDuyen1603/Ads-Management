@@ -16,7 +16,7 @@ function filterData(arr, filterObj = {}) {
         //
         if(value == null) return true
         const fieldValue = item[field];
-        console.log({op, value, fieldValue})
+        // console.log({op, value, fieldValue})
 
         switch (op) {
           case "gt":

@@ -22,7 +22,7 @@
           <li>
             <a class="waves-effect waves-dark" aria-expanded="false" @click="logOut()">
               <i class="mdi mdi-logout"></i>
-              <span class="hide-menu">Đăng suất</span>
+              <span class="hide-menu">Đăng xuất</span>
             </a>
           </li>
           <li>

@@ -75,6 +75,14 @@
         :submit="false"
       />
 
+      <TextElement
+          name=""
+          label="Đổi mật khẩu"
+          placeholder="Nhập mật khẩu mới"
+          :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
+          :submit="false"
+      />
+
       <ButtonElement name="submit" add-class="mt-2" submits>
         {{ submitType === 'create' ? 'Tạo mới' : 'Cập nhật' }}
       </ButtonElement>

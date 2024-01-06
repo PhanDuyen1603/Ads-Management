@@ -28,14 +28,15 @@ export default defineNuxtConfig({
   modules: [
     '@vueform/nuxt',
     '@pinia/nuxt',
-    'nuxt-mongoose',
+    // 'nuxt-mongoose',
     '@vueuse/nuxt',
+    '@invictus.codes/nuxt-vuetify'
   ],
-  mongoose: {
-    uri: process.env.MONGODB_URI,
-    options: {},
-    modelsDir: 'models',
-  },
+  // mongoose: {
+  //   uri: process.env.MONGODB_URI,
+  //   options: {},
+  //   modelsDir: 'models',
+  // },
   build: {
     transpile: ['@fawmi/vue-google-maps']
   },
@@ -54,11 +55,23 @@ export default defineNuxtConfig({
       script: [{ src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', integrity: 'sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM', crossorigin: 'anonymous'}]
     }
   },
+  experimental: {
+    watcher: "chokidar",
+  },
   css: [
     // 'bootstrap/dist/css/bootstrap.min.css',
     // '~/styles/reset.css',
     '~/styles/_app.scss',
   ],
+  vuetify: {
+    moduleOptions: {
+      treeshaking: true,
+      useIconCDN: true,
+      styles: 'sass',
+      autoImport: true,
+      useVuetifyLabs: true, 
+    }
+  },
   runtimeConfig: {
     public: {
       googleMapApiKey: process.env.GOOGLE_MAP_API_KEY || '',

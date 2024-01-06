@@ -7,7 +7,7 @@
           <ul class="nav nav-pills nav-fill mb-2 nav-blue">
             <li class="nav-item" @click="showAddressList()">
               <div :class="`nav-link ${ !isShowAdsList ? 'active' : ''}`">
-                Báo cáo điểm đặt quảng cáo
+                Báo cáo địa điểm
               </div>
             </li>
             <li class="nav-item" @click="showAdsList()">

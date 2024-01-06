@@ -37,4 +37,10 @@ export const adminMenu = [
     icon: 'mdi mdi-table',
     roles: [ROLES.SUPER_ADMIN]
   },
+  {
+    title: 'Phường/ Quận',
+    name: 'admin-location',
+    icon: 'mdi mdi-map-marker',
+    roles: [ROLES.SUPER_ADMIN]
+  },
 ]

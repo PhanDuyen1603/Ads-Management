@@ -4,9 +4,9 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>
+          <!-- <th>
              Báo cáo
-          </th>
+          </th> -->
           <th>Địa chỉ</th>
           <th v-for="(item, index) in Object.values(tableField)" :key="`head_${index}`" style="width: fit-content;">
             {{ item }}
@@ -17,11 +17,11 @@
       <tbody>
         <tr v-for="(item, index) in transformData">
           <td>{{ index + 1 }}</td>
-          <td>
+          <!-- <td>
             <div @click="openModalListReport(item)" class="count badge rounded-pill bg-danger">
               {{ item.adLocationReport?.length || '' }}
             </div>
-          </td>
+          </td> -->
           <td>
             {{ `${item.streetLine1}, ${item.streetLine2}` }}
           </td>

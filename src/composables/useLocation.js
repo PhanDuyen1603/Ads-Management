@@ -214,6 +214,52 @@ export default function useLocation() {
     }
   };
 
+  const createWard = async ({name, district}) => {
+    try {
+      const response = await $apiFetch(`/wards`, {
+        method: "POST",
+        body: { name, district },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.success) {
+        toast.success("Tạo mới phường thành công", {
+          timeout: 2000,
+        });
+        return response.data;
+      }
+    } catch (error) {
+      console.log("POST: /wards", error);
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000,
+      });
+    }
+  }
+
+  const updateWard = async (id, name) => {
+    try {
+      const response = await $apiFetch(`/wards/${id}`, {
+        method: "PATCH",
+        body: { name },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.success) {
+        toast.success("Cập nhập phường thành công", {
+          timeout: 2000,
+        });
+        return response.data;
+      }
+    } catch (error) {
+      console.log("PATCH: /wards", error);
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000,
+      });
+    }
+  }
+
   /**
    * @desc get district list
    */
@@ -246,6 +292,52 @@ export default function useLocation() {
       });
     }
   };
+
+  const createDistrict = async (name) => {
+    try {
+      const response = await $apiFetch(`/districts`, {
+        method: "POST",
+        body: { name },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.success) {
+        toast.success("Tạo mới quận thành công", {
+          timeout: 2000,
+        });
+        return response.data;
+      }
+    } catch (error) {
+      console.log("POST: /district", error);
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000,
+      });
+    }
+  }
+
+  const updateDistrict = async (id, name) => {
+    try {
+      const response = await $apiFetch(`/districts/${id}`, {
+        method: "PATCH",
+        body: { name },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.success) {
+        toast.success("Cập nhập quận thành công", {
+          timeout: 2000,
+        });
+        return response.data;
+      }
+    } catch (error) {
+      console.log("PATCH: /district", error);
+      toast.error("có lỗi xảy ra", {
+        timeout: 2000,
+      });
+    }
+  }
 
   /**
    * @desc resetData
@@ -297,8 +389,12 @@ export default function useLocation() {
     getLocationTypes,
     getWards,
     getWard,
+    createWard,
+    updateWard,
     getDistricts,
     getDistrict,
+    createDistrict,
+    updateDistrict,
     filterAdLocation,
     requestUpdateLocation,
     filterLocations,

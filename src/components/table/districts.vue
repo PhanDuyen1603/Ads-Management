@@ -6,7 +6,7 @@
           <IconsPlusCircle />
           <span>Thêm</span>
         </button>
-        <div class="table-responsive">
+        <div v-if="districts && districts.length" class="table-responsive">
           <table :class="['table', tableClass]">
             <thead>
               <tr>
@@ -51,7 +51,7 @@
           <IconsPlusCircle />
           <span>Thêm</span>
         </button>
-        <div class="table-responsive">
+        <div v-if="activeWards && activeWards.length" class="table-responsive">
           <table :class="['table', tableClass]">
             <thead>
               <tr>
@@ -107,16 +107,23 @@ const props = defineProps({
 
 const { getDistricts, getWards, createDistrict, updateDistrict, createWard, updateWard } = useLocation();
 const toast = useToast()
-const districts = await getDistricts();
-const wards = await getWards()
+const districts = ref([]);
+const wards = ref([])
+
+const initData = async () => {
+  districts.value = await getDistricts()
+  wards.value = await getWards()
+}
+
+await initData()
 
 const activeDistrict = ref(null)
 
 const activeWards = computed(() => {
   if(activeDistrict.value && activeDistrict.value._id) {
-    return wards.filter(x => x.district._id === activeDistrict.value._id)
+    return wards.value.filter(x => x.district._id === activeDistrict.value._id)
   } 
-  return wards
+  return wards.value
 })
 
 const addDistrict = async () => {
@@ -125,7 +132,7 @@ const addDistrict = async () => {
   })
   if(!newDistrict.value) return
   await createDistrict(newDistrict.value)
-  await getDistricts()
+  await initData()
 }
 const changeDistrictName = async (item) => {
   const newDistrict = await $modal.show({
@@ -136,10 +143,9 @@ const changeDistrictName = async (item) => {
       }
     }
   })
-  console.log(newDistrict.value)
   if(!newDistrict.value.name === item.name) return
   await updateDistrict(item._id, newDistrict.value)
-  await getDistricts()
+  await initData()
 }
 
 const addWard = async () => {
@@ -153,7 +159,7 @@ const addWard = async () => {
   })
   if(!newWard.value) return
   await createWard({ name: newWard.value, district: activeDistrict.value._id})
-  // await getDistricts()
+  await initData()
 }
 
 const changeWardName = async (item) => {
@@ -167,6 +173,7 @@ const changeWardName = async (item) => {
   })
   if(!newWard.value.name === item.name) return
   await updateWard(item._id, newWard.value)
+  await initData()
 }
 </script>
 

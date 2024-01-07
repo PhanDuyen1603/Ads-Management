@@ -89,7 +89,8 @@ export default {
 
     const {
       stausControlButtons,
-      generateListMarkers
+      generateListMarkers,
+      generateFilterButton
     } = generateButtons()
 
     const focusMarker = (id) => {
@@ -105,8 +106,9 @@ export default {
       if (googleMap) {
         googleMap.$mapPromise.then(map=> {
           getLocationFromClick(map, emit)
-          stausControlButtons(map)
+          // stausControlButtons(map)
           generateListMarkers(map)
+          generateFilterButton(map)
           //
           //
           isLoading.value = false
@@ -155,5 +157,13 @@ export default {
     display: inline-flex;
     gap: 5px;
   }
+}
+.card-filter {
+  background-color: #fff;
+  font-size: 1.5rem;
+  padding: .5rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  cursor: pointer;
 }
 </style>

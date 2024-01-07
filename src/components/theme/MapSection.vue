@@ -14,6 +14,7 @@
 </template>
 
 <script setup>
+import useGmapStore from '~/stores/gmap.store';
 import { v4 as uuidv4 } from 'uuid';
 import { changeToSlug } from '~/utils/string/slug'
 import useLocationStore from '~/stores/locations.store'
@@ -24,12 +25,20 @@ const { getAds, ads } = useAdvertise()
 const { getReportByGuest, reports: adsReports } = useAdReport()
 const { getReportByGuest: getAdLocationReportByGuest, reports: locationReports } = useAdLocationReport()
 const { getPhotos } = useGoogleMap()
-await getLocations()
-await getAds()
-await getReportByGuest()
-await getAdLocationReportByGuest()
+const $store = useGmapStore()
 
-const initialMarkers = computed(() => dataMapAdsWithLocation(markers.value, ads.value, adsReports.value, locationReports.value))
+const initData = async () => {
+  await getLocations()
+  await getAds()
+  await getReportByGuest()
+  await getAdLocationReportByGuest()
+
+  const allSiteMarkers = ref(dataMapAdsWithLocation(markers.value, ads.value, adsReports.value, locationReports.value))
+  $store.allSiteMarkers = allSiteMarkers.value
+}
+
+await initData()
+const initialMarkers = computed(() => $store.allSiteMarkers)
 
 const mapStore = useLocationStore()
 const $router = useRouter()

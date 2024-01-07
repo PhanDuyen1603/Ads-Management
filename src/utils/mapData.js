@@ -45,7 +45,7 @@ export const dataMapAdsWithLocation = (adsLocations, ads = [], reports = [], loc
       if (adsLocationWithReport[location]) {
         adsLocationWithReport[location].fullAddress = locationReports[index].fullAddress
       } else {
-        adsLocationWithReport.push(locationReports[index])
+        adsLocationWithReport.push({...locationReports[index], countAds: 0, reportsCount: 1})
       }
     }
   }

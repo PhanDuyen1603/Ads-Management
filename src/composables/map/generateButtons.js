@@ -1,15 +1,30 @@
 import { iconsList, iconNote } from '~/utils/map'
+import useGmapStore from '~/stores/gmap.store';
+import { useCloned } from '@vueuse/core'
+
 export default function () {
   const { filterAdLocation } = useLocation()
   const $route = useRoute()
+  const { $modal } = useNuxtApp()
+  const clone = ref(null)
 
   const filters = ref({
     countAds: {}
   })
 
+  const modalFilter = reactive({
+    isPlanned: true,
+    reportsCount: true,
+    countAds: true
+  })
+
   const handleFilter = async () => {
     console.log({filters: filters.value})
     await filterAdLocation({ conditions: filters.value })
+  }
+
+  const handleFilterMarkers = async () => {
+
   }
 
   const stausControlButtons = (map) => {
@@ -36,29 +51,51 @@ export default function () {
     controlAdButton.appendChild(controlAdLabel)
 
     // btn 2
+    var controlLocationInput = document.createElement("INPUT")
+    controlLocationInput.setAttribute("type", "checkbox")
+    controlLocationInput.checked = true
+    controlLocationInput.classList.add('form-check-input')
+    controlLocationInput.addEventListener('change',async (e) => {
+      const value = e.target.checked
+      filters.value.reportsCount = {}
+      filters.value.reportsCount.gt = !value ? 0 : null
+    })
+
+    var controlLocationLabel = document.createElement('label')
+    controlLocationLabel.classList.add('form-check-label')
+    controlLocationLabel.textContent = 'Hiện báo cáo'
+
+    var controlLocationButton = document.createElement("div")
+    controlLocationButton.classList.add('form-check','custom-check')
+    controlLocationButton.appendChild(controlLocationInput)
+    controlLocationButton.appendChild(controlLocationLabel)
+
+    // btn 3
     var controlReportInput = document.createElement("INPUT")
     controlReportInput.setAttribute("type", "checkbox")
     controlReportInput.checked = true
     controlReportInput.classList.add('form-check-input')
     controlReportInput.addEventListener('change', (e) => {
       const value = e.target.checked
-      filters.value.countAds = {}
-      filters.value.countAds.gt = !value ? 0 : null
+      filters.value.isPlanned = {}
+      filters.value.isPlanned.eq = !value ? 0 : 1
       handleFilter()
     })
 
     var controlReportLabel = document.createElement('label')
     controlReportLabel.classList.add('form-check-label')
-    controlReportLabel.textContent = 'Hiện điểm quảng cáo'
+    controlReportLabel.textContent = 'Thông tin quy hoạch'
 
     var controlReportButton = document.createElement("div")
     controlReportButton.classList.add('form-check','custom-check')
     controlReportButton.appendChild(controlReportInput)
     controlReportButton.appendChild(controlReportLabel)
 
+    // groups button
     var groupButtons = document.createElement('div')
     groupButtons.classList.add('form-custom-map')
     groupButtons.appendChild(controlAdButton)
+    groupButtons.appendChild(controlLocationButton)
     groupButtons.appendChild(controlReportButton)
 
     map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(groupButtons); // eslint-disable-line no-undef
@@ -86,8 +123,53 @@ export default function () {
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(wrapper); // eslint-disable-line no-undef
   }
 
+  const generateFilterButton = (map) => {
+    if($route.name.startsWith('admin')) return
+
+    var wrapper = document.createElement('div')
+    wrapper.classList.add('card-filter')
+    const filterBtn = document.createElement('div')
+    filterBtn.classList.add('btn_filter')
+    filterBtn.innerHTML += `<span class="mdi mdi-filter-variant"></span>`
+
+    filterBtn.addEventListener('click',async (e) => {
+      const { value : filter } = await $modal.show({
+        component: 'LayoutFilterMapFilter',
+        props: {
+          ...modalFilter
+        }
+      })
+      if(!filter) return
+      modalFilter.isPlanned = filter.isPlanned
+      modalFilter.reportsCount = filter.reportsCount
+      modalFilter.countAds = filter.countAds
+
+      const googleMapStore = useGmapStore()
+      const { cloned } = useCloned(googleMapStore.allSiteMarkers)
+      if(!clone.value) {
+        clone.value = cloned.value
+      }
+
+      if(!modalFilter.isPlanned) {
+        googleMapStore.allSiteMarkers = clone.value.filter(x => {
+          return x.isPlanned === modalFilter.isPlanned
+        })
+      }
+      if(!modalFilter.reportsCount) {
+        googleMapStore.allSiteMarkers = clone.value.filter(x => {
+          return x.reportsCount && x.reportsCount > 0
+        })
+      }
+
+    })
+
+    wrapper.appendChild(filterBtn)
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(wrapper)
+  }
+
   return {
     stausControlButtons,
-    generateListMarkers
+    generateListMarkers,
+    generateFilterButton
   }
 }

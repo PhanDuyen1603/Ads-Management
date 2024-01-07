@@ -7,6 +7,7 @@ const useGmapStore = defineStore('api-store', () => {
   const locationStore = useLocationsStore()
   const { gMapAddress: markers } = storeToRefs(locationStore)
   const initCenter = reactive({})
+  const allSiteMarkers = ref(null)
 
   const changeMapCenter = (location = {}) => {
     if (location && location.lat) initCenter.lat = location.lat;
@@ -23,6 +24,7 @@ const useGmapStore = defineStore('api-store', () => {
     markers,
     // center,
     initCenter,
+    allSiteMarkers,
 
     changeMapCenter,
     center

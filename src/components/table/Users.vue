@@ -9,6 +9,7 @@
           </th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,11 @@
           <td>
             <button class="btn btn-danger" @click="openRemoveModal(item)">
               xoá
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-success" @click="openAssignModal(item)">
+              phân công quản lý
             </button>
           </td>
           <td>
@@ -47,7 +53,10 @@ const openDetailModal = async (item) => {
   await $modal.show({
     component: 'LazyFormUser',
     props: {
-      defaultFormData: item,
+      defaultFormData: {
+        ...item,
+        ...item.assigned
+      },
       submitType: 'update'
     },
     wrapperProps: {
@@ -63,6 +72,15 @@ const openRemoveModal = async (item) => {
     component: 'LazyModalAdminUserRemoveModal',
     props: {
       data: item,
+    }
+  })
+}
+
+const openAssignModal = async (item) => {
+  await $modal.show({
+    component: 'ModalAdminAssignStaff',
+    props: {
+      modelValue: item,
     }
   })
 }

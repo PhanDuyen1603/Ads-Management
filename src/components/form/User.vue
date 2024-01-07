@@ -53,33 +53,36 @@
       />
 
       <SelectElement
-        v-if="['update', 'authUpdate'].includes(submitType) && form.role === 'canbo_quan'"
         label="Quận"
         name="district"
         :native="true"
         :items="districts"
         label-prop="name"
-        value-prop="slug"
+        value-prop="_id"
         :submit="false"
+        disabled
+        readonly
+        :columns="{ container: 6 }"
       />
 
       <SelectElement
-        v-if="['update', 'authUpdate'].includes(submitType) && form.role === 'canbo_quan' || form.role === 'canbo_phuong'"
         label="Phường"
         name="ward"
         :native="false"
         :items="listWards"
-        :disabled="!form.district"
         label-prop="name"
-        value-prop="slug"
+        value-prop="_id"
+        disabled
+        readonly
         :submit="false"
+        :columns="{ container: 6 }"
       />
 
       
       <ButtonElement full name="submit" submits :columns="{ container: 3, wrapper: 12 }">
         {{ submitType === 'create' ? 'Tạo mới' : 'Cập nhật' }}
       </ButtonElement>
-      <ButtonElement v-if="['update', 'authUpdate'].includes(submitType)" full @click="openChangePasswordModal" name="changepass" :columns="{ container: 3, wrapper: 12 }">
+      <ButtonElement v-if="['authUpdate'].includes(submitType)" full @click="openChangePasswordModal" name="changepass" :columns="{ container: 3, wrapper: 12 }">
         đổi mật khẩu
       </ButtonElement>
       
@@ -89,7 +92,6 @@
 
 <script setup>
 import { ROLES, ROLE_LABEL } from '~/constant/user'
-import { districts } from '~/constant/location'
 
 const props = defineProps({
   defaultFormData: {
@@ -106,10 +108,14 @@ const props = defineProps({
 const emits = defineEmits(['close', 'handle-update'])
 const { createStaff } = useStaff()
 const { $modal } = useNuxtApp()
+const { getWards, getDistricts } = useLocation();
+
+const districts = await getDistricts();
+const wards = await getWards();
 
 const form = reactive(props.defaultFormData && props.submitType !== 'create' ? props.defaultFormData : {})
 
-const listWards = computed(() => form.district ? districts.find(x => x.slug === form.district)?.wards : [])
+const listWards = computed(() => form.district ? wards.filter(x => x.district?._id === form.district) : [])
 
 const roles = Object.keys(ROLES).map(key => {
   return {

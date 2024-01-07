@@ -5,8 +5,8 @@ export const tableField = {
   phone: 'Số điện thoại',
   dob: 'Ngày sinh',
   role: 'Quyền',
-  ward: 'Phường',
-  district: 'Quận',
+  // ward: 'Phường',
+  // district: 'Quận',
   // verified: 'Xác thực',
 }
 

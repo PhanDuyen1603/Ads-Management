@@ -83,6 +83,29 @@ export default function useStaff() {
     }
   }
 
+  const assignStaff = async ({district, ward = '', id}) => {
+    try {
+      const response = await $apiFetch('/staff/assign/' + id, {
+        method: 'PATCH',
+        body: {
+          district, ward
+        },
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      toast.success("Phân công quảng lý thành công", {
+        timeout: 2000
+      })
+      return response
+    } catch (error) {
+      console.log('PATCH: /staff/assign/', error)
+      toast.error("Phân công quảng lý thất bại", {
+        timeout: 2000
+      })
+    }
+  }
+
   const staffs = computed(() => $store.staffList)
 
   return {
@@ -90,6 +113,7 @@ export default function useStaff() {
     getStaff,
     createStaff,
     updateStaff,
+    assignStaff,
 
     staffs
   }

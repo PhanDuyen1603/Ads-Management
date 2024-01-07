@@ -37,7 +37,7 @@
                     <div>{{ getName(item, field) }}</div>
                   </td>
                   <td>
-                    <div>{{ item.report.status ? status[item.report.status] : status[0] }}</div>
+                    <div>{{ item.status ? status[item.status] : status[0] }}</div>
                   </td>
                   <td>
                     <button class="btn btn-success" @click="openDetailModal(item, 'ad')">Chi tiết</button>

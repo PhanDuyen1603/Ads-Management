@@ -3,7 +3,7 @@ export const tableField = {
   username: 'Tên người dùng',
   email: 'Email',
   phone: 'Số điện thoại',
-  dob: 'Ngày sinh',
+  // dob: 'Ngày sinh',
   role: 'Quyền',
   // ward: 'Phường',
   // district: 'Quận',

@@ -20,14 +20,8 @@ export const adminMenu = [
     roles: [ROLES.SUPER_ADMIN]
   },
   {
-    title: 'Danh sách loại hình quảng cáo',
+    title: 'Danh sách loại hình/hình thức quảng cáo',
     name: 'admin-typeAds',
-    icon: 'mdi mdi-table',
-    roles: [ROLES.SUPER_ADMIN]
-  },
-  {
-    title: 'Danh sách hình thức báo cáo',
-    name: 'admin-reportForm',
     icon: 'mdi mdi-table',
     roles: [ROLES.SUPER_ADMIN]
   },

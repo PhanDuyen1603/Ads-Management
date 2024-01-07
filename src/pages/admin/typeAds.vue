@@ -1,12 +1,12 @@
 <template>
   <div>
-    loại hình quảng cáo
+    <TableTypeAds />
   </div>
 </template>
 
 <script setup>
 definePageMeta({
-  layout: 'admin',
-  middleware: ['admin'],
-})
+  layout: "admin",
+  middleware: ["admin"],
+});
 </script>

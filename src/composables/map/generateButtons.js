@@ -19,7 +19,6 @@ export default function () {
   })
 
   const handleFilter = async () => {
-    console.log({filters: filters.value})
     await filterAdLocation({ conditions: filters.value })
   }
 
@@ -153,7 +152,6 @@ export default function () {
           return x.isPlanned === true
         })
         .filter(x => {
-          console.log(x)
           if(modalFilter.countAds === 0) return true
           if(modalFilter.countAds === 1) return !x.countAds
           return x.countAds > 0
@@ -161,7 +159,7 @@ export default function () {
         .filter(x => {
           if(modalFilter.reportsCount === 0) return true
           if(modalFilter.reportsCount === 1) return !x.reportsCount
-          return x.reportsCount && x.reportsCount > 0
+          return x.countReports || x.reportsCount || ( x.address && x.fullAddress )
         })
 
     })

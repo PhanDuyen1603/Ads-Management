@@ -3,8 +3,10 @@ const iconsList = {
   ad: '/icons/icon-qc.svg',
   adRed: '/icons/icon-qc-red.svg',
   noAdRed: '/icons/icon-no-qc-red.svg',
-  report: '/icons/flag-diemdatqc.svg',
-  reportWithAd: '/icons/flag-quangcao.svg',
+  reportWithAd: '/icons/flag-diemdatqc.svg',
+  report: '/icons/flag-quangcao.svg',
+  // report: '/icons/flag-diemdatqc.svg',
+  // reportWithAd: '/icons/flag-quangcao.svg',
 }
 
 const iconNote = {
@@ -21,7 +23,7 @@ const getMarkerIcon = (marker) => {
   const isPlanned = marker.isPlanned
   const ads = marker.countAds
   const fullAddress = marker.fullAddress
-  const hasReport = marker.countReports || ( marker.address && marker.fullAddress )
+  const hasReport = marker.reportsCount && !marker.address
   if(hasReport) return iconsList.reportWithAd
   if(fullAddress) return iconsList.report
   if(isPlanned) {

@@ -79,17 +79,25 @@ export default function useAdReport() {
         }
       })
       if(response.success) {
-        const { data } = response
-        const reportsLs = localStorage.getItem('reports')
-        if(data && data.length) {
-          localStorage.setItem("reports", JSON.stringify(data));
+        if(process.client) {
+          const { data } = response
+          const reportsLs = localStorage.getItem('reports')
+          if(data && data.length) {
+            localStorage.setItem("reports", JSON.stringify(data));
+            reports.value = data
+            return data
+          }
+          if(!data?.length && reportsLs && reportsLs.length) {
+            reports.value = JSON.parse(reportsLs)
+            return JSON.parse(reportsLs)
+          } 
+          reports.value = null
+          return null
+        } else {
+          const { data } = response
           reports.value = data
           return data
         }
-        if(!data.length && reportsLs.length) {
-          reports.value = JSON.parse(reportsLs)
-          return JSON.parse(reportsLs)
-        } 
       }
     } catch (error) {
       console.log('GET: /reports/ads', error)

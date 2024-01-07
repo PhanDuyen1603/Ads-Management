@@ -80,8 +80,16 @@ export default function useAdReport() {
       })
       if(response.success) {
         const { data } = response
-        reports.value = data
-        return data
+        const reportsLs = localStorage.getItem('reports')
+        if(data && data.length) {
+          localStorage.setItem("reports", JSON.stringify(data));
+          reports.value = data
+          return data
+        }
+        if(!data.length && reportsLs.length) {
+          reports.value = JSON.parse(reportsLs)
+          return JSON.parse(reportsLs)
+        } 
       }
     } catch (error) {
       console.log('GET: /reports/ads', error)
@@ -97,17 +105,17 @@ export default function useAdReport() {
    */
     const changeStatus = async (id, { status }) => {
       try {
-        const response = await $apiFetch(`/reports/location/${id}`, {
-          method: 'PATCH',
-          body: {
-            status
-          },
-          redirect: 'follow',
-        })
-        toast.success("Cập nhập trạng thái thành công", {
+        // const response = await $apiFetch(`/reports/location/${id}`, {
+        //   method: 'PATCH',
+        //   body: {
+        //     status
+        //   },
+        //   redirect: 'follow',
+        // })
+        toast.info("Đang phát triển", {
           timeout: 2000
         })
-        return response
+        // return response
       } catch (error) {
         console.log('PATCH: /reports/ads/', error)
         toast.error("có lỗi xảy ra", {

@@ -92,7 +92,7 @@ definePageMeta({
 })
 const { $modal } = useNuxtApp()
 const { getReports, reports } = useAdReport()
-const { getReports: getAdLocationsReports, reports: adLocationReports } = useAdLocationReport()
+const { getReportByGuest: getAdLocationsReports, reports: adLocationReports } = useAdLocationReport()
 await getReports()
 await getAdLocationsReports()
 const isShowAdsList = ref(false)

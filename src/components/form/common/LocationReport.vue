@@ -92,12 +92,16 @@ const props = defineProps({
     type: String,
     default: 'location',
     validator:(x) => ['location', 'ad'].includes(x)
+  },
+  modelValue: {
+    type: Object,
+    default:() => {}
   }
 })
 const emits = defineEmits(['close'])
 const captcha = ref(null)
 const form = reactive({})
-// const { $clientId } = useNuxtApp()
+const { $clientId } = useNuxtApp()
 const { getFileUrl } = useMedia()
 const { getReportTypes } = useReport()
 const { createReport } = useAdReport()
@@ -123,9 +127,8 @@ const handleSubmit = async (submitForm, el) => {
   const { value: captchaRes } = await captcha.value.checkCaptcha()
   // console.log({ captchaRes, captcha: captcha.value })
   if(!captchaRes) return false
-  const _id = props.updateType === 'ad' ? props.adId : props.addressId
+  const _id = props.updateType === 'ad' ? props.adId : null
 
-  if (!_id) window.alert('Khong tim thay quang cao hay địa điểm')
   var formdata = new FormData();
 
   const keys = Object.keys(submitForm)
@@ -139,10 +142,13 @@ const handleSubmit = async (submitForm, el) => {
       formdata.append(keys[i], submitForm[keys[i]])
     }
   }
+
   formdata.append('fullName', `${form.firstName} ${form.lastName}`)
-  // formdata.append('guestId', $clientId)
+  formdata.append('guestId', $clientId)
+  formdata.append('lat', props.modelValue.position?.lat || props.modelValue.lat)
+  formdata.append('long', props.modelValue.position?.lng || props.modelValue.long)
   if(props.updateType === 'ad') formdata.append('adsId', _id)
-  if(props.updateType === 'location') formdata.append('adsLocationId', _id)
+
   try {
     const res = props.updateType === 'ad' ? await createReport(formdata) : await createAdLocationReport(formdata)
     const list = props.updateType === 'ad' ? window.localStorage.getItem('reports') : window.localStorage.getItem('reports_location') || ''

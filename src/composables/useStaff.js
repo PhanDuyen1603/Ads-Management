@@ -1,7 +1,9 @@
 import useStaffStore from '~/stores/staff.store'
+import { useToast } from "vue-toastification";
 export default function useStaff() {
   const $store = useStaffStore()
   const { $apiFetch } = useNuxtApp()
+  const toast = useToast()
 
   /**
    * @desc get staffs
@@ -45,9 +47,15 @@ export default function useStaff() {
           "Content-Type": "application/json"
         }
       })
+      toast.success("Tạo cán bộ thành công", {
+        timeout: 2000
+      })
       return response
     } catch (error) {
       console.log('POST: /auth/create', error)
+      toast.error("Tạo cán bộ thất bại", {
+        timeout: 2000
+      })
     }
   }
 
@@ -63,9 +71,38 @@ export default function useStaff() {
           "Content-Type": "application/json"
         }
       })
+      toast.success("Sửa thông tin thành công", {
+        timeout: 2000
+      })
       return response
     } catch (error) {
       console.log('PATCH: /staff/update-info', error)
+      toast.error("Sửa thông tin thất bại", {
+        timeout: 2000
+      })
+    }
+  }
+
+  const assignStaff = async ({district, ward = '', id}) => {
+    try {
+      const response = await $apiFetch('/staff/assign/' + id, {
+        method: 'PATCH',
+        body: {
+          district, ward
+        },
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      toast.success("Phân công quảng lý thành công", {
+        timeout: 2000
+      })
+      return response
+    } catch (error) {
+      console.log('PATCH: /staff/assign/', error)
+      toast.error("Phân công quảng lý thất bại", {
+        timeout: 2000
+      })
     }
   }
 
@@ -76,6 +113,7 @@ export default function useStaff() {
     getStaff,
     createStaff,
     updateStaff,
+    assignStaff,
 
     staffs
   }

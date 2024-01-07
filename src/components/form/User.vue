@@ -6,21 +6,12 @@
       sync
     >
       <TextElement
-        name="firstName"
-        label="Họ và tên đệm"
-        placeholder="Nhập họ và tên đệm"
-        :columns="{ container: 6 }"
+        name="fullName"
+        label="Họ và tên"
+        placeholder="Nhập họ và tên"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
-        :submit="false"
       />
-      <TextElement
-        name="lastName"
-        label="Tên"
-        placeholder="Nhập tên"
-        :columns="{ container: 6 }"
-        :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
-        :submit="false"
-      />
+
       <TextElement
         name="username"
         label="Tên đăng nhập"
@@ -49,6 +40,7 @@
         value-format="DD-MM-YYYY"
         display-format="DD-MM-YYYY"
       />
+
       <SelectElement
         label="Quyền"
         name="role"
@@ -60,36 +52,39 @@
       />
 
       <SelectElement
+        v-if="submitType === 'create'"
         label="Quận"
         name="district"
-        :native="true"
         :items="districts"
         label-prop="name"
-        value-prop="slug"
-        :submit="false"
+        value-prop="_id"
+        :columns="{ container: 6 }"
       />
 
       <SelectElement
+        v-if="submitType === 'create'"
         label="Phường"
         name="ward"
-        :native="false"
         :items="listWards"
-        :disabled="!form.district"
         label-prop="name"
-        value-prop="slug"
-        :submit="false"
+        value-prop="_id"
+        :columns="{ container: 6 }"
       />
 
-      <ButtonElement name="submit" add-class="mt-2" submits>
+      
+      <ButtonElement full name="submit" submits :columns="{ container: 3, wrapper: 12 }">
         {{ submitType === 'create' ? 'Tạo mới' : 'Cập nhật' }}
       </ButtonElement>
+      <ButtonElement v-if="['authUpdate'].includes(submitType)" full @click="openChangePasswordModal" name="changepass" :columns="{ container: 3, wrapper: 12 }">
+        đổi mật khẩu
+      </ButtonElement>
+      
     </Vueform>
   </ClientOnly>
 </template>
 
 <script setup>
 import { ROLES, ROLE_LABEL } from '~/constant/user'
-import { districts } from '~/constant/location'
 
 const props = defineProps({
   defaultFormData: {
@@ -104,11 +99,16 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['close', 'handle-update'])
-const { createStaff } = useStaff()
+const { createStaff, updateStaff } = useStaff()
+const { $modal } = useNuxtApp()
+const { getWards, getDistricts } = useLocation();
+
+const districts = await getDistricts();
+const wards = await getWards();
 
 const form = reactive(props.defaultFormData && props.submitType !== 'create' ? props.defaultFormData : {})
 
-const listWards = computed(() => form.district ? districts.find(x => x.slug === form.district)?.wards : [])
+const listWards = computed(() => form.district ? wards.filter(x => x.district?._id === form.district) : [])
 
 const roles = Object.keys(ROLES).map(key => {
   return {
@@ -121,7 +121,12 @@ const handleSubmit = async (submitForm, $el) => {
   try {
     if (props.submitType === 'create') {
       submitForm.password = '123456'
-      submitForm.fullName = `${form?.firstName || ''} ${form?.lastName || ''}`
+      submitForm.assigned = {
+        district: submitForm.district || submitForm.assigned?.district,
+        ward: submitForm.ward || submitForm.assigned?.ward
+      }
+      delete submitForm.district
+      delete submitForm.ward
       const res = await createStaff(submitForm)
       if(res.success) {
         emits('close')
@@ -139,6 +144,12 @@ const handleSubmit = async (submitForm, $el) => {
   } catch (error) {
     console.log({error})
   }
+}
+
+const openChangePasswordModal = async () => {
+  await $modal.show({
+    component: 'ModalAdminChangePassword'
+  })
 }
 
 </script>

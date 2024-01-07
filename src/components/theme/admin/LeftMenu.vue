@@ -1,4 +1,5 @@
 <template>
+  <ClientOnly>
   <aside class="left-sidebar">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
@@ -21,10 +22,11 @@
           <li>
             <a class="waves-effect waves-dark" aria-expanded="false" @click="logOut()">
               <i class="mdi mdi-logout"></i>
-              <span class="hide-menu">Đăng suất</span></a>
+              <span class="hide-menu">Đăng xuất</span>
+            </a>
           </li>
           <li>
-            <NuxtLink :to="{ path:'/'}" class="waves-effect waves-dark" aria-expanded="false">
+              <NuxtLink :to="{ path:'/'}" class="waves-effect waves-dark" aria-expanded="false">
               <i class="mdi mdi-arrow-left"></i>
               <span class="hide-menu">Về trang chủ</span>
             </NuxtLink>
@@ -34,7 +36,9 @@
       <!-- End Sidebar navigation -->
   </div>
   <!-- End Sidebar scroll-->
-</aside></template>
+    </aside>
+  </ClientOnly>
+</template>
 
 <script setup>
 import { adminMenu } from '~/constant/layout/admin/leftMenu'
@@ -43,10 +47,21 @@ const route = useRoute()
 const router = useRouter()
 const { role: userRole, signOut } = useAuth()
 
+//
+const { resetData: resetAdData } = useAdvertise()
+const { resetData: resetLocationData } = useLocation()
+//
+
 const activeMenu = ref(route.name)
-const logOut = () => {
+const logOut = async () => {
   signOut()
-  router.push({ path: '/' })
+  await router.push({ path: '/' })
+  router.go()
+}
+
+const resetData = () => {
+  resetAdData()
+  resetLocationData()
 }
 //
 watch(() => route.name, (newRouteName, oldRouteName) => {

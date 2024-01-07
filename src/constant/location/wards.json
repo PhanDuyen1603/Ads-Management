@@ -1,0 +1,344 @@
+[
+  {
+    "_id": {
+      "$oid": "65897a662992505116474a10"
+    },
+    "name": "Bến Nghé",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65897bba0c652f18ce27d803"
+    },
+    "name": "Bến Thành",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65897bc30c652f18ce27d806"
+    },
+    "name": "Cầu Kho",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65897bc70c652f18ce27d809"
+    },
+    "name": "Cầu Ông Lãnh",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65897bd10c652f18ce27d80c"
+    },
+    "name": "Đa Kao",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65897bd90c652f18ce27d80f"
+    },
+    "name": "Nguyễn Cư Trinh",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65897bde0c652f18ce27d812"
+    },
+    "name": "Nguyễn Thái Bình",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65897be40c652f18ce27d815"
+    },
+    "name": "Phạm Ngũ Lão",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "65897beb0c652f18ce27d818"
+    },
+    "name": "Tân Định",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "658a9bcdfb8077138d4f6e95"
+    },
+    "name": "Tân Định2",
+    "district": {
+      "$oid": "65894bf5837b369ea222e92f"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659062ea0d85e0e18aa0d179"
+    },
+    "name": "1",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063060d85e0e18aa0d181"
+    },
+    "name": "2",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063080d85e0e18aa0d185"
+    },
+    "name": "3",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590630a0d85e0e18aa0d189"
+    },
+    "name": "4",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590630c0d85e0e18aa0d18d"
+    },
+    "name": "5",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590630e0d85e0e18aa0d191"
+    },
+    "name": "6",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063100d85e0e18aa0d195"
+    },
+    "name": "7",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063130d85e0e18aa0d199"
+    },
+    "name": "8",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063150d85e0e18aa0d19d"
+    },
+    "name": "9",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063180d85e0e18aa0d1a1"
+    },
+    "name": "10",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590631b0d85e0e18aa0d1a5"
+    },
+    "name": "11",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590631d0d85e0e18aa0d1a9"
+    },
+    "name": "12",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063210d85e0e18aa0d1ad"
+    },
+    "name": "13",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063240d85e0e18aa0d1b1"
+    },
+    "name": "14",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063260d85e0e18aa0d1b5"
+    },
+    "name": "15",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063280d85e0e18aa0d1b9"
+    },
+    "name": "16",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590632a0d85e0e18aa0d1bd"
+    },
+    "name": "17",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590632c0d85e0e18aa0d1c1"
+    },
+    "name": "18",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590632f0d85e0e18aa0d1c5"
+    },
+    "name": "19",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063320d85e0e18aa0d1c9"
+    },
+    "name": "20",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063330d85e0e18aa0d1cd"
+    },
+    "name": "21",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063350d85e0e18aa0d1d1"
+    },
+    "name": "22",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063380d85e0e18aa0d1d5"
+    },
+    "name": "23",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590633a0d85e0e18aa0d1d9"
+    },
+    "name": "24",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590633c0d85e0e18aa0d1dd"
+    },
+    "name": "25",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6590633e0d85e0e18aa0d1e1"
+    },
+    "name": "26",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063400d85e0e18aa0d1e5"
+    },
+    "name": "27",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "659063420d85e0e18aa0d1e9"
+    },
+    "name": "28",
+    "district": {
+      "$oid": "65894c1f837b369ea222e933"
+    }
+  }
+]

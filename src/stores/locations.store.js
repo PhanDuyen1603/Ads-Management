@@ -11,19 +11,8 @@ export default defineStore({
     targetAds: [],
   }),
   actions: {
-    async setDetailTarget(target) {
-      try {
-        this.target = target
-        const ids = target.ads
-        const res = ids && ids.length ? await $fetch('/api/advertise', {
-          params: {
-            ids: target.ads?.join(', '),
-          }
-        }) : {}
-        this.targetAds = res
-      } catch (error) {
-        console.log(error)
-      }
+    setDetailTarget(target) {
+      this.target = target
     },
     getAdInfo(id, field) {
       const ad = this.locations.filter(x => x.id === id)

@@ -4,6 +4,9 @@
       <thead>
         <tr>
           <th>#</th>
+          <th>
+             Báo cáo
+          </th>
           <th v-for="(item, index) in Object.keys(tableAd)" :key="`head_${index}`" style="width: fit-content;">
             {{ tableAd[item].label }}
           </th>
@@ -12,11 +15,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in data" :key="`ad_${index}`">
+        <tr v-for="(item, index) in initialData" :key="`ad_${index}`">
           <td>{{ index + 1 }}</td>
+          <td>
+            <div class="count badge rounded-pill bg-danger" @click="openListReportModal(item.adReports)">
+              {{ item.adReports?.length || '' }}
+            </div>
+          </td>
           <td v-for="(field, i) in Object.keys(tableAd)" :key="i">
             <div v-if="field !== 'images' && field !== 'address'" class="line-clamp-5">{{ getName(item, tableAd[field].key) }}</div>
-            <div v-else-if="field === 'address'" class="line-clamp-5">{{ buildAddress(item) }}</div>
+            <div v-else-if="field === 'address'" class="line-clamp-5">{{ getFullAddressByAdsLocation(item) }}</div>
             <div class="table_images" v-else>
               <img v-for="(img, img_i) in item[field]" :key="`img_${img_i}`" :src="getFileUrl(img.path)" >
             </div>
@@ -43,15 +51,27 @@
 <script setup>
 import getName from '~/utils/getter/getName'
 import { tableAd } from '~/constant/ads'
+import { getFullAddressByAdsLocation } from '~/utils/location/address'
 const { userPermission } = useAuth()
 
 const { $modal } = useNuxtApp()
 const props = defineProps({
   data: {
-    type: Array
+    type: Array,
+    default:() => []
   },
 })
 const { getFileUrl } = useMedia()
+
+const { getReports } = useAdReport()
+const list = await getReports(false)
+
+const initialData = computed(() => {
+  return props.data?.length ? props.data.map(x => ({
+    ...x,
+    adReports: list.filter(i => i.ads?._id === x._id && (!i.status || i.status === 0)),
+  })) : []
+})
 
 const openDetailModal = async (item) => {
   await $modal.show({
@@ -68,8 +88,6 @@ const openDetailModal = async (item) => {
 }
 
 const openUpdateModal = async (item) => {
-  console.log(222)
-
   await $modal.show({
     component: userPermission.value.advertise.update ? 'FormAdCreate' : 'FormAdRequestEdit',
     props: {
@@ -85,8 +103,13 @@ const openUpdateModal = async (item) => {
   })
 }
 
-const buildAddress = (item) => {
-  return `${getName(item, 'adsLocation_address_streetLine1')}, ${getName(item, 'adsLocation_address_streetLine2')}, phường ${getName(item, 'adsLocation_address_ward')}, quận ${getName(item, 'adsLocation_address_district')}, TP HCM`
+const openListReportModal = async (item) => {
+  await $modal.show({
+    component: 'LazyModalAdminListAdReport',
+    props: {
+      modelValue: item,
+    },
+  })
 }
 
 </script>

@@ -4,6 +4,9 @@
       <thead>
         <tr>
           <th>#</th>
+          <!-- <th>
+             Báo cáo
+          </th> -->
           <th>Địa chỉ</th>
           <th v-for="(item, index) in Object.values(tableField)" :key="`head_${index}`" style="width: fit-content;">
             {{ item }}
@@ -14,6 +17,11 @@
       <tbody>
         <tr v-for="(item, index) in transformData">
           <td>{{ index + 1 }}</td>
+          <!-- <td>
+            <div @click="openModalListReport(item)" class="count badge rounded-pill bg-danger">
+              {{ item.adLocationReport?.length || '' }}
+            </div>
+          </td> -->
           <td>
             {{ `${item.streetLine1}, ${item.streetLine2}` }}
           </td>
@@ -44,7 +52,7 @@
 <script setup>
 import { mapAdsLocation } from '~/utils/mapData'
 import getName from '~/utils/getter/getName'
-const { $modal, $gMap } = useNuxtApp()
+const { $modal } = useNuxtApp()
 const { userPermission } = useAuth()
 const emits = defineEmits(['refresh'])
 const props = defineProps({
@@ -62,7 +70,10 @@ const props = defineProps({
   }
 })
 
-const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x)) || [])
+const { getReports: getAdLocationsReports } = useAdLocationReport()
+const list = await getAdLocationsReports(false)
+
+const transformData = computed(() => props.data && props.data.length && props.data.map(x => mapAdsLocation(x, list)) || [])
 
 const tableField = {
   city: 'Thành phố',
@@ -71,7 +82,7 @@ const tableField = {
 }
 const openReportModal = async (item) => {
   const result = await $modal.show({
-    component: userPermission.value.advertise.update ? 'FormAddressRequestEdit' : 'LazyFormAdRequestEdit',
+    component: userPermission.value.advertise.update ? 'FormAddressRequestEdit' : 'FormAddressRequestEdit',
     // component: 'FormAddressRequestEdit',
     props: {
       defaultFormData: item,
@@ -101,10 +112,24 @@ const openDetailModal = async (item) => {
   })
 }
 
+const openModalListReport = async (item) => {
+  await $modal.show({
+    component: 'LazyModalAdminListReport',
+    props: {
+      modelValue: item.adLocationReport || []
+    },
+    wrapperProps: {
+      styles: {
+        width: '650px'
+      }
+    }
+  })
+}
+
 </script>
 
 <style>
-.detail_icon {
+.detail_icon, .count {
   cursor: pointer;
 }
 </style>

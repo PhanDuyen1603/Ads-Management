@@ -32,19 +32,13 @@
 
 <script setup>
 import getName from '~/utils/getter/getName';
+import { getFullAddress } from '~/utils/location/address'
 const props = defineProps({
   modelValue: {
     type: Object,
     default:() => {}
   },
 })
-const getFullAddress = (item) => {
-  return `${getName(item, 'address_streetLine1') } ${ getName(item, 'address_streetLine2') },
-    ${ getName(item, 'address_ward') },
-    ${ getName(item, 'address_district') },
-    ${ getName(item, 'address_city') },
-    ${ getName(item, 'address_country') }`
-}
 </script>
 
 <style lang="scss">

@@ -71,7 +71,7 @@
           :submit="false"
           label="Hình thức xử lý: "
         />
-        <ToggleElement text="Trạng thái xử lý" name="status" :true-value="1" :false-value="0" />
+        <ToggleElement text="Trạng thái xử lý" name="status" :true-value="2" :false-value="0" />
         <ButtonElement name="submit" submits>
            Lưu thay đổi
         </ButtonElement>
@@ -93,7 +93,8 @@ const props = defineProps({
     validator:(x) => ['ad', 'location'].includes(x)
   }
 })
-const { changeStatue } = useAdReport()
+const { changeStatus } = useAdReport()
+const { changeStatus: changeAdlocationReportStatus } = useAdLocationReport()
 const emits = defineEmits(['close'])
 const imagesViews = []
 
@@ -106,12 +107,13 @@ const form = ref({
 })
 
 const handleSubmit = async (form, el) => {
-  console.log(1)
   if (props.type === 'ad') {
-    // awa
     const status = form.status
-    const res = await changeStatue(props.modelValue._id, { status })
-    console.log({res})
+    const res = await changeStatus(props.modelValue._id, { status })
+    // console.log({res})
+  } else {
+    const status = form.status
+    const res = await changeAdlocationReportStatus(props.modelValue._id, { status })
   }
   emits('close')
 }

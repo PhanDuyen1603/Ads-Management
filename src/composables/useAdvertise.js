@@ -67,37 +67,6 @@ export default function useAdvertise() {
   }
 
   /**
-   * @desc get bill board types
-   */
-  const getBillboardTypes = async () => {
-    try {
-      const response = await $apiFetch(`/billboard-types`)
-      if(response.success) {
-        $store.billboardTypes = response.data
-        return response.data
-      }
-    } catch (error) {
-      console.log('GET: /ads', error)
-      toast.error("có lỗi xảy ra", {
-        timeout: 2000
-      })
-    }
-  }
-  const getBillboardType = async (id) => {
-    try {
-      const response = await $apiFetch(`/billboard-types/${id}`)
-      if(response.success) {
-        return response.data
-      }
-    } catch (error) {
-      console.log('GET: /ads', error)
-      toast.error("có lỗi xảy ra", {
-        timeout: 2000
-      })
-    }
-  }
-
-  /**
    * @desc create ad
    */
   const createAd = async () => {
@@ -133,24 +102,29 @@ export default function useAdvertise() {
     return cloned.value?.filter(x => slugify(x.title).includes(slugify(str)))
   }
 
+  /**
+   * @desc resetData
+   */
+  const resetData = () => {
+    filterAds.value = null;
+    $store.ads = null
+  }
+
   const ads = computed(() => filterAds.value && filterAds.value.length ? filterAds.value : $store.ads)
-  const billboardTypes = computed(() => $store.adsBillboardTypes)
   const adsCategories = computed(() => $store.categories.map(x => ({
     label: x.name,
     value: x._id
   })))
 
   return {
+    resetData,
     getAds,
     getAdById,
     getAdsCategories,
-    getBillboardTypes,
-    getBillboardType,
     requestUpdateAd,
     filterAd,
 // no return .value in composable it will not reactive any more
     ads,
-    billboardTypes,
     adsCategories
   }
 }

@@ -27,11 +27,18 @@
           :opened="targetMarker === m.id"
         >
           <div v-if="!markers.ads" class="marker_info">
-            <h3>{{ `${m.streetLine1} ${m.streetLine2 || ''}` }}</h3>
-            <p>Phường: {{ getName(m, 'ward') }}</p>
-            <p>Quận: {{ getName(m, 'district') }}</p>
-            <p>{{ m.city }}</p>
-            <h4>{{ m.isPlanned ? 'Đã' : 'Chưa' }} quy hoạch</h4>
+            <div v-if="m.fullAddress && m.report?._id">
+              <h3>{{ m.fullAddress }}</h3>
+              <p><strong>Người báo cáo: </strong>{{ m.report.fullName }}</p>
+              <p><strong>Email: </strong>{{ m.report.email }}</p>
+              <p><strong>Nội dung: </strong><span class="line-clamp-1" v-html="m.report.content" /></p>
+            </div>
+            <div v-else>
+              <h3>{{ getName(m, 'locationType') }}</h3>
+              <p>{{ getName(m, 'adsCategory') }}</p>
+              <p>{{ `${m.streetLine1} ${m.streetLine2 || ''}` }}, Phường: {{ getName(m, 'ward') }}, Quận: {{ getName(m, 'district') }}, TP Hồ Chí Minh</p>
+              <p><strong>{{ m.isPlanned ? 'Đã' : 'Chưa' }} quy hoạch</strong></p>
+            </div>
           </div>
         </GMapInfoWindow>
 
@@ -81,7 +88,8 @@ export default {
     })
 
     const {
-      stausControlButtons
+      stausControlButtons,
+      generateListMarkers
     } = generateButtons()
 
     const focusMarker = (id) => {
@@ -98,6 +106,7 @@ export default {
         googleMap.$mapPromise.then(map=> {
           getLocationFromClick(map, emit)
           stausControlButtons(map)
+          generateListMarkers(map)
           //
           //
           isLoading.value = false
@@ -137,12 +146,14 @@ export default {
 }
 .marker_info {
   max-width: 300px;
-  > * {
-    font-size: .8rem;
-    margin: .5rem;
-  }
   h3 {
     font-size: .9rem;
+  }
+  p {
+    font-size: .8rem;
+    margin-bottom: .5rem;  
+    display: inline-flex;
+    gap: 5px;
   }
 }
 </style>

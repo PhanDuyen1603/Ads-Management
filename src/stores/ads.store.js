@@ -12,37 +12,6 @@ export default defineStore({
     billboardTypes: [],
   }),
   actions: {
-    // create
-    async createLocation(data) {
-      try {
-        const res = await $fetch('/api/address/create', {
-          method: 'POST',
-          body: data,
-          redirect: 'follow',
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        console.log(res)
-      } catch (error) {
-        console.log({error})
-      }
-    },
-    async createAds(data) {
-      try {
-        const res = await $fetch('/api/advertise/create', {
-          method: 'POST',
-          body: data,
-          redirect: 'follow',
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        console.log(res)
-      } catch (error) {
-        console.log({error})
-      }
-    },
   },
   getters: {
     adsCategories:(state) => {

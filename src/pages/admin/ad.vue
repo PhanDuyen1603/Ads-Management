@@ -1,32 +1,34 @@
 <template>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div v-if="userPermission.advertise.create && userPermission.address.create" class="card-header">
-          <button class="btn btn-outline-danger btn-add" @click="addAdsModal()">
-            <IconsPlusCircle />
-            <span>Thêm {{ isShowAdsList ? 'quảng cáo' : 'điểm đặt  quảng cáo' }}</span>
-          </button>
-        </div>
-        <div class="card-body">
-          <ul class="nav nav-pills nav-fill mb-2 nav-blue">
-            <li class="nav-item" @click="showAddressList()">
-              <div :class="`nav-link ${ !isShowAdsList ? 'active' : ''}`">
-                Điểm đặt quảng cáo
-              </div>
-            </li>
-            <li class="nav-item" @click="showAdsList()">
-              <div :class="`nav-link ${ isShowAdsList ? 'active' : ''}`">
-                Danh sách quảng cáo
-              </div>
-            </li>
-          </ul>
-          <TableLocations v-if="!isShowAdsList" :data="dataList" :key="`location_${new Date()}`" @refresh="initData()" />
-          <TableAds v-else :data="dataList" :key="`ad_${new Date()}`" />
+  <ClientOnly>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div v-if="userPermission.advertise.create && userPermission.address.create" class="card-header">
+            <button class="btn btn-outline-danger btn-add" @click="addAdsModal()">
+              <IconsPlusCircle />
+              <span>Thêm {{ isShowAdsList ? 'quảng cáo' : 'điểm đặt  quảng cáo' }}</span>
+            </button>
+          </div>
+          <div class="card-body">
+            <ul class="nav nav-pills nav-fill mb-2 nav-blue">
+              <li class="nav-item" @click="showAddressList()">
+                <div :class="`nav-link ${ !isShowAdsList ? 'active' : ''}`">
+                  Điểm đặt quảng cáo
+                </div>
+              </li>
+              <li class="nav-item" @click="showAdsList()">
+                <div :class="`nav-link ${ isShowAdsList ? 'active' : ''}`">
+                  Danh sách quảng cáo
+                </div>
+              </li>
+            </ul>
+            <TableLocations v-if="!isShowAdsList" :data="dataList" :key="`location_${new Date()}`" @refresh="initData()" />
+            <TableAds v-else :data="dataList" :key="`ad_${new Date()}`" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>

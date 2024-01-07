@@ -10,7 +10,7 @@
     </div>
     <div class="detail_item">
       <h4>Địa chỉ:</h4>
-      <p>{{ getFullAddress(modelValue) }}</p>
+      <p>{{ getFullAddressByAdsLocation(modelValue) }}</p>
     </div>
     <div class="detail_item">
       <h4>Loại bảng QC:</h4>
@@ -51,6 +51,7 @@
 <script setup>
 import getName from '~/utils/getter/getName';
 import { mapAdsLocation } from '~/utils/mapData'
+import { getFullAddressByAdsLocation } from '~/utils/location/address'
 
 const props = defineProps({
   modelValue: {
@@ -60,16 +61,6 @@ const props = defineProps({
 })
 const { getFileUrl } = useMedia()
 const address = computed(() => mapAdsLocation(props.modelValue.adsLocation))
-console.log({
-  address: address.value
-})
-const getFullAddress = (item) => {
-  return `${getName(item, 'adsLocation_address_streetLine1') } ${ getName(item, 'adsLocation_address_streetLine2') },
-    ${ getName(item, 'adsLocation_address_ward') },
-    ${ getName(item, 'adsLocation_address_district') },
-    ${ getName(item, 'adsLocation_address_city') },
-    ${ getName(item, 'adsLocation_address_country') }`
-}
 </script>
 
 <style lang="scss">

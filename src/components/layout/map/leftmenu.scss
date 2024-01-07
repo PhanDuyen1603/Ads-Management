@@ -9,7 +9,7 @@
   .item_info {
     width: var(--el-width);
     min-width: var(--el-width);
-    max-height: var(--el-height);
+    max-height: calc(100vh - 100px);
     position: var(--el-position);
     top: var(--el-top);
     right: var(--el-right);
@@ -52,9 +52,9 @@
       font-size: 14px;
       margin-bottom: .5rem;
     }
-    p:first-child {
-      font-weight: 700;
-    }
+    // p:first-child {
+    //   font-weight: 700;
+    // }
   }
 }
 .list_items_horizontal {

@@ -14,6 +14,19 @@ export const adminMenu = [
     roles: [ROLES.SUPER_ADMIN, ROLES.ADMIN_LV_1, ROLES.ADMIN_LV_2]
   },
   {
+    title: 'Phường/ Quận',
+    name: 'admin-location',
+    icon: 'mdi mdi-map-marker',
+    roles: [ROLES.SUPER_ADMIN]
+  },
+  {
+    title: 'Danh sách loại hình/hình thức quảng cáo',
+    name: 'admin-typeAds',
+    icon: 'mdi mdi-table',
+    roles: [ROLES.SUPER_ADMIN]
+  },
+
+  {
     title: 'Danh sách quảng cáo/ điểm đặt quảng cáo',
     name: 'admin-ad',
     icon: 'mdi mdi-table',
@@ -37,4 +50,5 @@ export const adminMenu = [
     icon: 'mdi mdi-table',
     roles: [ROLES.SUPER_ADMIN]
   },
+
 ]

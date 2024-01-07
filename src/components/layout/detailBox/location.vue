@@ -82,7 +82,8 @@ const openReportModal = async (type) => {
     props: {
       addressId: type === 'location' && props.modelValue?._id,
       adId: type === 'ad' && props.modelValue?._id,
-      updateType: type
+      updateType: type,
+      modelValue: props.modelValue
     },
     wrapperProps: {
       styles: {

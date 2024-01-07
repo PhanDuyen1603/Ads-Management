@@ -1,29 +1,31 @@
 <template>
-  <div class="admin_map_wrap">
-    <div class="row">
-      <div class="col-lg-4 col-md-12">
-        <div class="card">
-          <div class="card-body" style="max-height: calc(100vh - 100px); overflow: auto;">
-            <h4 class="card-title"><span class="lstick"></span>Danh sách địa điểm đặt quảng cáo</h4>
-            <TableLocations :data="addresses" :key="`location_${new Date()}`" table-class="table-overflow" :show-update-btn="false" />
+  <ClientOnly>
+    <div class="admin_map_wrap">
+      <div class="row">
+        <div class="col-lg-4 col-md-12">
+          <div class="card">
+            <div class="card-body" style="max-height: calc(100vh - 100px); overflow: auto;">
+              <h4 class="card-title"><span class="lstick"></span>Danh sách địa điểm đặt quảng cáo</h4>
+              <TableLocations :data="addresses" :key="`location_${new Date()}`" table-class="table-overflow" :show-update-btn="false" />
+            </div>
           </div>
         </div>
+        <div class="col-lg-8 col-md-12">
+          <ElementGmap
+            class="map"
+            ref="map"
+            :markers="markers"
+            :map-styles="{
+              width: '100%',
+              height: 'calc(100vh - 100px)'
+            }"
+            :center="markers[0]?.position"
+          />
       </div>
-      <div class="col-lg-8 col-md-12">
-        <ElementGmap
-          class="map"
-          ref="map"
-          :markers="markers"
-          :map-styles="{
-            width: '100%',
-            height: 'calc(100vh - 100px)'
-          }"
-          :center="markers[0]?.position"
-        />
-    </div>
 
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>

@@ -77,6 +77,8 @@
           label="Loại bảng quảng cáo"
           rules="required"
           name="billboardType"
+          value-prop="_id"
+          label-prop="name"
           :items="billboardTypes"
         />
         <TextElement
@@ -157,7 +159,8 @@ const props = defineProps({
 const { $apiFetch } = useNuxtApp()
 const { getFileUrl } = useMedia()
 const emits = defineEmits(['close'])
-const { getBillboardTypes, billboardTypes, getAdById } = useAdvertise()
+const { getAdById } = useAdvertise()
+const { getBillboardTypes, billboardTypes } = useBillboardTypes()
 const { getLocations, addresses: locations, markers} = useLocation()
 
 await getBillboardTypes()

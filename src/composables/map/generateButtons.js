@@ -13,18 +13,14 @@ export default function () {
   })
 
   const modalFilter = reactive({
-    isPlanned: true,
-    reportsCount: true,
-    countAds: true
+    isPlanned: 0,
+    reportsCount: 0,
+    countAds: 0
   })
 
   const handleFilter = async () => {
     console.log({filters: filters.value})
     await filterAdLocation({ conditions: filters.value })
-  }
-
-  const handleFilterMarkers = async () => {
-
   }
 
   const stausControlButtons = (map) => {
@@ -150,16 +146,23 @@ export default function () {
         clone.value = cloned.value
       }
 
-      if(!modalFilter.isPlanned) {
-        googleMapStore.allSiteMarkers = clone.value.filter(x => {
-          return x.isPlanned === modalFilter.isPlanned
+      googleMapStore.allSiteMarkers = clone.value
+        .filter(x => {
+          if(modalFilter.isPlanned === 0) return true
+          if(modalFilter.isPlanned === 1) return x.isPlanned === false
+          return x.isPlanned === true
         })
-      }
-      if(!modalFilter.reportsCount) {
-        googleMapStore.allSiteMarkers = clone.value.filter(x => {
+        .filter(x => {
+          console.log(x)
+          if(modalFilter.countAds === 0) return true
+          if(modalFilter.countAds === 1) return !x.countAds
+          return x.countAds > 0
+        })
+        .filter(x => {
+          if(modalFilter.reportsCount === 0) return true
+          if(modalFilter.reportsCount === 1) return !x.reportsCount
           return x.reportsCount && x.reportsCount > 0
         })
-      }
 
     })
 

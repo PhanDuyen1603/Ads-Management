@@ -1,47 +1,31 @@
 <template>
-  <v-container class="text-center">
+  <v-container>
     <v-row justify="center">
-      <!-- <v-col cols="12">
-        <v-switch
-          v-model="filters.countAds"
-          hide-details
-          inset
-          color="primary"
-          :label="`${ filters.countAds ? 'Hiện' : 'Ẩn' } bảng quảng cáo`"
-          @update:modelValue="changeCountAds"
-        />
-      </v-col> -->
-      <!-- <v-col cols="12"> -->
-        <!-- <v-switch
-          v-model="filters.adsLocation"
-          hide-details
-          inset
-          color="primary"
-          :label="`${ filters.adsLocation ? 'Hiện' : 'Ẩn' } điểm đặt`"
-        />
-      </v-col> -->
       <v-col cols="12">
-        <v-switch
-          v-model="filters.reportsCount"
-          hide-details
-          inset
-          color="primary"
-          :label="`${ filters.reportsCount ? 'Hiện' : 'Ẩn' } Báo cáo`"
-          @update:modelValue="changeReport"
-        />
+        <p>Tình trạng quy hoạch</p>
+        <v-radio-group v-model="ratioCheck.isPlanned" inline>
+          <v-radio label="Tất cả" :value="0"></v-radio>
+          <v-radio label="Chưa quy hoạch" :value="1"></v-radio>
+          <v-radio label="Đã quy hoạch" :value="2"></v-radio>
+        </v-radio-group>
       </v-col>
       <v-col cols="12">
-        <v-switch
-          v-model="filters.isPlanned"
-          hide-details
-          inset
-          color="primary"
-          :label="`Thông tin quy hoạch: ${ filters.isPlanned ? 'Đã quy hoạch' : 'Chưa quy hoạch' }`"
-          @update:modelValue="changeIsplanned"
-        />
+        <p>Quảng cáo</p>
+        <v-radio-group v-model="ratioCheck.countAds" inline>
+          <v-radio label="Tất cả" :value="0"></v-radio>
+          <v-radio label="Điểm đặt" :value="1"></v-radio>
+          <v-radio label="Quảng cáo" :value="2"></v-radio>
+        </v-radio-group>
       </v-col>
       <v-col cols="12">
+        <p>Báo cáo</p>
+        <v-radio-group v-model="ratioCheck.reportsCount" inline>
+          <v-radio label="Tất cả" :value="0"></v-radio>
+          <v-radio label="ẩn" :value="1"></v-radio>
+          <v-radio label="hiện" :value="2"></v-radio>
+        </v-radio-group>
       </v-col>
+
       <v-col cols="12" sm="6" md="4">
         <v-btn block rounded="lg" @click="filterLocations">Lọc</v-btn>
       </v-col>
@@ -52,49 +36,31 @@
 <script setup>
 const props = defineProps({
   countAds: {
-    type: Boolean,
-    default: true
+    type: Number,
+    default: 0
   },
   adsLocation: {
-    type: Boolean,
-    default: true
+    type: Number,
+    default: 0
   },
   isPlanned: {
-    type: Boolean,
-    default: true
+    type: Number,
+    default: 0
   },
   reportsCount: {
-    type: Boolean,
-    default: true
+    type: Number,
+    default: 0
   },
 })
 const emits = defineEmits(['close'])
-const filters = reactive({
+
+const ratioCheck = reactive({
   countAds: props.countAds,
   adsLocation: props.adsLocation,
   isPlanned: props.isPlanned,
   reportsCount: props.reportsCount,
 })
-
-const changeCountAds = (e) => {
-  if(!e) {
-    filters.isPlanned = true,
-    filters.reportsCount = true
-  }
-}
-const changeIsplanned = (e) => {
-  if(!e) {
-    filters.countAds = true,
-    filters.reportsCount = true
-  }
-}
-const changeReport = (e) => {
-  if(!e) {
-    filters.isPlanned = true,
-    filters.countAds = true
-  }
-}
 const filterLocations = () => {
-  emits('close', { value: filters })
+  emits('close', { value: ratioCheck })
 }
 </script>

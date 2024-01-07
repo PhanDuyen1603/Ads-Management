@@ -28,7 +28,6 @@
           rules="required"
           label="Thành phố"
           placeholder="Thành phố"
-          readonly
         />
 
         <SelectElement
@@ -53,8 +52,6 @@
           placeholder="Quận"
           :columns="{ container: 6 }"
           :items="listDistricts"
-          readonly
-          :disabled="true"
         />
 
         <SelectElement
@@ -63,9 +60,7 @@
           label="Phường"
           placeholder="Phường"
           :columns="{ container: 6 }"
-          readonly
           :items="listWards"
-          :disabled="true"
         />
         <TextElement
           name="lat"

@@ -54,7 +54,7 @@
                   <!-- <p>{{ getName(item, 'adsLocation_address_streetLine1') }}</p> -->
                   <p>Kích thước: {{ item.width }} x {{ item.height }}</p>
                   <p>Số lượng: <strong>1 tru/bang</strong></p>
-                  <p>Hình thức: <strong>{{ getName(item, 'adsLocation_adCategory') }}</strong></p>
+                  <p>Hình thức: <strong>{{ item.billboardType.name}}</strong></p>
                   <p>Phân loại: <strong>{{ locationTypes.find(x => x._id === item.adsLocation.locationType).name }}</strong></p>
                   <div class="action_groups">
                       <IconsInfoCircle fill="blue" />

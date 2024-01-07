@@ -10,7 +10,6 @@
         label="Họ và tên"
         placeholder="Nhập họ và tên"
         :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
-        :submit="false"
       />
 
       <TextElement

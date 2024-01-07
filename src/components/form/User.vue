@@ -75,17 +75,14 @@
         :submit="false"
       />
 
-      <TextElement
-          name=""
-          label="Đổi mật khẩu"
-          placeholder="Nhập mật khẩu mới"
-          :messages="{ required: 'Vui lòng nhập đầy đủ thông tin' }"
-          :submit="false"
-      />
-
-      <ButtonElement name="submit" add-class="mt-2" submits>
+      
+      <ButtonElement full name="submit" submits :columns="{ container: 3, wrapper: 12 }">
         {{ submitType === 'create' ? 'Tạo mới' : 'Cập nhật' }}
       </ButtonElement>
+      <ButtonElement v-if="['update', 'authUpdate'].includes(submitType)" full @click="openChangePasswordModal" name="changepass" :columns="{ container: 3, wrapper: 12 }">
+        đổi mật khẩu
+      </ButtonElement>
+      
     </Vueform>
   </ClientOnly>
 </template>
@@ -108,6 +105,7 @@ const props = defineProps({
 
 const emits = defineEmits(['close', 'handle-update'])
 const { createStaff } = useStaff()
+const { $modal } = useNuxtApp()
 
 const form = reactive(props.defaultFormData && props.submitType !== 'create' ? props.defaultFormData : {})
 
@@ -141,6 +139,12 @@ const handleSubmit = async (submitForm, $el) => {
   } catch (error) {
     console.log({error})
   }
+}
+
+const openChangePasswordModal = async () => {
+  await $modal.show({
+    component: 'ModalAdminChangePassword'
+  })
 }
 
 </script>

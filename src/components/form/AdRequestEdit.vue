@@ -103,7 +103,8 @@ const props = defineProps({
   }
 })
 const emits = defineEmits(['close'])
-const { getBillboardTypes, billboardTypes, requestUpdateAd } = useAdvertise()
+const { requestUpdateAd } = useAdvertise()
+const { getBillboardTypes, billboardTypes } = useBillboardTypes()
 const { getFileUrl } = useMedia()
 
 await getBillboardTypes()

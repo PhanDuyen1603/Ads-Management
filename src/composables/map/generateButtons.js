@@ -65,6 +65,8 @@ export default function () {
   }
 
   const generateListMarkers = (map) => {
+    if($route.name.startsWith('admin')) return
+
     var wrapper = document.createElement('div')
     wrapper.classList.add('list_wrapper', 'card-body')
     const ul = document.createElement('ul')

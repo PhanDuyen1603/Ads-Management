@@ -47,12 +47,16 @@ export const dataMapAdsWithLocation = (adsLocations, ads = [], reports = [], loc
       } else {
         adsLocationWithReport.push(locationReports[index])
       }
-      console.log({
-        location,
-        locationReports: locationReports[index],
-        adsLocationWithReport,
-      })
     }
   }
+  adsLocationWithReport.map(x => {
+    const res = x
+    if(x.ads?.length){
+      for (let index = 0; index < x.ads?.length; index++) { 
+        res.reportsCount = x.ads[index].reportsCount
+      }
+    }
+    return x
+  })
   return adsLocationWithReport
  }

@@ -39,6 +39,12 @@ export const adminMenu = [
     roles: [ROLES.SUPER_ADMIN, ROLES.ADMIN_LV_1, ROLES.ADMIN_LV_2]
   },
   {
+    title: 'Danh sách cấp phép quảng cáo',
+    name: 'admin-adLicensing',
+    icon: 'mdi mdi-table',
+    roles: [ROLES.SUPER_ADMIN, ROLES.ADMIN_LV_1, ROLES.ADMIN_LV_2]
+  },
+  {
     title: 'Danh sách cty cấp phép',
     name: 'admin-companny',
     icon: 'mdi mdi-table',

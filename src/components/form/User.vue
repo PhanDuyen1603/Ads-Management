@@ -52,28 +52,22 @@
       />
 
       <SelectElement
+        v-if="submitType === 'create'"
         label="Quận"
         name="district"
-        :native="true"
         :items="districts"
         label-prop="name"
         value-prop="_id"
-        :submit="false"
-        disabled
-        readonly
         :columns="{ container: 6 }"
       />
 
       <SelectElement
+        v-if="submitType === 'create'"
         label="Phường"
         name="ward"
-        :native="false"
         :items="listWards"
         label-prop="name"
         value-prop="_id"
-        disabled
-        readonly
-        :submit="false"
         :columns="{ container: 6 }"
       />
 
@@ -105,7 +99,7 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['close', 'handle-update'])
-const { createStaff } = useStaff()
+const { createStaff, updateStaff } = useStaff()
 const { $modal } = useNuxtApp()
 const { getWards, getDistricts } = useLocation();
 
@@ -127,6 +121,12 @@ const handleSubmit = async (submitForm, $el) => {
   try {
     if (props.submitType === 'create') {
       submitForm.password = '123456'
+      submitForm.assigned = {
+        district: submitForm.district || submitForm.assigned?.district,
+        ward: submitForm.ward || submitForm.assigned?.ward
+      }
+      delete submitForm.district
+      delete submitForm.ward
       const res = await createStaff(submitForm)
       if(res.success) {
         emits('close')

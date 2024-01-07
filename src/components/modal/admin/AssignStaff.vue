@@ -40,7 +40,10 @@ const props = defineProps({
     default: () => {},
   },
 });
-const form = ref(null);
+const form = ref({
+  ward: props.modelValue.assigned?.ward || '',
+  district: props.modelValue.assigned?.district || '',
+});
 const toast = useToast();
 const { assignStaff } = useStaff();
 const { getWards, getDistricts } = useLocation();

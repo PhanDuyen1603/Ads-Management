@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-5">
+    <div class="col-6">
       <div class="card">
         <button class="btn btn-outline-danger btn-add btn-add-custom" @click="addDistrict()">
           <IconsPlusCircle />
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-6">
       <div class="card">
         <button 
           class="btn btn-outline-danger btn-add btn-add-custom"

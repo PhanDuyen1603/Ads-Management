@@ -39,7 +39,7 @@ export const dataMapAdsWithLocation = (adsLocations, ads = [], reports = [], loc
       ads: ads.filter(i => i.adsLocation?._id === x._id)
     }
   })
-  if(locationReports.length) {
+  if(locationReports && locationReports.length) {
     for (let index = 0; index < locationReports.length; index++) {
       const location = adsLocationWithReport.findIndex(x => x.lat === locationReports[index].lat && x.long === locationReports[index].long)
       if (adsLocationWithReport[location]) {
